@@ -55,7 +55,7 @@ export default function LandingPage() {
           {/* Badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FF6B00]/30 bg-[#FF6B00]/10 px-4 py-1.5 text-sm text-[#FF6B00]">
             <Star className="h-3.5 w-3.5" fill="currentColor" />
-            <span>R$ 2,64 por vídeo UGC viral — sem creators, sem espera</span>
+            <span>55 créditos por clonagem completa — sem creators, sem espera</span>
           </div>
 
           {/* Headline */}
@@ -253,17 +253,12 @@ export default function LandingPage() {
             <h3 className="mb-6 text-center font-bold">Custo por operação</h3>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {[
-                { op: 'Título + descrição + tags', creditos: 5, valor: 'R$ 0,24' },
-                { op: 'Imagem fundo branco', creditos: 15, valor: 'R$ 0,72' },
-                { op: 'Vídeo 5s TikTok', creditos: 30, valor: 'R$ 1,44' },
-                { op: 'Vídeo 10s', creditos: 50, valor: 'R$ 2,40' },
-                { op: 'Pack completo (título+imagem+vídeo 5s)', creditos: 40, valor: 'R$ 1,92' },
-                {
-                  op: 'Clonagem completa',
-                  creditos: 55,
-                  valor: 'R$ 2,64',
-                  highlight: true,
-                },
+                { op: 'Título + descrição + tags', creditos: 5 },
+                { op: 'Imagem fundo branco', creditos: 15 },
+                { op: 'Vídeo 5s TikTok', creditos: 30 },
+                { op: 'Vídeo 10s', creditos: 50 },
+                { op: 'Pack completo (título+imagem+vídeo 5s)', creditos: 40 },
+                { op: 'Clonagem completa', creditos: 55, highlight: true },
               ].map((item) => (
                 <div
                   key={item.op}
@@ -273,14 +268,11 @@ export default function LandingPage() {
                       : 'bg-white/3'
                   }`}
                 >
-                  <div>
-                    <p className="text-sm font-medium">{item.op}</p>
-                    <p className="text-xs text-white/40">{item.creditos} créditos</p>
-                  </div>
+                  <p className="text-sm font-medium">{item.op}</p>
                   <span
-                    className={`text-sm font-bold ${item.highlight ? 'text-[#FF6B00]' : 'text-white'}`}
+                    className={`text-sm font-bold whitespace-nowrap ${item.highlight ? 'text-[#FF6B00]' : 'text-white'}`}
                   >
-                    {item.valor}
+                    {item.creditos} créditos
                   </span>
                 </div>
               ))}
