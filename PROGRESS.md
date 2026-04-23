@@ -130,6 +130,27 @@
 
 ---
 
+## Sessão 2026-04-23 (Kimi Code)
+
+**O que foi feito:**
+- **Migração Anthropic Claude → Kimi API (Moonshot AI)**
+  - Substituído `@anthropic-ai/sdk` por `openai` SDK apontando para `https://api.moonshot.ai/v1`
+  - Novo cliente Kimi em `src/lib/ai/kimi/client.ts`
+  - `video-analyzer.ts` adaptado para usar modelo `kimi-k2.5` com vision support via OpenAI-compatible format
+  - Todos os imports atualizados: `anthropic/` → `kimi/`
+  - Todos os textos de UI atualizados: "Claude" → "Kimi"
+  - `.env.local.example` atualizado: `ANTHROPIC_API_KEY` → `KIMI_API_KEY`
+  - Pasta `src/lib/ai/anthropic/` removida completamente
+- **Build validado**: TypeScript passou sem erros, Next.js build gerou 30 páginas com sucesso
+- **Design Higgsfield.ai**: Landing page e dashboard já alinhados com estilo dark/roxo/cards do Higgsfield
+
+**Próximos passos:**
+- Fase 4 — Monetização (Stripe webhooks, checkout, billing page)
+- Fase 5 — Pastas, templates, referral, notificações
+- Fase 6 — Integrações TikTok Shop, Shopee, Mercado Livre
+
+---
+
 ## Sessão 2026-04-23
 
 **O que foi feito:**
