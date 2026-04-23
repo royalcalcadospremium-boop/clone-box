@@ -71,21 +71,31 @@ ${referenceVideoUrl ? `URL do vídeo de referência (para contexto de estilo): $
 Retorne APENAS o JSON, sem markdown, sem explicações.`
 
   // Constrói a mensagem com ou sem a imagem do produto
-  const userContent: Parameters<typeof client.messages.create>[0]['messages'][0]['content'] = productImageUrl
-    ? [
+  let userContent: Parameters<typeof client.messages.create>[0]['messages'][0]['content'] = textContent
+
+  if (productImageUrl) {
+    try {
+      // Baixa a imagem e converte para base64 (compatível com todas as versões do SDK)
+      const imgRes = await fetch(productImageUrl, { signal: AbortSignal.timeout(15_000) })
+      const imgBuffer = Buffer.from(await imgRes.arrayBuffer())
+      const base64Data = imgBuffer.toString('base64')
+      const rawMime = imgRes.headers.get('content-type') ?? 'image/jpeg'
+      const mediaType = (['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(rawMime)
+        ? rawMime
+        : 'image/jpeg') as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
+
+      userContent = [
         {
           type: 'image',
-          source: {
-            type: 'url',
-            url: productImageUrl,
-          },
+          source: { type: 'base64', media_type: mediaType, data: base64Data },
         },
-        {
-          type: 'text',
-          text: `Esta é a foto do produto. ${textContent}`,
-        },
+        { type: 'text', text: `Esta é a foto do produto. ${textContent}` },
       ]
-    : textContent
+    } catch {
+      // Se não conseguir baixar a imagem, prossegue apenas com texto
+      logger.warn({ productImageUrl }, 'Failed to fetch product image, proceeding without vision')
+    }
+  }
 
   const response = await client.messages.create({
     model: 'claude-sonnet-4-6',
