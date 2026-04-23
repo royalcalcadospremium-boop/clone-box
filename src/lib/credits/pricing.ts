@@ -34,6 +34,12 @@ export const REFERRAL_REFERRER_BONUS = 100
 export const REFERRAL_REFERRED_BONUS = 50
 export const TRIAL_DAYS = 7
 
+export function getVideoCost(duration: number): number {
+  if (duration <= 5) return CREDIT_COSTS.VIDEO_GENERATION_5S
+  if (duration <= 10) return CREDIT_COSTS.VIDEO_GENERATION_10S
+  return 65 // 15s
+}
+
 export type CreditCostKey = keyof typeof CREDIT_COSTS
 export type PlanKey = keyof typeof PLAN_CREDITS
 export type TopupPackageKey = keyof typeof TOPUP_PACKAGES

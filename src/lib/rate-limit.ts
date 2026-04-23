@@ -6,24 +6,35 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 })
 
-// Rate limiters por rota
-export const rateLimitClone = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, '1 m'),
-  prefix: 'rl:clone',
-})
+const limiterCache = new Map<string, Ratelimit>()
 
-export const rateLimitTopup = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(5, '1 m'),
-  prefix: 'rl:topup',
-})
+function getLimiter(requests: number, windowSeconds: number, prefix: string): Ratelimit {
+  const key = `${prefix}:${requests}:${windowSeconds}`
+  if (!limiterCache.has(key)) {
+    limiterCache.set(key, new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(requests, `${windowSeconds} s`),
+      prefix: `rl:${prefix}`,
+    }))
+  }
+  return limiterCache.get(key)!
+}
 
-export const rateLimitUpload = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(20, '1 h'),
-  prefix: 'rl:upload',
-})
+// Retorna true se deve bloquear a requisição
+export async function rateLimit(
+  identifier: string,
+  requests: number,
+  windowSeconds: number
+): Promise<boolean> {
+  const prefix = identifier.split(':')[0]
+  const limiter = getLimiter(requests, windowSeconds, prefix)
+  const { success } = await limiter.limit(identifier)
+  return !success
+}
+
+export const rateLimitClone = getLimiter(10, 60, 'clone')
+export const rateLimitTopup = getLimiter(5, 60, 'topup')
+export const rateLimitUpload = getLimiter(20, 3600, 'upload')
 
 export async function checkRateLimit(
   limiter: Ratelimit,
