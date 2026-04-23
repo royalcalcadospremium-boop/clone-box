@@ -3,35 +3,49 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Zap, Eye, EyeOff, Loader2, CheckCircle2 } from 'lucide-react'
+import { formatCPF, validateCPF } from '@/lib/utils/cpf'
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [cpfError, setCpfError] = useState('')
+
+  function handleCPFChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const formatted = formatCPF(e.target.value)
+    setCpf(formatted)
+    if (formatted.replace(/\D/g, '').length === 11) {
+      setCpfError(validateCPF(formatted) ? '' : 'CPF inválido')
+    } else {
+      setCpfError('')
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setLoading(true)
     setError('')
 
+    if (!validateCPF(cpf)) {
+      setCpfError('CPF inválido')
+      return
+    }
+
+    setLoading(true)
     const form = e.currentTarget
     const name = (form.elements.namedItem('name') as HTMLInputElement).value
     const email = (form.elements.namedItem('email') as HTMLInputElement).value
     const password = (form.elements.namedItem('password') as HTMLInputElement).value
 
     try {
-      const { createClient } = await import('@/lib/supabase/client')
-      const supabase = createClient()
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { full_name: name },
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, cpf }),
       })
-      if (error) throw error
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
       setSuccess(true)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Erro ao criar conta. Tente novamente.')
@@ -51,22 +65,19 @@ export default function SignupPage() {
 
   if (success) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A] px-4">
+      <div className="flex min-h-screen items-center justify-center bg-[#121212] px-4">
         <div className="w-full max-w-md text-center">
           <div className="mb-6 flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF6B00]/10">
-              <CheckCircle2 className="h-8 w-8 text-[#FF6B00]" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#1DB954]/10">
+              <CheckCircle2 className="h-8 w-8 text-[#1DB954]" />
             </div>
           </div>
           <h1 className="text-2xl font-bold">Confirme seu email</h1>
           <p className="mt-3 text-white/50">
             Enviamos um link de confirmação para o seu email. Clique nele para ativar sua conta e
-            receber seus <span className="text-[#FF6B00] font-semibold">100 créditos grátis</span>.
+            receber seus <span className="text-[#1DB954] font-semibold">20 créditos grátis</span>.
           </p>
-          <Link
-            href="/login"
-            className="mt-8 inline-block text-sm text-[#FF6B00] hover:underline"
-          >
+          <Link href="/login" className="mt-8 inline-block text-sm text-[#1DB954] hover:underline">
             Voltar para o login
           </Link>
         </div>
@@ -75,25 +86,22 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#121212] px-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <Link href="/" className="flex items-center gap-2 mb-6">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF6B00]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1DB954]">
               <Zap className="h-5 w-5 text-black" fill="black" />
             </div>
             <span className="text-xl font-black">CloneBox</span>
           </Link>
           <h1 className="text-2xl font-bold text-white">Criar conta grátis</h1>
           <p className="mt-1 text-sm text-white/50">
-            Ganhe <span className="text-[#FF6B00]">100 créditos grátis</span> para começar
+            Ganhe <span className="text-[#1DB954]">20 créditos grátis</span> para começar
           </p>
         </div>
 
-        {/* Card */}
-        <div className="rounded-2xl border border-white/5 bg-[#111111] p-8">
-          {/* Google */}
+        <div className="rounded-2xl border border-white/5 bg-[#181818] p-8">
           <button
             onClick={handleGoogle}
             className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-medium transition hover:bg-white/10"
@@ -119,13 +127,28 @@ export default function SignupPage() {
                 Nome completo
               </label>
               <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                placeholder="Fellipe Silva"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                id="name" name="name" type="text" required placeholder="Fellipe Silva"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
               />
+            </div>
+
+            <div>
+              <label htmlFor="cpf" className="block text-sm font-medium text-white/70 mb-1.5">
+                CPF
+              </label>
+              <input
+                id="cpf" name="cpf" type="text" required
+                placeholder="000.000.000-00"
+                value={cpf}
+                onChange={handleCPFChange}
+                className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:ring-1 ${
+                  cpfError
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                    : 'border-white/10 focus:border-[#1DB954] focus:ring-[#1DB954]'
+                }`}
+              />
+              {cpfError && <p className="mt-1 text-xs text-red-400">{cpfError}</p>}
+              <p className="mt-1 text-xs text-white/30">Usado para evitar contas duplicadas</p>
             </div>
 
             <div>
@@ -133,12 +156,8 @@ export default function SignupPage() {
                 Email
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="seu@email.com"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                id="email" name="email" type="email" required placeholder="seu@email.com"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
               />
             </div>
 
@@ -148,13 +167,10 @@ export default function SignupPage() {
               </label>
               <div className="relative">
                 <input
-                  id="password"
-                  name="password"
+                  id="password" name="password"
                   type={showPassword ? 'text' : 'password'}
-                  required
-                  minLength={8}
-                  placeholder="Mínimo 8 caracteres"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                  required minLength={8} placeholder="Mínimo 8 caracteres"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
                 />
                 <button
                   type="button"
@@ -173,33 +189,25 @@ export default function SignupPage() {
             )}
 
             <button
-              type="submit"
-              disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#FF6B00] py-3 text-sm font-bold text-black transition hover:bg-[#FF8C00] disabled:opacity-50"
+              type="submit" disabled={loading || !!cpfError}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1DB954] py-3 text-sm font-bold text-black transition hover:bg-[#1ED760] disabled:opacity-50"
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-              {loading ? 'Criando conta...' : 'Criar conta e ganhar 100 créditos'}
+              {loading ? 'Criando conta...' : 'Criar conta e ganhar 20 créditos'}
             </button>
 
             <p className="text-center text-xs text-white/30">
               Ao criar uma conta, você concorda com os{' '}
-              <Link href="/termos" className="text-white/50 hover:text-white">
-                Termos de Uso
-              </Link>{' '}
+              <Link href="/termos" className="text-white/50 hover:text-white">Termos de Uso</Link>{' '}
               e a{' '}
-              <Link href="/privacidade" className="text-white/50 hover:text-white">
-                Política de Privacidade
-              </Link>
-              .
+              <Link href="/privacidade" className="text-white/50 hover:text-white">Política de Privacidade</Link>.
             </p>
           </form>
         </div>
 
         <p className="mt-6 text-center text-sm text-white/40">
           Já tem conta?{' '}
-          <Link href="/login" className="text-[#FF6B00] hover:underline">
-            Entrar
-          </Link>
+          <Link href="/login" className="text-[#1DB954] hover:underline">Entrar</Link>
         </p>
       </div>
     </div>
