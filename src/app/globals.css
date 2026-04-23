@@ -1,79 +1,107 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
 
-@layer base {
-  :root {
-    /* CloneBox — Spotify-Inspired Design System */
-    --background: 0 0% 7%;           /* #121212 Spotify dark */
-    --foreground: 0 0% 100%;         /* #FFFFFF */
+@custom-variant dark (&:is(.dark *));
 
-    --card: 0 0% 9%;                 /* #181818 Spotify card */
-    --card-foreground: 0 0% 100%;
+@theme inline {
+  /* Spotify-Inspired Design System */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-    --popover: 0 0% 11%;             /* #1C1C1C */
-    --popover-foreground: 0 0% 100%;
+  /* Brand colors */
+  --color-brand-green: #1DB954;
+  --color-brand-green-hover: #1ED760;
+  --color-brand-black: #191414;
+  --color-brand-surface-base: #121212;
+  --color-brand-surface-card: #181818;
+  --color-brand-surface-elevated: #282828;
+  --color-brand-surface-highlight: #3E3E3E;
+  --color-brand-white: #FFFFFF;
+  --color-brand-subdued: #B3B3B3;
+  --color-brand-muted: #535353;
+  --color-brand-error: #E91429;
+  --color-brand-warning: #FFA42B;
 
-    --primary: 141 69% 42%;          /* #1DB954 Spotify green */
-    --primary-foreground: 0 0% 0%;   /* black text on green */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 
-    --secondary: 0 0% 16%;           /* #282828 elevated surface */
-    --secondary-foreground: 0 0% 100%;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
 
-    --muted: 0 0% 24%;               /* #3E3E3E */
-    --muted-foreground: 0 0% 70%;    /* #B3B3B3 subdued */
-
-    --accent: 141 69% 42%;           /* #1DB954 */
-    --accent-foreground: 0 0% 0%;
-
-    --destructive: 352 86% 52%;      /* #E91429 Spotify red */
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 24%;              /* #3E3E3E */
-    --input: 0 0% 24%;
-    --ring: 141 69% 42%;             /* green focus ring */
-
-    --radius: 0.5rem;
-  }
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-pulse-green: pulse-green 2s infinite;
+  --animate-fade-in: fade-in 0.3s ease forwards;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
+:root {
+  --background: #121212;
+  --foreground: #ffffff;
+  --card: #181818;
+  --card-foreground: #ffffff;
+  --popover: #1c1c1c;
+  --popover-foreground: #ffffff;
+  --primary: #1DB954;
+  --primary-foreground: #000000;
+  --secondary: #282828;
+  --secondary-foreground: #ffffff;
+  --muted: #3E3E3E;
+  --muted-foreground: #B3B3B3;
+  --accent: #1DB954;
+  --accent-foreground: #000000;
+  --destructive: #E91429;
+  --destructive-foreground: #ffffff;
+  --border: #3E3E3E;
+  --input: #3E3E3E;
+  --ring: #1DB954;
+  --radius: 0.5rem;
+}
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(29, 185, 84, 0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
 
 /* Scrollbar — Spotify style */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #121212;
-}
-::-webkit-scrollbar-thumb {
-  background: #3E3E3E;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #1DB954;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #121212; }
+::-webkit-scrollbar-thumb { background: #3E3E3E; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1DB954; }
 
-/* Spotify green glow utility */
-.glow-green {
-  box-shadow: 0 0 20px rgba(29, 185, 84, 0.3);
-}
-
-/* Pill button utility */
-.btn-pill {
-  border-radius: 500px;
-  font-weight: 700;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-.btn-pill:hover {
-  transform: scale(1.04);
-}
+.glow-green { box-shadow: 0 0 20px rgba(29, 185, 84, 0.3); }
