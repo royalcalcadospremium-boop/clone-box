@@ -1,0 +1,230 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { Loader2, Download, RefreshCw, Copy, Trash2, Check } from 'lucide-react'
+import Link from 'next/link'
+import type { CloneState } from '../page'
+
+interface Props {
+  state: CloneState
+}
+
+type VideoStatus =
+  | 'generating_video'
+  | 'polling'
+  | 'ready'
+  | 'failed'
+
+export function StepResult({ state }: Props) {
+  const [status, setStatus] = useState<VideoStatus>('generating_video')
+  const [videoUrl, setVideoUrl] = useState<string | null>(null)
+  const [error, setError] = useState('')
+  const [copied, setCopied] = useState(false)
+  const [elapsed, setElapsed] = useState(0)
+
+  // Inicia a geração do vídeo
+  useEffect(() => {
+    if (!state.videoId || !state.promptFinal) return
+    generateVideo()
+  }, [])
+
+  // Timer de progresso
+  useEffect(() => {
+    if (status === 'ready' || status === 'failed') return
+    const interval = setInterval(() => setElapsed((e) => e + 1), 1000)
+    return () => clearInterval(interval)
+  }, [status])
+
+  async function generateVideo() {
+    try {
+      const res = await fetch('/api/clone/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          videoId: state.videoId,
+          promptFinal: state.promptFinal,
+          productImageUrl: state.productImageUrl,
+          duration: state.duration,
+          resolution: state.resolution,
+          aspectRatio: state.aspectRatio,
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error ?? 'Erro ao iniciar geração')
+      }
+
+      setStatus('polling')
+      pollStatus()
+    } catch (err: unknown) {
+      setStatus('failed')
+      setError(err instanceof Error ? err.message : 'Erro ao gerar vídeo')
+    }
+  }
+
+  async function pollStatus() {
+    if (!state.videoId) return
+
+    const maxAttempts = 30
+    let attempts = 0
+
+    const poll = async () => {
+      attempts++
+      try {
+        const res = await fetch(`/api/clone/status/${state.videoId}`)
+        const data = await res.json()
+
+        if (data.status === 'ready') {
+          setStatus('ready')
+          setVideoUrl(data.outputVideoUrl)
+        } else if (data.status === 'failed') {
+          setStatus('failed')
+          setError(data.errorMessage ?? 'A geração falhou. Créditos foram estornados.')
+        } else if (attempts < maxAttempts) {
+          setTimeout(poll, 10000) // poll a cada 10s
+        } else {
+          setStatus('failed')
+          setError('Timeout: a geração demorou mais do que o esperado.')
+        }
+      } catch {
+        if (attempts < maxAttempts) setTimeout(poll, 10000)
+      }
+    }
+
+    setTimeout(poll, 10000)
+  }
+
+  function copyLink() {
+    if (videoUrl) {
+      navigator.clipboard.writeText(videoUrl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }
+
+  const progressPercent = Math.min((elapsed / 120) * 100, 95)
+
+  return (
+    <div className="rounded-2xl border border-white/5 bg-[#111111] p-8 space-y-6">
+      <div>
+        <h2 className="text-lg font-bold">Passo 4 — Seu vídeo</h2>
+        <p className="mt-1 text-sm text-white/50">
+          {status === 'ready' ? 'Vídeo pronto! Baixe e publique.' : 'Gerando seu vídeo com IA...'}
+        </p>
+      </div>
+
+      {/* Gerando */}
+      {(status === 'generating_video' || status === 'polling') && (
+        <div className="space-y-6">
+          <div className="flex flex-col items-center gap-4 py-8">
+            <div className="relative">
+              <div className="h-20 w-20 rounded-full border-4 border-[#FF6B00]/20" />
+              <div
+                className="absolute inset-0 rounded-full border-4 border-[#FF6B00] border-r-transparent animate-spin"
+                style={{ animationDuration: '1.5s' }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-sm font-bold text-[#FF6B00]">{elapsed}s</span>
+              </div>
+            </div>
+            <div className="text-center">
+              <p className="font-semibold">
+                {status === 'generating_video' ? 'Iniciando geração...' : 'Seedance está gerando seu vídeo'}
+              </p>
+              <p className="text-sm text-white/40 mt-1">Tempo estimado: 60–120 segundos</p>
+            </div>
+          </div>
+
+          {/* Barra de progresso */}
+          <div className="space-y-1">
+            <div className="flex justify-between text-xs text-white/40">
+              <span>Progresso estimado</span>
+              <span>{Math.round(progressPercent)}%</span>
+            </div>
+            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-[#FF6B00] transition-all duration-1000"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+          </div>
+
+          <p className="text-center text-xs text-white/30">
+            Você pode fechar esta aba — notificaremos quando ficar pronto
+          </p>
+        </div>
+      )}
+
+      {/* Pronto */}
+      {status === 'ready' && videoUrl && (
+        <div className="space-y-6">
+          {/* Player */}
+          <div className="rounded-xl overflow-hidden bg-black flex justify-center">
+            <video src={videoUrl} controls className="max-h-[480px] w-full object-contain" />
+          </div>
+
+          {/* Ações */}
+          <div className="grid gap-2 sm:grid-cols-2">
+            <a
+              href={videoUrl}
+              download
+              className="flex items-center justify-center gap-2 rounded-xl bg-[#FF6B00] py-3 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+            >
+              <Download className="h-4 w-4" />
+              Baixar MP4
+            </a>
+            <button
+              onClick={copyLink}
+              className="flex items-center justify-center gap-2 rounded-xl border border-white/10 py-3 text-sm font-medium hover:bg-white/5 transition"
+            >
+              {copied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
+              {copied ? 'Link copiado!' : 'Copiar link'}
+            </button>
+            <Link
+              href="/clone"
+              className="flex items-center justify-center gap-2 rounded-xl border border-white/10 py-3 text-sm font-medium hover:bg-white/5 transition"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Gerar variação (+{(state.duration ?? 5) === 5 ? 30 : 50} créditos)
+            </Link>
+            <button className="flex items-center justify-center gap-2 rounded-xl border border-red-500/20 py-3 text-sm font-medium text-red-400 hover:bg-red-500/5 transition">
+              <Trash2 className="h-4 w-4" />
+              Excluir vídeo
+            </button>
+          </div>
+
+          <div className="text-center">
+            <Link href="/library" className="text-sm text-[#FF6B00] hover:underline">
+              Ver todos os vídeos na biblioteca →
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Falhou */}
+      {status === 'failed' && (
+        <div className="space-y-4">
+          <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-6 text-center">
+            <p className="font-semibold text-red-400">A geração falhou</p>
+            <p className="mt-2 text-sm text-white/50">{error}</p>
+            <p className="mt-2 text-sm text-green-400">✓ Seus créditos foram estornados automaticamente</p>
+          </div>
+          <div className="flex justify-center">
+            <button
+              onClick={() => {
+                setStatus('generating_video')
+                setElapsed(0)
+                generateVideo()
+              }}
+              className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Tentar novamente
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
