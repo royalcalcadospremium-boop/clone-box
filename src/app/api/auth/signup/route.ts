@@ -2,6 +2,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { validateCPF } from '@/lib/utils/cpf'
+import { Resend } from 'resend'
 
 const schema = z.object({
   name: z.string().min(3).max(100),
@@ -58,14 +59,38 @@ export async function POST(request: Request) {
       .update({ cpf_cnpj: cpfDigits })
       .eq('id', data.user.id)
 
-    // Envia email de confirmação
-    await admin.auth.admin.generateLink({
+    // Gera link de confirmação e envia via Resend
+    const { data: linkData } = await admin.auth.admin.generateLink({
       type: 'signup',
       email,
+      password,
       options: {
         redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
       },
     })
+
+    if (linkData?.properties?.action_link) {
+      const resend = new Resend(process.env.RESEND_API_KEY)
+      await resend.emails.send({
+        from: 'CloneBox <onboarding@resend.dev>',
+        to: email,
+        subject: 'Confirme seu email — CloneBox',
+        html: `
+          <div style="font-family:sans-serif;max-width:480px;margin:0 auto;background:#121212;color:#fff;padding:32px;border-radius:16px;">
+            <h2 style="color:#1DB954;margin-bottom:8px;">Bem-vindo ao CloneBox!</h2>
+            <p style="color:#aaa;">Olá ${name}, sua conta foi criada com sucesso.</p>
+            <p style="color:#aaa;">Clique no botão abaixo para confirmar seu email e ativar seus <strong style="color:#1DB954;">20 créditos grátis</strong>:</p>
+            <a href="${linkData.properties.action_link}"
+               style="display:inline-block;background:#1DB954;color:#000;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:15px;margin-top:16px;">
+              Confirmar email e ativar créditos
+            </a>
+            <p style="margin-top:32px;color:#555;font-size:12px;">
+              Se você não criou uma conta no CloneBox, ignore este email.
+            </p>
+          </div>
+        `,
+      })
+    }
 
     return NextResponse.json({ success: true }, { status: 201 })
   } catch (error) {
