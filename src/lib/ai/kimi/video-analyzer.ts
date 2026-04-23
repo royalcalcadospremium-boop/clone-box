@@ -71,7 +71,10 @@ ${referenceVideoUrl ? `URL do vídeo de referência (para contexto de estilo): $
 Retorne APENAS o JSON, sem markdown, sem explicações.`
 
   // Constrói as mensagens com ou sem a imagem do produto
-  const userContent: OpenAI.Chat.Completions.ChatCompletionContentPart[] = []
+  type ContentPart =
+    | { type: 'image_url'; image_url: { url: string } }
+    | { type: 'text'; text: string }
+  const userContent: ContentPart[] = []
 
   if (productImageUrl) {
     try {

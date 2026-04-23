@@ -46,10 +46,11 @@ export async function submitFalVideoJob(params: FalVideoParams): Promise<string>
   if (params.imageUrl) input.image_url = params.imageUrl
   if (params.negativePrompt) input.negative_prompt = params.negativePrompt
 
-  // Cast to `never` to bypass strict endpoint ID typing
-  const queued = await fal.queue.submit(modelId as never, { input }) as InQueueQueueStatus
-  logger.info({ model: params.model, modelId, requestId: queued.request_id }, 'FAL video job submitted')
-  return queued.request_id
+  // Bypass strict typing — fal-ai client types are too restrictive for dynamic model IDs
+  const queued = await (fal.queue.submit as any)(modelId, { input })
+  const requestId = queued.request_id as string
+  logger.info({ model: params.model, modelId, requestId }, 'FAL video job submitted')
+  return requestId
 }
 
 export async function getFalVideoStatus(model: FalVideoModel, requestId: string): Promise<{
