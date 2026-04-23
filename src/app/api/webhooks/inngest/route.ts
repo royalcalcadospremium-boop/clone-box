@@ -4,6 +4,7 @@ import { analyzeReferenceVideo, analyzeReferenceVideoFailed } from '@/server/inn
 import { generateVideo, generateVideoFailed } from '@/server/inngest/generate-video'
 import { pollByteplusJob } from '@/server/inngest/poll-byteplus-job'
 import { resetMonthlyCredits } from '@/server/inngest/reset-monthly-credits'
+import { generateVideoFal } from '@/server/inngest/generate-video-fal'
 
 export const { GET, POST, PUT } = serve({
   client: inngest,
@@ -14,6 +15,7 @@ export const { GET, POST, PUT } = serve({
     generateVideoFailed,
     pollByteplusJob,
     resetMonthlyCredits,
+    generateVideoFal,
   ],
   signingKey: process.env.INNGEST_SIGNING_KEY,
 })

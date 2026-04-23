@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { rateLimit } from '@/lib/rate-limit'
 import { CREDIT_COSTS } from '@/lib/credits/pricing'
 import { chargeCredits } from '@/lib/credits/charge'
-import { analyzeVideoForCloning } from '@/lib/ai/anthropic/video-analyzer'
+import { analyzeVideoForCloning } from '@/lib/ai/kimi/video-analyzer'
 
 const schema = z.object({
   referenceVideoUrl: z.string().url(),
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
       description: 'Análise do vídeo de referência + geração de prompt',
     })
 
-    // Claude analisa a imagem do produto + contexto do vídeo de referência
+    // Kimi analisa a imagem do produto + contexto do vídeo de referência
     const result = await analyzeVideoForCloning({
       referenceVideoUrl: input.referenceVideoUrl,
       productImageUrl: input.productImageUrl,

@@ -1,4 +1,4 @@
-import { getAnthropicClient } from './client'
+import { getKimiClient } from './client'
 import { logger } from '@/lib/logger'
 
 export type VideoAnalysis = {
@@ -60,7 +60,7 @@ export async function analyzeVideoForCloning({
   duration: number
   language?: string
 }): Promise<VideoAnalysis> {
-  const client = getAnthropicClient()
+  const client = getKimiClient()
 
   const textContent = `Produto a ser promovido: ${productDescription}
 Estilo desejado: ${style}
@@ -70,52 +70,52 @@ ${referenceVideoUrl ? `URL do vídeo de referência (para contexto de estilo): $
 
 Retorne APENAS o JSON, sem markdown, sem explicações.`
 
-  // Constrói a mensagem com ou sem a imagem do produto
-  let userContent: Parameters<typeof client.messages.create>[0]['messages'][0]['content'] = textContent
+  // Constrói as mensagens com ou sem a imagem do produto
+  const userContent: OpenAI.Chat.Completions.ChatCompletionContentPart[] = []
 
   if (productImageUrl) {
     try {
-      // Baixa a imagem e converte para base64 (compatível com todas as versões do SDK)
       const imgRes = await fetch(productImageUrl, { signal: AbortSignal.timeout(15_000) })
       const imgBuffer = Buffer.from(await imgRes.arrayBuffer())
       const base64Data = imgBuffer.toString('base64')
       const rawMime = imgRes.headers.get('content-type') ?? 'image/jpeg'
-      const mediaType = (['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(rawMime)
+      const mediaType = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(rawMime)
         ? rawMime
-        : 'image/jpeg') as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
+        : 'image/jpeg'
 
-      userContent = [
-        {
-          type: 'image',
-          source: { type: 'base64', media_type: mediaType, data: base64Data },
-        },
-        { type: 'text', text: `Esta é a foto do produto. ${textContent}` },
-      ]
+      userContent.push({
+        type: 'image_url',
+        image_url: { url: `data:${mediaType};base64,${base64Data}` },
+      })
     } catch {
-      // Se não conseguir baixar a imagem, prossegue apenas com texto
       logger.warn({ productImageUrl }, 'Failed to fetch product image, proceeding without vision')
     }
   }
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+  userContent.push({ type: 'text', text: `Esta é a foto do produto. ${textContent}` })
+
+  const response = await client.chat.completions.create({
+    model: 'kimi-k2.5',
     max_tokens: 2048,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userContent }],
+    temperature: 0.7,
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: userContent },
+    ],
   })
 
-  const content = response.content[0]
-  if (content.type !== 'text') throw new Error('Resposta inesperada do Claude')
+  const content = response.choices[0]?.message?.content
+  if (!content) throw new Error('Resposta inesperada da Kimi API')
 
-  // Remove possível markdown code block se Claude ainda retornar
-  const cleaned = content.text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim()
+  // Remove possível markdown code block
+  const cleaned = content.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim()
 
   try {
     const parsed = JSON.parse(cleaned) as VideoAnalysis
-    logger.info({ model: 'claude-sonnet-4-6', usage: response.usage }, 'video analysis complete')
+    logger.info({ model: 'kimi-k2.5', usage: response.usage }, 'video analysis complete')
     return parsed
   } catch {
-    logger.error({ raw: content.text }, 'Failed to parse Claude JSON response')
-    throw new Error('Claude retornou JSON inválido')
+    logger.error({ raw: content }, 'Failed to parse Kimi JSON response')
+    throw new Error('Kimi retornou JSON inválido')
   }
 }

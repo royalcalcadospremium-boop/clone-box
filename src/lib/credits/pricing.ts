@@ -8,7 +8,7 @@ export const CREDIT_COSTS = {
   VIDEO_10S: 50,
   PACK_COMPLETE_5S: 40,       // título + imagem + vídeo 5s (desconto)
   CLONE_COMPLETE: 55,         // análise + prompt + vídeo 10s (custo real da clonagem)
-  PROMPT_GENERATION: 10,      // análise Claude + Whisper (passo 3)
+  PROMPT_GENERATION: 10,      // análise Kimi + Whisper (passo 3)
   VIDEO_GENERATION_5S: 30,    // apenas vídeo 5s (passo 4)
   VIDEO_GENERATION_10S: 40,   // apenas vídeo 10s (passo 4)
   VIDEO_VARIATION: 40,        // nova seed, mesmo prompt

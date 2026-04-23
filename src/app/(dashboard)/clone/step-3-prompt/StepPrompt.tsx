@@ -72,7 +72,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
         <div>
           <h2 className="text-lg font-bold">Passo 3 — Gerar Prompt com IA</h2>
           <p className="mt-1 text-sm text-white/50">
-            O Claude vai analisar o vídeo viral e gerar um prompt otimizado para o seu produto
+            A Kimi vai analisar o vídeo viral e gerar um prompt otimizado para o seu produto
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
             O que vai acontecer
           </h3>
           <ul className="space-y-2 text-sm text-white/60">
-            <li>✦ Claude extrai 12 frames do vídeo de referência</li>
+            <li>✦ Kimi extrai 12 frames do vídeo de referência</li>
             <li>✦ Transcreve o áudio com Whisper (fal.ai)</li>
             <li>✦ Analisa o pacing, arco narrativo e estilo de câmera</li>
             <li>✦ Gera um prompt em inglês otimizado para o Seedance</li>
@@ -119,7 +119,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
           <Loader2 className="h-10 w-10 text-[#FF6B00] animate-spin" />
           <div className="text-center">
             <p className="font-medium">Analisando vídeo de referência...</p>
-            <p className="text-sm text-white/40 mt-1">Claude está trabalhando. Aguarde ~15 segundos.</p>
+            <p className="text-sm text-white/40 mt-1">Kimi está trabalhando. Aguarde ~15 segundos.</p>
           </div>
         </div>
       )}
@@ -138,7 +138,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
           {/* Análise em linguagem natural */}
           <div className="rounded-xl border border-white/10 bg-white/3 p-4">
             <h3 className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">
-              Análise do Claude
+              Análise da Kimi
             </h3>
             <p className="text-sm text-white/70 leading-relaxed">{analysis}</p>
           </div>

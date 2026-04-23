@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 import { inngest } from './client'
 import { db } from '@/server/db'
 import { videos } from '@/server/db/schema'
-import { analyzeVideoForCloning } from '@/lib/ai/anthropic/video-analyzer'
+import { analyzeVideoForCloning } from '@/lib/ai/kimi/video-analyzer'
 import { refundCredits } from '@/lib/credits/refund'
 import { logger } from '@/lib/logger'
 import { CREDIT_COSTS } from '@/lib/credits/pricing'
@@ -32,7 +32,7 @@ export const analyzeReferenceVideo = inngest.createFunction(
 
     // TODO: Fase 3 — extrair frames com ffmpeg + transcrever com Whisper
     // Por ora, placeholder para integração futura
-    const analysis = await step.run('claude-analysis', async () => {
+    const analysis = await step.run('kimi-analysis', async () => {
       return analyzeVideoForCloning({
         transcription: '', // será preenchido pelo Whisper
         frameDescriptions: [], // será preenchido pelo ffmpeg

@@ -1,42 +1,107 @@
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, Play, Star, Zap } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Play, Star, Zap, Video, Image, Grid3x3, Sparkles, ChevronRight } from 'lucide-react'
+
+const AI_MODELS = [
+  { name: 'Seedance 2.0', type: 'Vídeo', icon: '🎬', color: '#7C3AED', desc: 'Áudio nativo + lip-sync' },
+  { name: 'Kling 1.6', type: 'Vídeo', icon: '🎥', color: '#3B82F6', desc: 'Ultra-fotorrealista' },
+  { name: 'WAN 2.1', type: 'Vídeo', icon: '⚡', color: '#06B6D4', desc: 'Geração veloz' },
+  { name: 'Flux Schnell', type: 'Imagem', icon: '✨', color: '#EC4899', desc: 'Imagem em 2 segundos' },
+  { name: 'Flux Dev', type: 'Imagem', icon: '🎨', color: '#A78BFA', desc: 'Qualidade máxima' },
+  { name: 'SDXL Turbo', type: 'Imagem', icon: '🖼️', color: '#F59E0B', desc: 'Versátil e rápido' },
+]
+
+const FEATURES = [
+  {
+    icon: Video,
+    title: 'Multi-Modelo de Vídeo',
+    description: 'Acesse Seedance 2.0, Kling 1.6 e WAN 2.1 em uma única plataforma. Escolha o modelo ideal para cada projeto.',
+    color: '#7C3AED',
+  },
+  {
+    icon: Image,
+    title: 'Geração de Imagem IA',
+    description: 'Flux Schnell, Flux Dev e SDXL. Imagens profissionais de produto em segundos para seus anúncios.',
+    color: '#EC4899',
+  },
+  {
+    icon: Sparkles,
+    title: 'Marketing Studio',
+    description: 'Crie UGC ads virais otimizados para TikTok Shop, Shopee e Mercado Livre com IA adaptada ao Brasil.',
+    color: '#10B981',
+  },
+  {
+    icon: Grid3x3,
+    title: '20+ Apps de IA',
+    description: 'Lipsync, face swap, remoção de fundo, upscale, transições e muito mais em um único lugar.',
+    color: '#F59E0B',
+  },
+]
+
+const STEPS = [
+  {
+    step: '01',
+    title: 'Cole o vídeo viral',
+    desc: 'Insira o link do TikTok ou faça upload do vídeo que quer clonar para seu produto.',
+    gradient: 'from-[#7C3AED] to-[#A78BFA]',
+  },
+  {
+    step: '02',
+    title: 'Configure o estilo',
+    desc: 'Escolha modelo de IA, duração, resolução e envie a foto do seu produto.',
+    gradient: 'from-[#A78BFA] to-[#EC4899]',
+  },
+  {
+    step: '03',
+    title: 'IA gera o prompt',
+    desc: 'Kimi Vision analisa o viral, extrai pacing e gera prompt cinematográfico otimizado.',
+    gradient: 'from-[#EC4899] to-[#F59E0B]',
+  },
+  {
+    step: '04',
+    title: 'Vídeo pronto em 2 min',
+    desc: 'O modelo de IA gera o vídeo com seu produto. Baixe em HD e publique imediatamente.',
+    gradient: 'from-[#F59E0B] to-[#10B981]',
+  },
+]
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white">
+    <div className="min-h-screen bg-[#080808] text-white">
+
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#0A0A0A]/80 backdrop-blur-md">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#080808]/80 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FF6B00]">
-                <Zap className="h-4 w-4 text-black" fill="black" />
+          <div className="flex h-14 items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg gradient-purple">
+                <Video className="h-3.5 w-3.5 text-white" />
               </div>
-              <span className="text-lg font-bold tracking-tight">CloneBox</span>
+              <span className="text-[15px] font-black tracking-tight">CloneBox</span>
             </div>
-            <div className="hidden items-center gap-8 md:flex">
-              <Link href="#como-funciona" className="text-sm text-white/60 transition hover:text-white">
-                Como funciona
-              </Link>
-              <Link href="#precos" className="text-sm text-white/60 transition hover:text-white">
-                Preços
-              </Link>
-              <Link href="#faq" className="text-sm text-white/60 transition hover:text-white">
-                FAQ
-              </Link>
+
+            <div className="hidden items-center gap-6 md:flex">
+              {[
+                { href: '#modelos', label: 'Modelos' },
+                { href: '#como-funciona', label: 'Como funciona' },
+                { href: '#precos', label: 'Preços' },
+                { href: '#faq', label: 'FAQ' },
+              ].map(item => (
+                <Link key={item.href} href={item.href} className="text-sm text-white/50 transition hover:text-white">
+                  {item.label}
+                </Link>
+              ))}
             </div>
+
             <div className="flex items-center gap-3">
-              <Link
-                href="/login"
-                className="text-sm text-white/60 transition hover:text-white"
-              >
+              <Link href="/login" className="text-sm text-white/50 transition hover:text-white">
                 Entrar
               </Link>
               <Link
                 href="/signup"
-                className="rounded-lg bg-[#FF6B00] px-4 py-2 text-sm font-semibold text-black transition hover:bg-[#FF8C00]"
+                className="flex items-center gap-1.5 rounded-lg gradient-purple px-4 py-2 text-sm font-bold text-white transition hover:opacity-90 glow-purple-sm"
               >
                 Começar grátis
+                <ChevronRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
@@ -45,107 +110,170 @@ export default function LandingPage() {
 
       {/* HERO */}
       <section className="relative overflow-hidden pt-32 pb-24">
-        {/* Glow de fundo */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[#FF6B00]/10 blur-3xl" />
-          <div className="absolute top-20 right-0 h-[400px] w-[400px] rounded-full bg-[#E61C1C]/5 blur-3xl" />
+        {/* Background glows */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[#7C3AED]/12 blur-[120px]" />
+          <div className="absolute top-32 right-0 h-[500px] w-[500px] rounded-full bg-[#EC4899]/8 blur-[100px]" />
+          <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-[#3B82F6]/6 blur-[80px]" />
         </div>
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.025]" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+          backgroundSize: '40px 40px',
+        }} />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FF6B00]/30 bg-[#FF6B00]/10 px-4 py-1.5 text-sm text-[#FF6B00]">
-            <Star className="h-3.5 w-3.5" fill="currentColor" />
-            <span>55 créditos por clonagem completa — sem creators, sem espera</span>
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#7C3AED]/30 bg-[#7C3AED]/10 px-4 py-1.5 text-sm">
+            <Star className="h-3.5 w-3.5 text-[#A78BFA]" fill="currentColor" />
+            <span className="text-[#A78BFA] font-medium">Plataforma multi-modelo de IA para criadores</span>
           </div>
 
           {/* Headline */}
-          <h1 className="mx-auto max-w-4xl text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl">
-            Clone vídeos virais do{' '}
-            <span className="bg-gradient-to-r from-[#FF6B00] to-[#E61C1C] bg-clip-text text-transparent">
-              TikTok
-            </span>{' '}
-            pro seu produto em{' '}
-            <span className="bg-gradient-to-r from-[#FF6B00] to-[#E61C1C] bg-clip-text text-transparent">
-              2 minutos
-            </span>
+          <h1 className="mx-auto max-w-5xl text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl leading-[1.1]">
+            Infraestrutura de IA para{' '}
+            <span className="gradient-text">Vídeo & Imagem</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/60 sm:text-xl">
-            Cole o link de um vídeo viral da concorrência, envie a foto do seu produto e receba um
-            vídeo UGC pronto pra publicar. Com voz realista em português, pacing idêntico ao viral.
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/50 sm:text-xl leading-relaxed">
+            Seedance 2.0, Kling 1.6, WAN 2.1, Flux — todos os melhores modelos de IA em uma plataforma.
+            Crie vídeos virais, imagens e conteúdo de marketing para e-commerce brasileiro.
           </p>
 
-          {/* CTA */}
+          {/* CTAs */}
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/signup"
-              className="group flex items-center gap-2 rounded-xl bg-[#FF6B00] px-8 py-4 text-base font-bold text-black transition hover:bg-[#FF8C00]"
+              className="group flex items-center gap-2 rounded-xl gradient-purple px-8 py-4 text-base font-bold text-white transition hover:opacity-90 glow-purple"
             >
-              Começar com 100 créditos grátis
+              Começar com 20 créditos grátis
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </Link>
-            <button className="flex items-center gap-2 text-sm text-white/60 transition hover:text-white">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                <Play className="h-4 w-4" fill="currentColor" />
+            <button className="flex items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-6 py-4 text-sm font-semibold text-white/70 transition hover:bg-white/[0.06] hover:text-white">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10">
+                <Play className="h-3 w-3 fill-white ml-0.5" />
               </div>
               Ver demonstração
             </button>
           </div>
 
-          {/* Social proof */}
-          <p className="mt-8 text-sm text-white/40">
-            Sem cartão de crédito · 7 dias para testar · Cancele quando quiser
+          <p className="mt-6 text-sm text-white/30">
+            Sem cartão de crédito · Acesso imediato · Cancele quando quiser
           </p>
+
+          {/* Model pills */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
+            {AI_MODELS.map(model => (
+              <div
+                key={model.name}
+                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold"
+                style={{ background: `${model.color}15`, color: model.color, border: `1px solid ${model.color}25` }}
+              >
+                <span>{model.icon}</span>
+                <span>{model.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MODELOS */}
+      <section id="modelos" className="py-20 border-t border-white/[0.06]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-black sm:text-4xl">
+              Os melhores modelos de IA{' '}
+              <span className="gradient-text">em um só lugar</span>
+            </h2>
+            <p className="mt-4 text-white/50 max-w-xl mx-auto">
+              Acesse todos os modelos líderes de vídeo e imagem sem precisar de múltiplas assinaturas.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {AI_MODELS.map(model => (
+              <div
+                key={model.name}
+                className="group relative rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-5 overflow-hidden hover:border-white/[0.12] transition-all"
+              >
+                <div
+                  className="absolute -top-6 -right-6 h-16 w-16 rounded-full opacity-10 blur-xl group-hover:opacity-20 transition-opacity"
+                  style={{ background: model.color }}
+                />
+                <div
+                  className="mb-3 h-10 w-10 flex items-center justify-center rounded-xl text-xl"
+                  style={{ background: `${model.color}15`, border: `1px solid ${model.color}25` }}
+                >
+                  {model.icon}
+                </div>
+                <span
+                  className="text-[10px] font-bold px-2 py-0.5 rounded-full mb-2 inline-block"
+                  style={{ background: `${model.color}20`, color: model.color }}
+                >
+                  {model.type}
+                </span>
+                <h3 className="font-bold text-base text-white">{model.name}</h3>
+                <p className="text-sm text-white/40 mt-1">{model.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="py-20 border-t border-white/[0.06]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-black sm:text-4xl">
+              Tudo que você precisa para criar
+            </h2>
+            <p className="mt-4 text-white/50">Uma plataforma. Todos os modelos. Infinitas possibilidades.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {FEATURES.map(({ icon: Icon, title, description, color }) => (
+              <div
+                key={title}
+                className="group relative rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-6 overflow-hidden hover:border-white/[0.12] transition-all"
+              >
+                <div
+                  className="absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-8 blur-2xl group-hover:opacity-15 transition-opacity"
+                  style={{ background: color }}
+                />
+                <div
+                  className="mb-4 h-12 w-12 flex items-center justify-center rounded-xl"
+                  style={{ background: `${color}15`, border: `1px solid ${color}25` }}
+                >
+                  <Icon className="h-6 w-6" style={{ color }} />
+                </div>
+                <h3 className="font-bold text-lg text-white mb-2">{title}</h3>
+                <p className="text-sm text-white/50 leading-relaxed">{description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* COMO FUNCIONA */}
-      <section id="como-funciona" className="py-24 border-t border-white/5">
+      <section id="como-funciona" className="py-20 border-t border-white/[0.06]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-3xl font-black sm:text-4xl">Como funciona</h2>
-            <p className="mt-4 text-white/60">4 passos. 2 minutos. Vídeo pronto.</p>
+            <p className="mt-4 text-white/50">4 passos. 2 minutos. Vídeo viral pronto.</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-4">
-            {[
-              {
-                step: '01',
-                title: 'Cole o vídeo viral',
-                desc: 'Coloque o link do TikTok ou faça upload do vídeo que quer clonar.',
-                color: 'from-[#FF6B00] to-[#FF8C00]',
-              },
-              {
-                step: '02',
-                title: 'Configure o vídeo',
-                desc: 'Escolha estilo, duração, resolução e envie a foto do seu produto.',
-                color: 'from-[#FF6B00] to-[#E61C1C]',
-              },
-              {
-                step: '03',
-                title: 'IA analisa e gera o prompt',
-                desc: 'Claude analisa o viral, extrai o pacing e gera um prompt otimizado.',
-                color: 'from-[#E61C1C] to-[#FF6B00]',
-              },
-              {
-                step: '04',
-                title: 'Vídeo pronto em 2 min',
-                desc: 'Seedance gera o vídeo com seu produto. Baixe e publique imediatamente.',
-                color: 'from-[#FF6B00] to-[#FF8C00]',
-              },
-            ].map((item) => (
-              <div
-                key={item.step}
-                className="rounded-2xl border border-white/5 bg-[#111111] p-6"
-              >
+          <div className="grid gap-4 md:grid-cols-4">
+            {STEPS.map((item) => (
+              <div key={item.step} className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-5">
                 <div
-                  className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${item.color} text-sm font-black text-black`}
+                  className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${item.gradient} text-sm font-black text-white`}
                 >
                   {item.step}
                 </div>
-                <h3 className="mb-2 font-bold">{item.title}</h3>
-                <p className="text-sm text-white/50">{item.desc}</p>
+                <h3 className="mb-2 font-bold text-white">{item.title}</h3>
+                <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -153,164 +281,113 @@ export default function LandingPage() {
       </section>
 
       {/* PREÇOS */}
-      <section id="precos" className="py-24 border-t border-white/5">
+      <section id="precos" className="py-20 border-t border-white/[0.06]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-black sm:text-4xl">Preços simples e transparentes</h2>
-            <p className="mt-4 text-white/60">
-              Comece grátis com 100 créditos. Sem cartão de crédito.
-            </p>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-black sm:text-4xl">Preços simples</h2>
+            <p className="mt-4 text-white/50">Comece grátis com 20 créditos. Sem cartão de crédito.</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {/* Starter */}
-            <div className="rounded-2xl border border-white/10 bg-[#111111] p-8">
-              <h3 className="text-lg font-bold">Starter</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-4xl font-black">R$ 47</span>
-                <span className="text-white/40">/mês</span>
-              </div>
-              <p className="mt-2 text-sm text-white/50">700 créditos mensais</p>
-              <ul className="mt-6 space-y-3">
-                {['~14 imagens com fundo branco', '~23 vídeos de 5s', '~12 clonagens completas'].map(
-                  (item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#FF6B00]" />
-                      <span className="text-white/70">{item}</span>
-                    </li>
-                  )
+          <div className="grid gap-4 md:grid-cols-3 max-w-5xl mx-auto">
+            {[
+              {
+                name: 'Starter',
+                price: 'R$ 47',
+                credits: '700 créditos/mês',
+                features: ['~23 vídeos de 5s', '~14 imagens Flux HD', '~12 clonagens completas'],
+                cta: 'Começar grátis',
+                highlight: false,
+              },
+              {
+                name: 'Growth',
+                price: 'R$ 97',
+                credits: '1.500 créditos/mês',
+                features: ['~50 vídeos de 5s', '~50 imagens Flux HD', '~27 clonagens completas', 'Templates ilimitados'],
+                cta: 'Mais popular',
+                highlight: true,
+              },
+              {
+                name: 'Pro',
+                price: 'R$ 197',
+                credits: '3.000 créditos/mês',
+                features: ['~100 vídeos de 5s', '100+ imagens HD', '~54 clonagens', 'Download sem marca d\'água', 'API access'],
+                cta: 'Começar grátis',
+                highlight: false,
+              },
+            ].map(plan => (
+              <div
+                key={plan.name}
+                className={`relative rounded-xl p-6 ${
+                  plan.highlight
+                    ? 'border border-[#7C3AED]/50 bg-[#7C3AED]/5'
+                    : 'border border-white/[0.06] bg-[#0F0F0F]'
+                }`}
+              >
+                {plan.highlight && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full gradient-purple px-4 py-1 text-xs font-bold text-white">
+                    MAIS POPULAR
+                  </div>
                 )}
-              </ul>
-              <Link
-                href="/signup"
-                className="mt-8 block rounded-xl border border-white/10 py-3 text-center text-sm font-semibold transition hover:border-[#FF6B00] hover:text-[#FF6B00]"
-              >
-                Começar grátis
-              </Link>
-            </div>
-
-            {/* Growth — destaque */}
-            <div className="relative rounded-2xl border border-[#FF6B00] bg-[#111111] p-8">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#FF6B00] px-4 py-1 text-xs font-bold text-black">
-                MAIS POPULAR
-              </div>
-              <h3 className="text-lg font-bold">Growth</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-4xl font-black">R$ 97</span>
-                <span className="text-white/40">/mês</span>
-              </div>
-              <p className="mt-2 text-sm text-white/50">1.500 créditos mensais</p>
-              <ul className="mt-6 space-y-3">
-                {['~30 vídeos de 5s', '~27 clonagens completas', 'Templates salvos ilimitados'].map(
-                  (item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#FF6B00]" />
-                      <span className="text-white/70">{item}</span>
+                <h3 className="text-lg font-bold">{plan.name}</h3>
+                <div className="mt-3 flex items-baseline gap-1">
+                  <span className="text-3xl font-black">{plan.price}</span>
+                  <span className="text-white/40 text-sm">/mês</span>
+                </div>
+                <p className="mt-1 text-sm text-white/40">{plan.credits}</p>
+                <ul className="mt-5 space-y-2.5">
+                  {plan.features.map(f => (
+                    <li key={f} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#A78BFA]" />
+                      <span className="text-white/70">{f}</span>
                     </li>
-                  )
-                )}
-              </ul>
-              <Link
-                href="/signup"
-                className="mt-8 block rounded-xl bg-[#FF6B00] py-3 text-center text-sm font-bold text-black transition hover:bg-[#FF8C00]"
-              >
-                Começar grátis
-              </Link>
-            </div>
-
-            {/* Pro */}
-            <div className="rounded-2xl border border-white/10 bg-[#111111] p-8">
-              <h3 className="text-lg font-bold">Pro</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="text-4xl font-black">R$ 197</span>
-                <span className="text-white/40">/mês</span>
-              </div>
-              <p className="mt-2 text-sm text-white/50">3.000 créditos mensais</p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  '~60 vídeos de 5s',
-                  '~54 clonagens completas',
-                  'Download sem marca d\'água',
-                  'Publicação direta TikTok Shop',
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#FF6B00]" />
-                    <span className="text-white/70">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/signup"
-                className="mt-8 block rounded-xl border border-white/10 py-3 text-center text-sm font-semibold transition hover:border-[#FF6B00] hover:text-[#FF6B00]"
-              >
-                Começar grátis
-              </Link>
-            </div>
-          </div>
-
-          {/* Custo por operação */}
-          <div className="mt-12 rounded-2xl border border-white/5 bg-[#111111] p-8">
-            <h3 className="mb-6 text-center font-bold">Custo por operação</h3>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                { op: 'Título + descrição + tags', creditos: 5 },
-                { op: 'Imagem fundo branco', creditos: 15 },
-                { op: 'Vídeo 5s TikTok', creditos: 30 },
-                { op: 'Vídeo 10s', creditos: 50 },
-                { op: 'Pack completo (título+imagem+vídeo 5s)', creditos: 40 },
-                { op: 'Clonagem completa', creditos: 55, highlight: true },
-              ].map((item) => (
-                <div
-                  key={item.op}
-                  className={`flex items-center justify-between rounded-xl p-4 ${
-                    item.highlight
-                      ? 'border border-[#FF6B00]/30 bg-[#FF6B00]/5'
-                      : 'bg-white/3'
+                  ))}
+                </ul>
+                <Link
+                  href="/signup"
+                  className={`mt-6 block rounded-xl py-3 text-center text-sm font-bold transition ${
+                    plan.highlight
+                      ? 'gradient-purple text-white hover:opacity-90'
+                      : 'border border-white/[0.08] text-white/70 hover:border-[#7C3AED]/40 hover:text-[#A78BFA]'
                   }`}
                 >
-                  <p className="text-sm font-medium">{item.op}</p>
-                  <span
-                    className={`text-sm font-bold whitespace-nowrap ${item.highlight ? 'text-[#FF6B00]' : 'text-white'}`}
-                  >
-                    {item.creditos} créditos
-                  </span>
-                </div>
-              ))}
-            </div>
+                  {plan.cta}
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-24 border-t border-white/5">
+      <section id="faq" className="py-20 border-t border-white/[0.06]">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-12 text-center text-3xl font-black">Perguntas frequentes</h2>
-          <div className="space-y-4">
+          <h2 className="mb-10 text-center text-3xl font-black">Perguntas frequentes</h2>
+          <div className="space-y-3">
             {[
               {
                 q: 'Os vídeos violam direitos autorais?',
-                a: 'O CloneBox clona o ESTILO do vídeo — o pacing, o arco narrativo, o tipo de shot — não o conteúdo original. Os vídeos gerados são 100% originais com seu produto, criados por IA.',
+                a: 'O CloneBox clona o ESTILO do vídeo — pacing, arco narrativo, tipos de shot — não o conteúdo. Os vídeos gerados são 100% originais com seu produto, criados por IA do zero.',
               },
               {
-                q: 'Quanto tempo leva para gerar um vídeo?',
-                a: 'Entre 60 e 120 segundos. Você pode continuar usando o dashboard enquanto o vídeo é gerado em segundo plano. Você recebe uma notificação quando ficar pronto.',
+                q: 'Quanto tempo leva para gerar?',
+                a: 'Entre 30 segundos e 3 minutos dependendo do modelo e duração. O Flux Schnell gera imagens em 2-4 segundos. Você recebe notificação quando ficar pronto.',
+              },
+              {
+                q: 'Posso usar qualquer modelo de IA?',
+                a: 'Sim. Seedance 2.0, Kling 1.6, WAN 2.1 para vídeo. Flux Schnell, Flux Dev e SDXL para imagem. Todos incluídos em todos os planos.',
               },
               {
                 q: 'Os créditos acumulam de um mês para o outro?',
                 a: 'Créditos mensais do plano NÃO acumulam — expiram no fim do ciclo. Pacotes avulsos de recarga acumulam por 12 meses.',
               },
               {
-                q: 'Posso cancelar quando quiser?',
-                a: 'Sim. Cancele a qualquer momento. O plano continua ativo até o fim do período pago. Sem multa, sem burocracia.',
+                q: 'E se o vídeo gerado falhar?',
+                a: 'Se houver erro técnico no servidor, os créditos são devolvidos automaticamente. Você pode gerar variações com seeds diferentes sem custo adicional.',
               },
-              {
-                q: 'E se eu não gostar do vídeo gerado?',
-                a: 'Você pode editar o prompt antes de gerar e tentar variações (mesma configuração, seed diferente). Se a API falhar por erro técnico, os créditos são devolvidos automaticamente.',
-              },
-            ].map((item) => (
-              <div key={item.q} className="rounded-xl border border-white/5 bg-[#111111] p-6">
-                <h3 className="font-semibold">{item.q}</h3>
-                <p className="mt-2 text-sm text-white/60">{item.a}</p>
+            ].map(({ q, a }) => (
+              <div key={q} className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-5">
+                <h3 className="font-semibold text-white">{q}</h3>
+                <p className="mt-2 text-sm text-white/50 leading-relaxed">{a}</p>
               </div>
             ))}
           </div>
@@ -318,39 +395,45 @@ export default function LandingPage() {
       </section>
 
       {/* CTA FINAL */}
-      <section className="py-24 border-t border-white/5">
+      <section className="py-24 border-t border-white/[0.06]">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-black sm:text-5xl">
-            Pronto para parar de pagar{' '}
-            <span className="text-[#E61C1C]">R$ 500</span> por vídeo?
-          </h2>
-          <p className="mt-6 text-lg text-white/60">
-            Comece grátis com 100 créditos. Sem cartão. Cancele quando quiser.
-          </p>
-          <Link
-            href="/signup"
-            className="mt-10 inline-flex items-center gap-2 rounded-xl bg-[#FF6B00] px-10 py-4 text-lg font-bold text-black transition hover:bg-[#FF8C00]"
-          >
-            Criar conta grátis
-            <ArrowRight className="h-5 w-5" />
-          </Link>
+          <div className="relative">
+            <div className="absolute inset-0 bg-[#7C3AED]/8 blur-3xl rounded-full" />
+            <div className="relative">
+              <h2 className="text-4xl font-black sm:text-5xl leading-tight">
+                Infraestrutura de IA para{' '}
+                <span className="gradient-text">criadores brasileiros</span>
+              </h2>
+              <p className="mt-6 text-lg text-white/50">
+                Crie vídeos virais, imagens profissionais e conteúdo de marketing com os melhores modelos de IA.
+              </p>
+              <Link
+                href="/signup"
+                className="mt-10 inline-flex items-center gap-2 rounded-xl gradient-purple px-10 py-4 text-base font-bold text-white transition hover:opacity-90 glow-purple"
+              >
+                Criar conta grátis
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+              <p className="mt-4 text-sm text-white/30">20 créditos grátis · Sem cartão · Acesso imediato</p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/5 py-8">
+      <footer className="border-t border-white/[0.06] py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded bg-[#FF6B00]">
-                <Zap className="h-3 w-3 text-black" fill="black" />
+              <div className="flex h-6 w-6 items-center justify-center rounded-md gradient-purple">
+                <Video className="h-3 w-3 text-white" />
               </div>
               <span className="text-sm font-bold">CloneBox</span>
             </div>
-            <p className="text-sm text-white/30">© 2026 CloneBox. Todos os direitos reservados.</p>
+            <p className="text-sm text-white/25">© 2026 CloneBox. Todos os direitos reservados.</p>
             <div className="flex gap-4 text-sm text-white/30">
-              <Link href="/privacidade" className="hover:text-white/60">Privacidade</Link>
-              <Link href="/termos" className="hover:text-white/60">Termos</Link>
+              <Link href="/privacidade" className="hover:text-white/60 transition">Privacidade</Link>
+              <Link href="/termos" className="hover:text-white/60 transition">Termos</Link>
             </div>
           </div>
         </div>

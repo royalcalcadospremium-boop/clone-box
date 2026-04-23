@@ -310,7 +310,7 @@ export const apiUsageLog = pgTable(
     userId: uuid('user_id').references(() => profiles.id),
     videoId: uuid('video_id').references(() => videos.id),
 
-    provider: text('provider').notNull(), // byteplus, anthropic, fal
+    provider: text('provider').notNull(), // byteplus, kimi, fal
     endpoint: text('endpoint').notNull(),
     model: text('model'),
 
