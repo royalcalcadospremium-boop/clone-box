@@ -95,13 +95,13 @@ export default function OnboardingPage() {
         <p className="mt-2 text-white/50 text-sm leading-relaxed">
           Em 4 perguntas rápidas vamos personalizar sua experiência.
           <br />
-          Você já ganhou <span className="text-[#FF6B00] font-bold">100 créditos grátis</span> para começar.
+          Você já ganhou <span className="text-[#FF6B00] font-bold">20 créditos grátis</span> para começar.
         </p>
       </div>
       <div className="rounded-xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 p-4 space-y-2">
         <div className="flex items-center gap-2 text-sm">
           <CheckCircle2 className="h-4 w-4 text-[#FF6B00]" />
-          <span>~14 clonagens grátis incluídas</span>
+          <span>2 análises de IA gratuitas incluídas</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           <CheckCircle2 className="h-4 w-4 text-[#FF6B00]" />

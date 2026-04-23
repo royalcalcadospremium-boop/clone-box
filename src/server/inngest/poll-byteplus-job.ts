@@ -5,7 +5,7 @@ import { videos } from '@/server/db/schema'
 import { getJobStatus } from '@/lib/ai/byteplus/seedance'
 import { refundCredits } from '@/lib/credits/refund'
 import { logger } from '@/lib/logger'
-import { CREDIT_COSTS } from '@/lib/credits/pricing'
+import { getVideoCost } from '@/lib/credits/pricing'
 
 const POLL_DELAYS_MS = [10_000, 20_000, 40_000, 60_000, 60_000] // total: ~3min
 
@@ -52,10 +52,12 @@ export const pollByteplusJob = inngest.createFunction(
       }
 
       if (job.status === 'failed') {
-        const isServerError = job.error?.code?.startsWith('5') ?? true
+        const [failedVideo] = await db.select({ duration: videos.duration }).from(videos).where(eq(videos.id, videoId))
+        const fullCost = getVideoCost(failedVideo?.duration ?? 5)
+        const isServerError = job.error?.code ? parseInt(job.error.code) >= 500 : true
         const refundAmount = isServerError
-          ? CREDIT_COSTS.VIDEO_GENERATION_10S
-          : Math.floor(CREDIT_COSTS.VIDEO_GENERATION_10S * 0.5) // 50% se prompt rejeitado (422)
+          ? fullCost
+          : Math.floor(fullCost * 0.5) // 50% se prompt rejeitado pelo modelo
 
         await step.run('refund-and-fail', async () => {
           await Promise.all([
@@ -84,8 +86,10 @@ export const pollByteplusJob = inngest.createFunction(
       attempt++
     }
 
-    // Timeout — estorna 100%
+    // Timeout — estorna 100% baseado na duração real
     await step.run('timeout-refund', async () => {
+      const [timedOutVideo] = await db.select({ duration: videos.duration }).from(videos).where(eq(videos.id, videoId))
+      const refundAmount = getVideoCost(timedOutVideo?.duration ?? 5)
       await Promise.all([
         db
           .update(videos)
@@ -93,7 +97,7 @@ export const pollByteplusJob = inngest.createFunction(
           .where(eq(videos.id, videoId)),
         refundCredits({
           userId,
-          amount: CREDIT_COSTS.VIDEO_GENERATION_10S,
+          amount: refundAmount,
           referenceId: videoId,
           referenceType: 'video',
           description: 'Estorno — timeout na geração do vídeo',

@@ -11,7 +11,7 @@ const schema = z.object({
   referenceVideoUrl: z.string().url(),
   productDescription: z.string().min(10).max(500),
   productImageUrl: z.string().url(),
-  style: z.string(),
+  style: z.string().min(1),
   duration: z.number().int().min(5).max(15),
   resolution: z.enum(['480p', '720p', '1080p']),
   aspectRatio: z.enum(['9:16', '16:9', '1:1']),
@@ -68,10 +68,10 @@ export async function POST(request: Request) {
       description: 'Análise do vídeo de referência + geração de prompt',
     })
 
-    // Chama Claude para análise
+    // Claude analisa a imagem do produto + contexto do vídeo de referência
     const result = await analyzeVideoForCloning({
-      transcription: '',
-      frameDescriptions: [`Vídeo de referência: ${input.referenceVideoUrl}`],
+      referenceVideoUrl: input.referenceVideoUrl,
+      productImageUrl: input.productImageUrl,
       productDescription: input.productDescription,
       style: input.style,
       duration: input.duration,
@@ -88,9 +88,10 @@ export async function POST(request: Request) {
       })
       .eq('id', video.id)
 
-    const analysisText = `Detectei um vídeo estilo ${input.style}, arco narrativo "${result.analysis.narrative_arc}", ` +
-      `${result.analysis.shot_types.length} tipos de shot (${result.analysis.shot_types.join(', ')}), ` +
-      `mood: ${result.analysis.mood}. Câmera: ${result.analysis.camera_style}.`
+    const analysisText =
+      `Estilo ${input.style} detectado — arco narrativo: "${result.analysis.narrative_arc}", ` +
+      `mood: ${result.analysis.mood}, câmera: ${result.analysis.camera_style}. ` +
+      `${result.analysis.shot_types.length} tipos de shot identificados.`
 
     return NextResponse.json({
       videoId: video.id,

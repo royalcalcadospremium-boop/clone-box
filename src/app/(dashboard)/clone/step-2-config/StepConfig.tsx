@@ -53,6 +53,7 @@ interface Props {
 export function StepConfig({ state, onUpdate, onNext }: Props) {
   const [productPreview, setProductPreview] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
 
   const selectedStyle = state.style ?? 'ugc-selfie'
   const selectedDuration = state.duration ?? 5
@@ -61,22 +62,30 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
   const selectedMusic = state.music ?? 'silent'
 
   const selectedCredits = DURATIONS.find((d) => d.value === selectedDuration)?.credits ?? 30
-  const totalCredits = 10 + selectedCredits // 10 análise + vídeo
+  const totalCredits = 10 + selectedCredits // 10 análise + créditos do vídeo
 
   const onDropProduct = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0]
     if (!file) return
     setUploading(true)
+    setUploadError('')
 
     try {
       const { createClient } = await import('@/lib/supabase/client')
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
-      const fileName = `${user!.id}/${Date.now()}-product.${file.name.split('.').pop()}`
-      await supabase.storage.from('product-images').upload(fileName, file)
+      if (!user) throw new Error('Não autenticado')
+
+      const ext = file.name.split('.').pop()
+      const fileName = `${user.id}/${Date.now()}-product.${ext}`
+      const { error: uploadErr } = await supabase.storage.from('product-images').upload(fileName, file)
+      if (uploadErr) throw new Error(uploadErr.message)
+
       const { data: { publicUrl } } = supabase.storage.from('product-images').getPublicUrl(fileName)
       setProductPreview(URL.createObjectURL(file))
       onUpdate({ productImageUrl: publicUrl })
+    } catch (err: unknown) {
+      setUploadError(err instanceof Error ? err.message : 'Erro ao fazer upload da imagem.')
     } finally {
       setUploading(false)
     }
@@ -231,7 +240,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
           <div className="relative w-32 h-32">
             <img src={productPreview} alt="produto" className="h-full w-full rounded-xl object-cover" />
             <button
-              onClick={() => { setProductPreview(null); onUpdate({ productImageUrl: undefined }) }}
+              onClick={() => { setProductPreview(null); setUploadError(''); onUpdate({ productImageUrl: undefined }) }}
               className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white text-xs"
             >✕</button>
           </div>
@@ -249,6 +258,12 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
               <p className="text-xs text-white/40">JPG, PNG, WebP · Máx 10MB</p>
             </div>
           </div>
+        )}
+        {uploadError && (
+          <p className="mt-2 text-xs text-red-400">{uploadError}</p>
+        )}
+        {uploading && !productPreview && (
+          <p className="mt-2 text-xs text-white/40">Fazendo upload...</p>
         )}
       </div>
 
@@ -270,13 +285,15 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
       </div>
 
       {/* Custo estimado */}
-      <div className="rounded-xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 px-4 py-3 flex items-center gap-2">
-        <Zap className="h-4 w-4 text-[#FF6B00]" />
-        <p className="text-sm">
-          Custo estimado desta clonagem:{' '}
-          <span className="font-bold text-[#FF6B00]">{totalCredits} créditos</span>
-          {' '}(R$ {((totalCredits * 0.048)).toFixed(2)})
-        </p>
+      <div className="rounded-xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 px-4 py-3 space-y-1">
+        <div className="flex items-center gap-2">
+          <Zap className="h-4 w-4 text-[#FF6B00] shrink-0" />
+          <p className="text-sm font-semibold text-[#FF6B00]">Custo total: {totalCredits} créditos</p>
+        </div>
+        <div className="pl-6 text-xs text-white/40 space-y-0.5">
+          <p>→ 10 créditos: análise IA (Passo 3)</p>
+          <p>→ {selectedCredits} créditos: geração do vídeo (Passo 4)</p>
+        </div>
       </div>
 
       {/* Avançar */}

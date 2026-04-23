@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { Plug, CheckCircle2, AlertCircle, Clock } from 'lucide-react'
+import { CheckCircle2, AlertCircle, Clock } from 'lucide-react'
+import { ConnectButton, ManageButtons } from './IntegrationButtons'
 
 const PLATFORMS = [
   {
@@ -124,25 +125,9 @@ export default async function IntegrationsPage() {
                     Em breve
                   </div>
                 ) : connected?.status === 'active' ? (
-                  <div className="flex gap-2">
-                    <button className="flex-1 rounded-xl border border-white/10 py-2 text-xs font-medium hover:border-white/20 transition">
-                      Reconectar
-                    </button>
-                    <button className="rounded-xl border border-red-500/20 px-3 py-2 text-xs text-red-400 hover:bg-red-500/5 transition">
-                      Desconectar
-                    </button>
-                  </div>
+                  <ManageButtons platformId={platform.id} />
                 ) : (
-                  <button
-                    className="w-full rounded-xl bg-[#FF6B00] py-2.5 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
-                    onClick={() => {
-                      // OAuth flow — implementado na Fase 6
-                      alert(`Integração com ${platform.name} disponível em breve!`)
-                    }}
-                  >
-                    <Plug className="inline h-4 w-4 mr-1.5" />
-                    Conectar {platform.name}
-                  </button>
+                  <ConnectButton platformId={platform.id} platformName={platform.name} />
                 )}
               </div>
             </div>
@@ -152,8 +137,8 @@ export default async function IntegrationsPage() {
 
       <div className="rounded-xl border border-white/5 bg-[#111111] p-5 text-sm text-white/40">
         <p>
-          <span className="text-white font-medium">Nota:</span> As integrações OAuth (TikTok, Shopee, Mercado Livre) estão sendo
-          implementadas na Fase 6. Por enquanto, use o botão "Baixar MP4" para salvar e publicar manualmente.
+          <span className="text-white font-medium">Nota:</span> As integrações OAuth estão sendo
+          implementadas na Fase 6. Por enquanto, use o botão &quot;Baixar MP4&quot; para salvar e publicar manualmente.
         </p>
       </div>
     </div>

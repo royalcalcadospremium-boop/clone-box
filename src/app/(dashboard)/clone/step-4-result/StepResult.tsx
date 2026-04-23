@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Loader2, Download, RefreshCw, Copy, Trash2, Check } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import type { CloneState } from '../page'
 
@@ -9,26 +10,23 @@ interface Props {
   state: CloneState
 }
 
-type VideoStatus =
-  | 'generating_video'
-  | 'polling'
-  | 'ready'
-  | 'failed'
+type VideoStatus = 'generating_video' | 'polling' | 'ready' | 'failed'
 
 export function StepResult({ state }: Props) {
+  const router = useRouter()
   const [status, setStatus] = useState<VideoStatus>('generating_video')
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
   const [elapsed, setElapsed] = useState(0)
+  const [deleting, setDeleting] = useState(false)
 
-  // Inicia a geração do vídeo
   useEffect(() => {
     if (!state.videoId || !state.promptFinal) return
     generateVideo()
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.videoId])
 
-  // Timer de progresso
   useEffect(() => {
     if (status === 'ready' || status === 'failed') return
     const interval = setInterval(() => setElapsed((e) => e + 1), 1000)
@@ -82,7 +80,7 @@ export function StepResult({ state }: Props) {
           setStatus('failed')
           setError(data.errorMessage ?? 'A geração falhou. Créditos foram estornados.')
         } else if (attempts < maxAttempts) {
-          setTimeout(poll, 10000) // poll a cada 10s
+          setTimeout(poll, 10000)
         } else {
           setStatus('failed')
           setError('Timeout: a geração demorou mais do que o esperado.')
@@ -92,7 +90,7 @@ export function StepResult({ state }: Props) {
       }
     }
 
-    setTimeout(poll, 10000)
+    setTimeout(poll, 5000) // primeira poll em 5s
   }
 
   function copyLink() {
@@ -100,6 +98,23 @@ export function StepResult({ state }: Props) {
       navigator.clipboard.writeText(videoUrl)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+    }
+  }
+
+  async function handleDelete() {
+    if (!state.videoId) return
+    if (!confirm('Excluir este vídeo? Esta ação não pode ser desfeita.')) return
+
+    setDeleting(true)
+    try {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      await supabase.from('videos').delete().eq('id', state.videoId)
+      router.push('/library')
+    } catch {
+      alert('Erro ao excluir vídeo. Tente novamente.')
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -114,7 +129,6 @@ export function StepResult({ state }: Props) {
         </p>
       </div>
 
-      {/* Gerando */}
       {(status === 'generating_video' || status === 'polling') && (
         <div className="space-y-6">
           <div className="flex flex-col items-center gap-4 py-8">
@@ -136,7 +150,6 @@ export function StepResult({ state }: Props) {
             </div>
           </div>
 
-          {/* Barra de progresso */}
           <div className="space-y-1">
             <div className="flex justify-between text-xs text-white/40">
               <span>Progresso estimado</span>
@@ -156,15 +169,12 @@ export function StepResult({ state }: Props) {
         </div>
       )}
 
-      {/* Pronto */}
       {status === 'ready' && videoUrl && (
         <div className="space-y-6">
-          {/* Player */}
           <div className="rounded-xl overflow-hidden bg-black flex justify-center">
             <video src={videoUrl} controls className="max-h-[480px] w-full object-contain" />
           </div>
 
-          {/* Ações */}
           <div className="grid gap-2 sm:grid-cols-2">
             <a
               href={videoUrl}
@@ -186,11 +196,15 @@ export function StepResult({ state }: Props) {
               className="flex items-center justify-center gap-2 rounded-xl border border-white/10 py-3 text-sm font-medium hover:bg-white/5 transition"
             >
               <RefreshCw className="h-4 w-4" />
-              Gerar variação (+{(state.duration ?? 5) === 5 ? 30 : 50} créditos)
+              Gerar variação (+{(state.duration ?? 5) <= 5 ? 30 : 50} créditos)
             </Link>
-            <button className="flex items-center justify-center gap-2 rounded-xl border border-red-500/20 py-3 text-sm font-medium text-red-400 hover:bg-red-500/5 transition">
-              <Trash2 className="h-4 w-4" />
-              Excluir vídeo
+            <button
+              onClick={handleDelete}
+              disabled={deleting}
+              className="flex items-center justify-center gap-2 rounded-xl border border-red-500/20 py-3 text-sm font-medium text-red-400 hover:bg-red-500/5 transition disabled:opacity-50"
+            >
+              {deleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+              {deleting ? 'Excluindo...' : 'Excluir vídeo'}
             </button>
           </div>
 
@@ -202,7 +216,6 @@ export function StepResult({ state }: Props) {
         </div>
       )}
 
-      {/* Falhou */}
       {status === 'failed' && (
         <div className="space-y-4">
           <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-6 text-center">

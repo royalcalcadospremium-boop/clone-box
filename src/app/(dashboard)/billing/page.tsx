@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { CheckCircle2, Zap, CreditCard, Package } from 'lucide-react'
+import { PlanButton, TopupButton } from './BillingActions'
 
 const PLANS = [
   {
@@ -140,18 +141,13 @@ export default async function BillingPage() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  disabled={isCurrent}
-                  className={`mt-6 w-full rounded-xl py-3 text-sm font-bold transition ${
-                    isCurrent
-                      ? 'border border-green-500/30 text-green-400 cursor-default'
-                      : plan.popular
-                      ? 'bg-[#FF6B00] text-black hover:bg-[#FF8C00]'
-                      : 'border border-white/10 hover:border-[#FF6B00] hover:text-[#FF6B00]'
-                  }`}
-                >
-                  {isCurrent ? 'Plano atual' : `Assinar por R$ ${plan.price}/mês`}
-                </button>
+                <PlanButton
+                  planId={plan.id}
+                  planName={plan.name}
+                  price={plan.price}
+                  isCurrent={isCurrent}
+                  isPopular={!!plan.popular}
+                />
               </div>
             )
           })}
@@ -177,9 +173,7 @@ export default async function BillingPage() {
                 {savings > 0 && (
                   <p className="text-xs text-green-400 mt-0.5">Economia de {savings}%</p>
                 )}
-                <button className="mt-3 w-full rounded-lg border border-white/10 py-2 text-xs font-medium hover:border-[#FF6B00] hover:text-[#FF6B00] transition">
-                  Comprar
-                </button>
+                <TopupButton topupId={topup.id} price={topup.price} credits={topup.credits} />
               </div>
             )
           })}
@@ -209,7 +203,7 @@ export default async function BillingPage() {
                     }`}>
                       {tx.amount > 0 ? '+' : ''}{tx.amount}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono text-white/50">{tx.balance_after}</td>
+                    <td className="px-4 py-3 text-right font-mono text-white/50">{tx.balance_after ?? '—'}</td>
                     <td className="px-4 py-3 text-right text-white/30 text-xs">
                       {new Date(tx.created_at).toLocaleDateString('pt-BR')}
                     </td>

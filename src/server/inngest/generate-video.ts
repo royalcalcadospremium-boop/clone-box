@@ -5,7 +5,7 @@ import { videos } from '@/server/db/schema'
 import { submitVideoJob } from '@/lib/ai/byteplus/seedance'
 import { refundCredits } from '@/lib/credits/refund'
 import { logger } from '@/lib/logger'
-import { CREDIT_COSTS } from '@/lib/credits/pricing'
+import { getVideoCost } from '@/lib/credits/pricing'
 import type { SeedanceSubmitParams } from '@/lib/ai/byteplus/types'
 
 export const generateVideo = inngest.createFunction(
@@ -76,6 +76,8 @@ export const generateVideoFailed = inngest.createFunction(
     const { videoId, userId } = originalEvent.data as { videoId: string; userId: string }
 
     await step.run('refund-and-fail', async () => {
+      const [failedVideo] = await db.select({ duration: videos.duration }).from(videos).where(eq(videos.id, videoId))
+      const refundAmount = getVideoCost(failedVideo?.duration ?? 5)
       await Promise.all([
         db
           .update(videos)
@@ -87,7 +89,7 @@ export const generateVideoFailed = inngest.createFunction(
           .where(eq(videos.id, videoId)),
         refundCredits({
           userId,
-          amount: CREDIT_COSTS.VIDEO_GENERATION_10S,
+          amount: refundAmount,
           referenceId: videoId,
           referenceType: 'video',
           description: 'Estorno — falha ao enviar job de geração de vídeo',
