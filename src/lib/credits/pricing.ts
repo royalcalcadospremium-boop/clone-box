@@ -29,7 +29,7 @@ export const TOPUP_PACKAGES = {
   enterprise: { credits: 12000, priceCents: 79700, validityDays: 365 },
 } as const
 
-export const TRIAL_CREDITS = 100
+export const TRIAL_CREDITS = 20
 export const REFERRAL_REFERRER_BONUS = 100
 export const REFERRAL_REFERRED_BONUS = 50
 export const TRIAL_DAYS = 7
