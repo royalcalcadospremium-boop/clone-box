@@ -4,36 +4,36 @@
 
 @layer base {
   :root {
-    /* CloneBox: fundo preto profundo, textos claros */
-    --background: 0 0% 4%;         /* #0A0A0A */
-    --foreground: 0 0% 98%;        /* #FAFAFA */
+    /* CloneBox — Spotify-Inspired Design System */
+    --background: 0 0% 7%;           /* #121212 Spotify dark */
+    --foreground: 0 0% 100%;         /* #FFFFFF */
 
-    --card: 0 0% 7%;               /* #111111 */
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 9%;                 /* #181818 Spotify card */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 11%;             /* #1C1C1C */
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 25 100% 50%;        /* #FF6B00 laranja neon */
-    --primary-foreground: 0 0% 4%;
+    --primary: 141 69% 42%;          /* #1DB954 Spotify green */
+    --primary-foreground: 0 0% 0%;   /* black text on green */
 
-    --secondary: 0 0% 10%;         /* #1A1A1A */
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 16%;           /* #282828 elevated surface */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 16%;             /* #2A2A2A */
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 24%;               /* #3E3E3E */
+    --muted-foreground: 0 0% 70%;    /* #B3B3B3 subdued */
 
-    --accent: 0 80% 50%;           /* #E61C1C vermelho */
-    --accent-foreground: 0 0% 98%;
+    --accent: 141 69% 42%;           /* #1DB954 */
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 352 86% 52%;      /* #E91429 Spotify red */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 14%;
-    --input: 0 0% 14%;
-    --ring: 25 100% 50%;           /* laranja neon no foco */
+    --border: 0 0% 24%;              /* #3E3E3E */
+    --input: 0 0% 24%;
+    --ring: 141 69% 42%;             /* green focus ring */
 
-    --radius: 0.625rem;
+    --radius: 0.5rem;
   }
 }
 
@@ -47,18 +47,33 @@
   }
 }
 
-/* Scrollbar personalizada pro tema dark */
+/* Scrollbar — Spotify style */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #111111;
+  background: #121212;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A2A2A;
+  background: #3E3E3E;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF6B00;
+  background: #1DB954;
+}
+
+/* Spotify green glow utility */
+.glow-green {
+  box-shadow: 0 0 20px rgba(29, 185, 84, 0.3);
+}
+
+/* Pill button utility */
+.btn-pill {
+  border-radius: 500px;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.btn-pill:hover {
+  transform: scale(1.04);
 }
