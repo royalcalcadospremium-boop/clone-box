@@ -282,7 +282,16 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
       {/* Avançar */}
       <div className="flex justify-end">
         <button
-          onClick={onNext}
+          onClick={() => {
+            onUpdate({
+              style: selectedStyle,
+              duration: selectedDuration,
+              resolution: selectedResolution,
+              aspectRatio: selectedAspectRatio,
+              music: selectedMusic,
+            })
+            onNext()
+          }}
           disabled={!canAdvance}
           className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black disabled:opacity-30 hover:bg-[#FF8C00] transition"
         >
