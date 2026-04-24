@@ -126,7 +126,7 @@ export function WooConnectButton() {
                   placeholder="https://minhaloja.com.br"
                   value={form.storeUrl}
                   onChange={e => setForm(f => ({ ...f, storeUrl: e.target.value }))}
-                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#7C3AED] outline-none transition"
+                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#ffff00] outline-none transition"
                 />
               </div>
               <div>
@@ -137,7 +137,7 @@ export function WooConnectButton() {
                   placeholder="ck_..."
                   value={form.consumerKey}
                   onChange={e => setForm(f => ({ ...f, consumerKey: e.target.value }))}
-                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#7C3AED] outline-none transition"
+                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#ffff00] outline-none transition"
                 />
               </div>
               <div>
@@ -148,7 +148,7 @@ export function WooConnectButton() {
                   placeholder="cs_..."
                   value={form.consumerSecret}
                   onChange={e => setForm(f => ({ ...f, consumerSecret: e.target.value }))}
-                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#7C3AED] outline-none transition"
+                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#ffff00] outline-none transition"
                 />
               </div>
 

@@ -84,20 +84,20 @@ export function Sidebar({ profile }: SidebarProps) {
                     href={item.href}
                     className={`group relative flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-all duration-150 ${
                       active
-                        ? 'bg-[#7C3AED]/15 text-foreground'
+                        ? 'bg-[#ffff00]/15 text-foreground'
                         : 'text-foreground/45 hover:bg-accent/5 hover:text-foreground/80'
                     }`}
                   >
                     {active && (
-                      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full bg-[#7C3AED]" />
+                      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full bg-[#ffff00]" />
                     )}
-                    <Icon className={`h-4 w-4 shrink-0 ${active ? 'text-[#A78BFA]' : ''}`} />
+                    <Icon className={`h-4 w-4 shrink-0 ${active ? 'text-[#ffff56]' : ''}`} />
                     <span className="font-medium text-[13px]">{item.label}</span>
                     {item.badge && (
                       <span className={`ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
                         item.badge === 'HOT'
                           ? 'bg-[#EC4899]/20 text-[#EC4899]'
-                          : 'bg-[#7C3AED]/20 text-[#A78BFA]'
+                          : 'bg-[#ffff00]/20 text-[#ffff56]'
                       }`}>
                         {item.badge}
                       </span>
@@ -114,13 +114,13 @@ export function Sidebar({ profile }: SidebarProps) {
       </nav>
 
       {/* Credits card */}
-      <div className="mx-2 mb-2 rounded-xl border border-[#7C3AED]/20 bg-primary/5 p-3">
+      <div className="mx-2 mb-2 rounded-xl border border-[#ffff00]/20 bg-primary/5 p-3">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-1.5">
-            <Star className="h-3 w-3 text-[#A78BFA]" />
+            <Star className="h-3 w-3 text-[#ffff56]" />
             <span className="text-[11px] font-medium text-muted-foreground">Créditos</span>
           </div>
-          <span className="text-[13px] font-black text-[#A78BFA]">{totalCredits.toLocaleString('pt-BR')}</span>
+          <span className="text-[13px] font-black text-[#ffff56]">{totalCredits.toLocaleString('pt-BR')}</span>
         </div>
         <div className="h-1 rounded-full bg-border overflow-hidden">
           <div
@@ -130,7 +130,7 @@ export function Sidebar({ profile }: SidebarProps) {
         </div>
         <Link
           href="/billing"
-          className="mt-2 flex items-center justify-center gap-1 text-[11px] font-semibold text-[#A78BFA] hover:text-white transition-colors"
+          className="mt-2 flex items-center justify-center gap-1 text-[11px] font-semibold text-[#ffff56] hover:text-white transition-colors"
         >
           Comprar créditos
         </Link>

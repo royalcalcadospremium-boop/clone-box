@@ -68,16 +68,16 @@ export default function SignupPage() {
       <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <div className="w-full max-w-md text-center">
           <div className="mb-6 flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#1DB954]/10">
-              <CheckCircle2 className="h-8 w-8 text-[#1DB954]" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10">
+              <CheckCircle2 className="h-8 w-8 text-[#ffff00]" />
             </div>
           </div>
           <h1 className="text-2xl font-bold text-foreground">Confirme seu email</h1>
           <p className="mt-3 text-muted-foreground">
             Enviamos um link de confirmação para o seu email. Clique nele para ativar sua conta e
-            receber seus <span className="text-[#1DB954] font-semibold">20 créditos grátis</span>.
+            receber seus <span className="text-[#ffff00] font-semibold">20 créditos grátis</span>.
           </p>
-          <Link href="/login" className="mt-8 inline-block text-sm text-[#1DB954] hover:underline">
+          <Link href="/login" className="mt-8 inline-block text-sm text-[#ffff00] hover:underline">
             Voltar para o login
           </Link>
         </div>
@@ -90,14 +90,14 @@ export default function SignupPage() {
       <div className="w-full max-w-md">
         <div className="mb-8 flex flex-col items-center">
           <Link href="/" className="flex items-center gap-2 mb-6">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1DB954]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#ffff00]">
               <Zap className="h-5 w-5 text-black" fill="black" />
             </div>
             <span className="text-xl font-black">Ninja Box</span>
           </Link>
           <h1 className="text-2xl font-bold text-foreground">Criar conta grátis</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Ganhe <span className="text-[#1DB954]">20 créditos grátis</span> para começar
+            Ganhe <span className="text-[#ffff00]">20 créditos grátis</span> para começar
           </p>
         </div>
 
@@ -128,7 +128,7 @@ export default function SignupPage() {
               </label>
               <input
                 id="name" name="name" type="text" required placeholder="Fellipe Silva"
-                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#ffff00] focus:ring-1 focus:ring-[#ffff00]"
               />
             </div>
 
@@ -144,7 +144,7 @@ export default function SignupPage() {
                 className={`w-full rounded-xl border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:ring-1 ${
                   cpfError
                     ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                    : 'border-border focus:border-[#1DB954] focus:ring-[#1DB954]'
+                    : 'border-border focus:border-[#ffff00] focus:ring-[#ffff00]'
                 }`}
               />
               {cpfError && <p className="mt-1 text-xs text-red-400">{cpfError}</p>}
@@ -157,7 +157,7 @@ export default function SignupPage() {
               </label>
               <input
                 id="email" name="email" type="email" required placeholder="seu@email.com"
-                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#ffff00] focus:ring-1 focus:ring-[#ffff00]"
               />
             </div>
 
@@ -170,7 +170,7 @@ export default function SignupPage() {
                   id="password" name="password"
                   type={showPassword ? 'text' : 'password'}
                   required minLength={8} placeholder="Mínimo 8 caracteres"
-                  className="w-full rounded-xl border border-border bg-muted px-4 py-3 pr-10 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
+                  className="w-full rounded-xl border border-border bg-muted px-4 py-3 pr-10 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#ffff00] focus:ring-1 focus:ring-[#ffff00]"
                 />
                 <button
                   type="button"
@@ -190,7 +190,7 @@ export default function SignupPage() {
 
             <button
               type="submit" disabled={loading || !!cpfError}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#1DB954] py-3 text-sm font-bold text-black transition hover:bg-[#1ED760] disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#ffff00] py-3 text-sm font-bold text-black transition hover:bg-[#ffff56] disabled:opacity-50"
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading ? 'Criando conta...' : 'Criar conta e ganhar 20 créditos'}
@@ -207,7 +207,7 @@ export default function SignupPage() {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Já tem conta?{' '}
-          <Link href="/login" className="text-[#1DB954] hover:underline">Entrar</Link>
+          <Link href="/login" className="text-[#ffff00] hover:underline">Entrar</Link>
         </p>
       </div>
     </div>

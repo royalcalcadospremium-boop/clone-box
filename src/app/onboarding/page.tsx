@@ -94,8 +94,8 @@ export default function OnboardingPage() {
     // Passo 0 — Boas-vindas
     <div key="welcome" className="space-y-6">
       <div className="flex justify-center">
-        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#FF6B00]/10">
-          <Zap className="h-10 w-10 text-[#FF6B00]" fill="#FF6B00" />
+        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#ffff00]/10">
+          <Zap className="h-10 w-10 text-[#ffff00]" fill="#ffff00" />
         </div>
       </div>
       <div className="text-center">
@@ -103,20 +103,20 @@ export default function OnboardingPage() {
         <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
           Em 4 perguntas rápidas vamos personalizar sua experiência.
           <br />
-          Você já ganhou <span className="text-[#FF6B00] font-bold">20 créditos grátis</span> para começar.
+          Você já ganhou <span className="text-[#ffff00] font-bold">20 créditos grátis</span> para começar.
         </p>
       </div>
-      <div className="rounded-xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 p-4 space-y-2">
+      <div className="rounded-xl border border-[#ffff00]/20 bg-[#ffff00]/5 p-4 space-y-2">
         <div className="flex items-center gap-2 text-sm">
-          <CheckCircle2 className="h-4 w-4 text-[#FF6B00]" />
+          <CheckCircle2 className="h-4 w-4 text-[#ffff00]" />
           <span>2 análises de IA gratuitas incluídas</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <CheckCircle2 className="h-4 w-4 text-[#FF6B00]" />
+          <CheckCircle2 className="h-4 w-4 text-[#ffff00]" />
           <span>Sem cartão de crédito necessário</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <CheckCircle2 className="h-4 w-4 text-[#FF6B00]" />
+          <CheckCircle2 className="h-4 w-4 text-[#ffff00]" />
           <span>Primeiro vídeo pronto em 2 minutos</span>
         </div>
       </div>
@@ -126,7 +126,7 @@ export default function OnboardingPage() {
     <div key="platforms" className="space-y-5">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <ShoppingBag className="h-5 w-5 text-[#FF6B00]" />
+          <ShoppingBag className="h-5 w-5 text-[#ffff00]" />
           <h2 className="text-lg font-bold">Onde você vende?</h2>
         </div>
         <p className="text-sm text-muted-foreground">Selecione todas que se aplicam</p>
@@ -138,7 +138,7 @@ export default function OnboardingPage() {
             onClick={() => toggle('platforms', p.id)}
             className={`rounded-xl border px-4 py-3 text-sm font-medium text-left transition ${
               data.platforms.includes(p.id)
-                ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
+                ? 'border-[#ffff00] bg-[#ffff00]/10 text-[#ffff00]'
                 : 'border-border hover:border-foreground/20'
             }`}
           >
@@ -153,7 +153,7 @@ export default function OnboardingPage() {
     <div key="volume" className="space-y-5">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <Video className="h-5 w-5 text-[#FF6B00]" />
+          <Video className="h-5 w-5 text-[#ffff00]" />
           <h2 className="text-lg font-bold">Quantos vídeos você posta?</h2>
         </div>
         <p className="text-sm text-muted-foreground">Média semanal nas redes sociais</p>
@@ -165,14 +165,14 @@ export default function OnboardingPage() {
             onClick={() => setData((prev) => ({ ...prev, videoVolume: v.id }))}
             className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition ${
               data.videoVolume === v.id
-                ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
+                ? 'border-[#ffff00] bg-[#ffff00]/10 text-[#ffff00]'
                 : 'border-border hover:border-foreground/20'
             }`}
           >
             <div className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-              data.videoVolume === v.id ? 'border-[#FF6B00]' : 'border-muted-foreground/30'
+              data.videoVolume === v.id ? 'border-[#ffff00]' : 'border-muted-foreground/30'
             }`}>
-              {data.videoVolume === v.id && <div className="h-2 w-2 rounded-full bg-[#FF6B00]" />}
+              {data.videoVolume === v.id && <div className="h-2 w-2 rounded-full bg-[#ffff00]" />}
             </div>
             {v.label}
           </button>
@@ -184,7 +184,7 @@ export default function OnboardingPage() {
     <div key="pain" className="space-y-5">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <TrendingUp className="h-5 w-5 text-[#FF6B00]" />
+          <TrendingUp className="h-5 w-5 text-[#ffff00]" />
           <h2 className="text-lg font-bold">Qual sua maior dor com vídeos?</h2>
         </div>
         <p className="text-sm text-muted-foreground">Selecione todas que se aplicam</p>
@@ -196,12 +196,12 @@ export default function OnboardingPage() {
             onClick={() => toggle('painPoints', p.id)}
             className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium text-left transition ${
               data.painPoints.includes(p.id)
-                ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
+                ? 'border-[#ffff00] bg-[#ffff00]/10 text-[#ffff00]'
                 : 'border-border hover:border-foreground/20'
             }`}
           >
             <div className={`h-4 w-4 shrink-0 rounded border-2 flex items-center justify-center ${
-              data.painPoints.includes(p.id) ? 'border-[#FF6B00] bg-[#FF6B00]' : 'border-muted-foreground/30'
+              data.painPoints.includes(p.id) ? 'border-[#ffff00] bg-[#ffff00]' : 'border-muted-foreground/30'
             }`}>
               {data.painPoints.includes(p.id) && (
                 <svg className="h-2.5 w-2.5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -222,7 +222,7 @@ export default function OnboardingPage() {
           value={data.companyName}
           onChange={(e) => setData((prev) => ({ ...prev, companyName: e.target.value }))}
           placeholder="Royal Calçados"
-          className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none focus:border-[#FF6B00]"
+          className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none focus:border-[#ffff00]"
         />
       </div>
     </div>,
@@ -245,7 +245,7 @@ export default function OnboardingPage() {
               <div
                 key={i}
                 className={`h-1 flex-1 rounded-full transition-all ${
-                  i <= step ? 'bg-[#FF6B00]' : 'bg-muted'
+                  i <= step ? 'bg-[#ffff00]' : 'bg-muted'
                 }`}
               />
             ))}
@@ -282,7 +282,7 @@ export default function OnboardingPage() {
               <button
                 onClick={finish}
                 disabled={!canAdvance || loading}
-                className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black disabled:opacity-40 hover:bg-[#FF8C00] transition"
+                className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-6 py-3 text-sm font-bold text-black disabled:opacity-40 hover:bg-[#ffff56] transition"
               >
                 {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {loading ? 'Salvando...' : 'Ir para o dashboard'}
@@ -291,7 +291,7 @@ export default function OnboardingPage() {
               <button
                 onClick={() => setStep((s) => s + 1)}
                 disabled={!canAdvance}
-                className="rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black disabled:opacity-40 hover:bg-[#FF8C00] transition"
+                className="rounded-xl bg-[#ffff00] px-6 py-3 text-sm font-bold text-black disabled:opacity-40 hover:bg-[#ffff56] transition"
               >
                 {step === 0 ? 'Começar' : 'Próximo'}
               </button>

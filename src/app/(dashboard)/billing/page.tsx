@@ -70,12 +70,12 @@ export default async function BillingPage() {
 
       {/* Saldo atual */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 p-6">
+        <div className="rounded-2xl border border-[#ffff00]/20 bg-[#ffff00]/5 p-6">
           <div className="flex items-center gap-2 text-sm text-white/50 mb-2">
-            <Zap className="h-4 w-4 text-[#FF6B00]" />
+            <Zap className="h-4 w-4 text-[#ffff00]" />
             Créditos disponíveis
           </div>
-          <div className="text-4xl font-black text-[#FF6B00]">{totalCredits}</div>
+          <div className="text-4xl font-black text-[#ffff00]">{totalCredits}</div>
           {profile?.credits_reset_date && (
             <p className="mt-1 text-xs text-white/30">
               Renova em {new Date(profile.credits_reset_date).toLocaleDateString('pt-BR')}
@@ -111,14 +111,14 @@ export default async function BillingPage() {
                 key={plan.id}
                 className={`relative rounded-2xl border p-6 ${
                   plan.popular
-                    ? 'border-[#FF6B00]'
+                    ? 'border-[#ffff00]'
                     : isCurrent
                     ? 'border-green-500/50'
                     : 'border-white/10'
                 }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#FF6B00] px-3 py-0.5 text-xs font-bold text-black">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#ffff00] px-3 py-0.5 text-xs font-bold text-black">
                     POPULAR
                   </div>
                 )}
@@ -136,7 +136,7 @@ export default async function BillingPage() {
                 <ul className="mt-4 space-y-2">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#FF6B00]" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#ffff00]" />
                       <span className="text-white/60">{f}</span>
                     </li>
                   ))}
@@ -166,10 +166,10 @@ export default async function BillingPage() {
             const pricePerCredit = topup.price / topup.credits
             const savings = Math.round((1 - pricePerCredit / 0.048) * 100)
             return (
-              <div key={topup.id} className="rounded-xl border border-white/10 p-4 text-center hover:border-[#FF6B00]/30 transition">
+              <div key={topup.id} className="rounded-xl border border-white/10 p-4 text-center hover:border-[#ffff00]/30 transition">
                 <p className="font-bold">{topup.name}</p>
                 <p className="text-2xl font-black mt-1">R$ {topup.price}</p>
-                <p className="text-sm text-[#FF6B00] font-medium">{topup.credits.toLocaleString('pt-BR')} créditos</p>
+                <p className="text-sm text-[#ffff00] font-medium">{topup.credits.toLocaleString('pt-BR')} créditos</p>
                 {savings > 0 && (
                   <p className="text-xs text-green-400 mt-0.5">Economia de {savings}%</p>
                 )}

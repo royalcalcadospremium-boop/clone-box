@@ -77,9 +77,9 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
           </p>
         </div>
 
-        <div className="rounded-xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 p-6 space-y-3">
+        <div className="rounded-xl border border-[#ffff00]/20 bg-[#ffff00]/5 p-6 space-y-3">
           <h3 className="font-semibold flex items-center gap-2">
-            <Zap className="h-4 w-4 text-[#FF6B00]" />
+            <Zap className="h-4 w-4 text-[#ffff00]" />
             O que vai acontecer
           </h3>
           <ul className="space-y-2 text-sm text-white/60">
@@ -90,7 +90,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
             <li>✦ Cria o diálogo em português para o seu produto</li>
           </ul>
           <div className="pt-2 border-t border-white/10">
-            <p className="text-sm font-bold text-[#FF6B00]">Custo: 10 créditos (debitados imediatamente)</p>
+            <p className="text-sm font-bold text-[#ffff00]">Custo: 10 créditos (debitados imediatamente)</p>
             <p className="text-xs text-white/40 mt-0.5">Não reembolsáveis — o processamento já foi feito</p>
           </div>
         </div>
@@ -98,7 +98,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
         <div className="flex justify-end">
           <button
             onClick={() => setConfirmed(true)}
-            className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+            className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-6 py-3 text-sm font-bold text-black hover:bg-[#ffff56] transition"
           >
             <Zap className="h-4 w-4" />
             Confirmar e gastar 10 créditos
@@ -117,7 +117,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
 
       {loading && (
         <div className="flex flex-col items-center gap-4 py-12">
-          <Loader2 className="h-10 w-10 text-[#FF6B00] animate-spin" />
+          <Loader2 className="h-10 w-10 text-[#ffff00] animate-spin" />
           <div className="text-center">
             <p className="font-medium">Analisando vídeo de referência...</p>
             <p className="text-sm text-white/40 mt-1">Kimi está trabalhando. Aguarde ~15 segundos.</p>
@@ -159,16 +159,16 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
                 onUpdate({ promptFinal: e.target.value })
               }}
               rows={6}
-              className="w-full rounded-xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white font-mono outline-none focus:border-[#FF6B00] resize-none"
+              className="w-full rounded-xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white font-mono outline-none focus:border-[#ffff00] resize-none"
             />
           </div>
 
           {/* Custo geração */}
-          <div className="rounded-xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 px-4 py-3 flex items-center gap-2">
-            <Zap className="h-4 w-4 text-[#FF6B00]" />
+          <div className="rounded-xl border border-[#ffff00]/20 bg-[#ffff00]/5 px-4 py-3 flex items-center gap-2">
+            <Zap className="h-4 w-4 text-[#ffff00]" />
             <p className="text-sm">
               Gerar o vídeo vai custar mais{' '}
-              <span className="font-bold text-[#FF6B00]">{videoCredits} créditos</span>
+              <span className="font-bold text-[#ffff00]">{videoCredits} créditos</span>
               {' '}(R$ {(videoCredits * 0.048).toFixed(2)})
             </p>
           </div>
@@ -179,7 +179,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
                 onUpdate({ promptFinal: prompt, videoId })
                 onNext()
               }}
-              className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+              className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-6 py-3 text-sm font-bold text-black hover:bg-[#ffff56] transition"
             >
               Gerar vídeo ({videoCredits} créditos)
               <ArrowRight className="h-4 w-4" />

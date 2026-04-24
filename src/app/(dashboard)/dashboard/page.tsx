@@ -12,7 +12,7 @@ const quickStartItems = [
     icon: Video,
     label: 'Vídeo IA',
     description: 'Seedance, Kling, WAN e mais',
-    gradient: 'from-[#7C3AED] to-[#3B82F6]',
+    gradient: 'from-[#ffff00] to-[#3B82F6]',
     badge: 'Multi-modelo',
   },
   {
@@ -47,7 +47,7 @@ const featuredModels = [
     type: 'Vídeo',
     description: 'Vídeo com áudio nativo e lip-sync sincronizado',
     href: '/generate/video?model=seedance',
-    color: '#7C3AED',
+    color: '#ffff00',
     icon: '🎬',
   },
   {
@@ -126,8 +126,8 @@ export default async function DashboardHome() {
           </p>
         </div>
         <div className="flex items-center gap-2 text-sm text-white/30">
-          <Zap className="h-4 w-4 text-[#A78BFA]" />
-          <span className="font-bold text-[#A78BFA]">{totalCredits.toLocaleString('pt-BR')}</span>
+          <Zap className="h-4 w-4 text-[#ffff56]" />
+          <span className="font-bold text-[#ffff56]">{totalCredits.toLocaleString('pt-BR')}</span>
           <span>créditos disponíveis</span>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default async function DashboardHome() {
       {/* Quick start grid */}
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="h-4 w-4 text-[#A78BFA]" />
+          <TrendingUp className="h-4 w-4 text-[#ffff56]" />
           <h2 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Começar agora</h2>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -167,7 +167,7 @@ export default async function DashboardHome() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Wand2 className="h-4 w-4 text-[#A78BFA]" />
+            <Wand2 className="h-4 w-4 text-[#ffff56]" />
             <h2 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Modelos em destaque</h2>
           </div>
         </div>
@@ -206,11 +206,11 @@ export default async function DashboardHome() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Film className="h-4 w-4 text-[#A78BFA]" />
+            <Film className="h-4 w-4 text-[#ffff56]" />
             <h2 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Criações recentes</h2>
           </div>
           {recentVideos && recentVideos.length > 0 && (
-            <Link href="/library" className="flex items-center gap-1 text-xs text-[#A78BFA] hover:text-white transition">
+            <Link href="/library" className="flex items-center gap-1 text-xs text-[#ffff56] hover:text-white transition">
               Ver todas <ArrowRight className="h-3 w-3" />
             </Link>
           )}
@@ -251,7 +251,7 @@ export default async function DashboardHome() {
                       ? 'bg-green-500/20 text-green-400 border border-green-500/20'
                       : video.status === 'failed'
                       ? 'bg-red-500/20 text-red-400 border border-red-500/20'
-                      : 'bg-[#7C3AED]/20 text-[#A78BFA] border border-[#7C3AED]/20'
+                      : 'bg-[#ffff00]/20 text-[#ffff56] border border-[#ffff00]/20'
                   }`}>
                     {video.status === 'ready' ? 'Pronto' :
                      video.status === 'failed' ? 'Falhou' :
@@ -280,18 +280,18 @@ export default async function DashboardHome() {
             {/* Create new */}
             <Link
               href="/generate/video"
-              className="group flex aspect-[9/16] flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.08] bg-[#0F0F0F] hover:border-[#7C3AED]/40 hover:bg-[#7C3AED]/5 transition-all"
+              className="group flex aspect-[9/16] flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.08] bg-[#0F0F0F] hover:border-[#ffff00]/40 hover:bg-[#ffff00]/5 transition-all"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#7C3AED]/30 bg-[#7C3AED]/10 group-hover:bg-[#7C3AED]/20 transition-colors mb-2">
-                <Plus className="h-5 w-5 text-[#A78BFA]" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ffff00]/30 bg-[#ffff00]/10 group-hover:bg-[#ffff00]/20 transition-colors mb-2">
+                <Plus className="h-5 w-5 text-[#ffff56]" />
               </div>
-              <span className="text-xs font-semibold text-[#A78BFA]">Criar</span>
+              <span className="text-xs font-semibold text-[#ffff56]">Criar</span>
             </Link>
           </div>
         ) : (
           <div className="rounded-xl border border-dashed border-white/[0.08] p-16 text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20">
-              <Video className="h-7 w-7 text-[#A78BFA]" />
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#ffff00]/10 border border-[#ffff00]/20">
+              <Video className="h-7 w-7 text-[#ffff56]" />
             </div>
             <h3 className="font-bold text-white">Nenhuma criação ainda</h3>
             <p className="mt-2 text-sm text-white/40 max-w-xs mx-auto">

@@ -51,10 +51,10 @@ export function Topbar({ profile }: TopbarProps) {
         {/* Credits pill */}
         <Link
           href="/billing"
-          className="flex items-center gap-1.5 h-8 rounded-lg border border-[#7C3AED]/25 bg-[#7C3AED]/8 px-3 text-xs font-semibold transition hover:border-[#7C3AED]/50 hover:bg-[#7C3AED]/15 group"
+          className="flex items-center gap-1.5 h-8 rounded-lg border border-[#ffff00]/25 bg-[#ffff00]/8 px-3 text-xs font-semibold transition hover:border-[#ffff00]/50 hover:bg-[#ffff00]/15 group"
         >
-          <Zap className="h-3 w-3 text-[#A78BFA]" />
-          <span className="text-[#A78BFA]">{totalCredits.toLocaleString('pt-BR')}</span>
+          <Zap className="h-3 w-3 text-[#ffff56]" />
+          <span className="text-[#ffff56]">{totalCredits.toLocaleString('pt-BR')}</span>
           <span className="text-foreground/30 hidden sm:inline">créditos</span>
         </Link>
 
@@ -65,7 +65,7 @@ export function Topbar({ profile }: TopbarProps) {
 
         {/* Avatar */}
         <button className="flex items-center gap-2 rounded-lg border border-border bg-card pl-1 pr-2 h-8 transition hover:bg-accent/10">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-[#7C3AED] to-[#EC4899] text-[10px] font-bold text-white shrink-0 overflow-hidden">
+          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-[#ffff00] to-[#EC4899] text-[10px] font-bold text-white shrink-0 overflow-hidden">
             {profile?.avatar_url ? (
               <Image src={profile.avatar_url} alt="avatar" width={24} height={24} className="h-full w-full object-cover" unoptimized />
             ) : (

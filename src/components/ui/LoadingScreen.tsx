@@ -33,7 +33,7 @@ export function LoadingScreen({ steps = DEFAULT_STEPS, currentStep = 0, customMe
         {/* Icon animation */}
         <div className="flex justify-center">
           <div className="relative">
-            <div className="absolute inset-0 bg-[#7C3AED]/20 blur-xl rounded-full animate-pulse" />
+            <div className="absolute inset-0 bg-[#ffff00]/20 blur-xl rounded-full animate-pulse" />
             <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl gradient-purple">
               <Sparkles className="h-7 w-7 text-white animate-pulse" />
             </div>
@@ -71,7 +71,7 @@ export function LoadingScreen({ steps = DEFAULT_STEPS, currentStep = 0, customMe
 export function InlineLoader({ text = 'Carregando...' }: { text?: string }) {
   return (
     <div className="flex items-center gap-2 text-sm text-white/60">
-      <Loader2 className="h-4 w-4 animate-spin text-[#A78BFA]" />
+      <Loader2 className="h-4 w-4 animate-spin text-[#ffff56]" />
       <span>{text}</span>
     </div>
   )

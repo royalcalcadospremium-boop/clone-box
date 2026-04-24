@@ -58,8 +58,8 @@ export default async function OriginalsPage() {
         </div>
       ) : (
         <div className="rounded-xl border border-dashed border-white/[0.08] p-16 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20">
-            <Film className="h-7 w-7 text-[#A78BFA]" />
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#ffff00]/10 border border-[#ffff00]/20">
+            <Film className="h-7 w-7 text-[#ffff56]" />
           </div>
           <h3 className="font-bold text-white">Nenhuma criação ainda</h3>
           <p className="mt-2 text-sm text-white/40 max-w-xs mx-auto">

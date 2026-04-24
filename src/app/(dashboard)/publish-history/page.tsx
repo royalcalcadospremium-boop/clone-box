@@ -61,7 +61,7 @@ export default async function PublishHistoryPage() {
         </div>
         <Link
           href="/library"
-          className="flex items-center gap-1 text-sm text-[#A78BFA] hover:text-white transition"
+          className="flex items-center gap-1 text-sm text-[#ffff56] hover:text-white transition"
         >
           Ver biblioteca <ArrowRight className="h-4 w-4" />
         </Link>
@@ -70,8 +70,8 @@ export default async function PublishHistoryPage() {
       {/* Lista */}
       {publishedVideos.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-20 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#7C3AED]/10 mb-4">
-            <Globe className="h-8 w-8 text-[#A78BFA]" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10 mb-4">
+            <Globe className="h-8 w-8 text-[#ffff56]" />
           </div>
           <h3 className="font-bold text-lg">Nenhuma publicação ainda</h3>
           <p className="mt-2 text-sm text-white/40 max-w-xs">
@@ -140,7 +140,7 @@ export default async function PublishHistoryPage() {
                               href={entry.external_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-[10px] text-[#A78BFA] hover:underline ml-1"
+                              className="text-[10px] text-[#ffff56] hover:underline ml-1"
                             >
                               Ver →
                             </a>

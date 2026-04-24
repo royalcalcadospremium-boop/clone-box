@@ -61,9 +61,9 @@ export default function ClonePage() {
               <div
                 className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition ${
                   step.number < currentStep
-                    ? 'bg-[#FF6B00] text-black'
+                    ? 'bg-[#ffff00] text-black'
                     : step.number === currentStep
-                    ? 'border-2 border-[#FF6B00] text-[#FF6B00]'
+                    ? 'border-2 border-[#ffff00] text-[#ffff00]'
                     : 'border border-white/10 text-white/30'
                 }`}
               >
@@ -78,7 +78,7 @@ export default function ClonePage() {
                   step.number === currentStep
                     ? 'text-white'
                     : step.number < currentStep
-                    ? 'text-[#FF6B00]'
+                    ? 'text-[#ffff00]'
                     : 'text-white/30'
                 }`}
               >
@@ -88,7 +88,7 @@ export default function ClonePage() {
             {i < steps.length - 1 && (
               <div
                 className={`h-px flex-1 transition ${
-                  step.number < currentStep ? 'bg-[#FF6B00]' : 'bg-white/10'
+                  step.number < currentStep ? 'bg-[#ffff00]' : 'bg-white/10'
                 }`}
               />
             )}

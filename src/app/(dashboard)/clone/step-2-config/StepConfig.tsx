@@ -118,7 +118,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
               onClick={() => onUpdate({ style: style.id })}
               className={`rounded-xl border p-3 text-left transition ${
                 selectedStyle === style.id
-                  ? 'border-[#FF6B00] bg-[#FF6B00]/10'
+                  ? 'border-[#ffff00] bg-[#ffff00]/10'
                   : 'border-white/10 hover:border-white/20'
               }`}
             >
@@ -139,7 +139,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
               onClick={() => onUpdate({ duration: d.value })}
               className={`flex-1 rounded-xl border px-4 py-3 text-sm transition ${
                 selectedDuration === d.value
-                  ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
+                  ? 'border-[#ffff00] bg-[#ffff00]/10 text-[#ffff00]'
                   : 'border-white/10 hover:border-white/20'
               }`}
             >
@@ -161,7 +161,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
                 onClick={() => onUpdate({ resolution: r.value })}
                 className={`flex-1 rounded-xl border px-3 py-2 text-xs transition ${
                   selectedResolution === r.value
-                    ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
+                    ? 'border-[#ffff00] bg-[#ffff00]/10 text-[#ffff00]'
                     : 'border-white/10 hover:border-white/20'
                 }`}
               >
@@ -181,7 +181,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
                 onClick={() => onUpdate({ aspectRatio: ar.value })}
                 className={`flex-1 rounded-xl border px-3 py-2 text-xs transition ${
                   selectedAspectRatio === ar.value
-                    ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
+                    ? 'border-[#ffff00] bg-[#ffff00]/10 text-[#ffff00]'
                     : 'border-white/10 hover:border-white/20'
                 }`}
               >
@@ -199,7 +199,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
         <select
           value={state.cameraMovement ?? 'Estático'}
           onChange={(e) => onUpdate({ cameraMovement: e.target.value })}
-          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-[#FF6B00]"
+          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-[#ffff00]"
         >
           {CAMERA_MOVEMENTS.map((m) => (
             <option key={m} value={m} className="bg-[#111111]">{m}</option>
@@ -217,14 +217,14 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
               onClick={() => onUpdate({ music: opt.value })}
               className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition ${
                 selectedMusic === opt.value
-                  ? 'border-[#FF6B00] bg-[#FF6B00]/10'
+                  ? 'border-[#ffff00] bg-[#ffff00]/10'
                   : 'border-white/10 hover:border-white/20'
               }`}
             >
               <div className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-                selectedMusic === opt.value ? 'border-[#FF6B00]' : 'border-white/30'
+                selectedMusic === opt.value ? 'border-[#ffff00]' : 'border-white/30'
               }`}>
-                {selectedMusic === opt.value && <div className="h-2 w-2 rounded-full bg-[#FF6B00]" />}
+                {selectedMusic === opt.value && <div className="h-2 w-2 rounded-full bg-[#ffff00]" />}
               </div>
               <div>
                 <p className="text-sm font-medium">{opt.label}</p>
@@ -252,8 +252,8 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
             className="flex cursor-pointer items-center gap-4 rounded-xl border border-dashed border-white/10 p-6 hover:border-white/20 transition"
           >
             <input {...getProductInput()} />
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FF6B00]/10">
-              <Image className="h-6 w-6 text-[#FF6B00]" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#ffff00]/10">
+              <Image className="h-6 w-6 text-[#ffff00]" />
             </div>
             <div>
               <p className="text-sm font-medium">Clique para enviar a foto do produto</p>
@@ -278,7 +278,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
           maxLength={500}
           rows={3}
           placeholder="Ex: Tênis Mr. Paid Social Vans, estilo streetwear, cores preto/branco, tamanho 39-44, material suede..."
-          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#FF6B00] resize-none"
+          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#ffff00] resize-none"
         />
         <div className="flex justify-between mt-1">
           <p className="text-xs text-white/30">Quanto mais detalhe, melhor o vídeo</p>
@@ -287,10 +287,10 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
       </div>
 
       {/* Custo estimado */}
-      <div className="rounded-xl border border-[#FF6B00]/20 bg-[#FF6B00]/5 px-4 py-3 space-y-1">
+      <div className="rounded-xl border border-[#ffff00]/20 bg-[#ffff00]/5 px-4 py-3 space-y-1">
         <div className="flex items-center gap-2">
-          <Zap className="h-4 w-4 text-[#FF6B00] shrink-0" />
-          <p className="text-sm font-semibold text-[#FF6B00]">Custo total: {totalCredits} créditos</p>
+          <Zap className="h-4 w-4 text-[#ffff00] shrink-0" />
+          <p className="text-sm font-semibold text-[#ffff00]">Custo total: {totalCredits} créditos</p>
         </div>
         <div className="pl-6 text-xs text-white/40 space-y-0.5">
           <p>→ 10 créditos: análise IA (Passo 3)</p>
@@ -312,7 +312,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
             onNext()
           }}
           disabled={!canAdvance}
-          className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black disabled:opacity-30 hover:bg-[#FF8C00] transition"
+          className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-6 py-3 text-sm font-bold text-black disabled:opacity-30 hover:bg-[#ffff56] transition"
         >
           Gerar Prompt (10 créditos)
           <ArrowRight className="h-4 w-4" />

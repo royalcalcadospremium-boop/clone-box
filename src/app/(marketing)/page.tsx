@@ -2,11 +2,11 @@ import Link from 'next/link'
 import { ArrowRight, CheckCircle2, Play, Star, Zap, Video, Image, Grid3x3, Sparkles, ChevronRight } from 'lucide-react'
 
 const AI_MODELS = [
-  { name: 'Seedance 2.0', type: 'Vídeo', icon: '🎬', color: '#7C3AED', desc: 'Áudio nativo + lip-sync' },
+  { name: 'Seedance 2.0', type: 'Vídeo', icon: '🎬', color: '#ffff00', desc: 'Áudio nativo + lip-sync' },
   { name: 'Kling 1.6', type: 'Vídeo', icon: '🎥', color: '#3B82F6', desc: 'Ultra-fotorrealista' },
   { name: 'WAN 2.1', type: 'Vídeo', icon: '⚡', color: '#06B6D4', desc: 'Geração veloz' },
   { name: 'Flux Schnell', type: 'Imagem', icon: '✨', color: '#EC4899', desc: 'Imagem em 2 segundos' },
-  { name: 'Flux Dev', type: 'Imagem', icon: '🎨', color: '#A78BFA', desc: 'Qualidade máxima' },
+  { name: 'Flux Dev', type: 'Imagem', icon: '🎨', color: '#ffff56', desc: 'Qualidade máxima' },
   { name: 'SDXL Turbo', type: 'Imagem', icon: '🖼️', color: '#F59E0B', desc: 'Versátil e rápido' },
 ]
 
@@ -15,7 +15,7 @@ const FEATURES = [
     icon: Video,
     title: 'Multi-Modelo de Vídeo',
     description: 'Acesse Seedance 2.0, Kling 1.6 e WAN 2.1 em uma única plataforma. Escolha o modelo ideal para cada projeto.',
-    color: '#7C3AED',
+    color: '#ffff00',
   },
   {
     icon: Image,
@@ -42,13 +42,13 @@ const STEPS = [
     step: '01',
     title: 'Cole o vídeo viral',
     desc: 'Insira o link do TikTok ou faça upload do vídeo que quer clonar para seu produto.',
-    gradient: 'from-[#7C3AED] to-[#A78BFA]',
+    gradient: 'from-[#ffff00] to-[#ffff56]',
   },
   {
     step: '02',
     title: 'Configure o estilo',
     desc: 'Escolha modelo de IA, duração, resolução e envie a foto do seu produto.',
-    gradient: 'from-[#A78BFA] to-[#EC4899]',
+    gradient: 'from-[#ffff56] to-[#EC4899]',
   },
   {
     step: '03',
@@ -112,7 +112,7 @@ export default function LandingPage() {
       <section className="relative overflow-hidden pt-32 pb-24">
         {/* Background glows */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[#7C3AED]/12 blur-[120px]" />
+          <div className="absolute -top-40 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[#ffff00]/12 blur-[120px]" />
           <div className="absolute top-32 right-0 h-[500px] w-[500px] rounded-full bg-[#EC4899]/8 blur-[100px]" />
           <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-[#3B82F6]/6 blur-[80px]" />
         </div>
@@ -125,9 +125,9 @@ export default function LandingPage() {
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           {/* Badge */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#7C3AED]/30 bg-[#7C3AED]/10 px-4 py-1.5 text-sm">
-            <Star className="h-3.5 w-3.5 text-[#A78BFA]" fill="currentColor" />
-            <span className="text-[#A78BFA] font-medium">Plataforma multi-modelo de IA para criadores</span>
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#ffff00]/30 bg-[#ffff00]/10 px-4 py-1.5 text-sm">
+            <Star className="h-3.5 w-3.5 text-[#ffff56]" fill="currentColor" />
+            <span className="text-[#ffff56] font-medium">Plataforma multi-modelo de IA para criadores</span>
           </div>
 
           {/* Headline */}
@@ -319,7 +319,7 @@ export default function LandingPage() {
                 key={plan.name}
                 className={`relative rounded-xl p-6 ${
                   plan.highlight
-                    ? 'border border-[#7C3AED]/50 bg-[#7C3AED]/5'
+                    ? 'border border-[#ffff00]/50 bg-[#ffff00]/5'
                     : 'border border-border bg-card'
                 }`}
               >
@@ -337,7 +337,7 @@ export default function LandingPage() {
                 <ul className="mt-5 space-y-2.5">
                   {plan.features.map(f => (
                     <li key={f} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#A78BFA]" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#ffff56]" />
                       <span className="text-muted-foreground">{f}</span>
                     </li>
                   ))}
@@ -347,7 +347,7 @@ export default function LandingPage() {
                   className={`mt-6 block rounded-xl py-3 text-center text-sm font-bold transition ${
                     plan.highlight
                       ? 'gradient-purple text-white hover:opacity-90'
-                      : 'border border-border text-muted-foreground hover:border-[#7C3AED]/40 hover:text-[#A78BFA]'
+                      : 'border border-border text-muted-foreground hover:border-[#ffff00]/40 hover:text-[#ffff56]'
                   }`}
                 >
                   {plan.cta}
@@ -398,7 +398,7 @@ export default function LandingPage() {
       <section className="py-24 border-t border-border">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <div className="relative">
-            <div className="absolute inset-0 bg-[#7C3AED]/8 blur-3xl rounded-full" />
+            <div className="absolute inset-0 bg-[#ffff00]/8 blur-3xl rounded-full" />
             <div className="relative">
               <h2 className="text-4xl font-black sm:text-5xl leading-tight">
                 Infraestrutura de IA para{' '}

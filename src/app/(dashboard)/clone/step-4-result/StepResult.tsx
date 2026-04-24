@@ -147,13 +147,13 @@ export function StepResult({ state }: Props) {
         <div className="space-y-6">
           <div className="flex flex-col items-center gap-4 py-8">
             <div className="relative">
-              <div className="h-20 w-20 rounded-full border-4 border-[#FF6B00]/20" />
+              <div className="h-20 w-20 rounded-full border-4 border-[#ffff00]/20" />
               <div
-                className="absolute inset-0 rounded-full border-4 border-[#FF6B00] border-r-transparent animate-spin"
+                className="absolute inset-0 rounded-full border-4 border-[#ffff00] border-r-transparent animate-spin"
                 style={{ animationDuration: '1.5s' }}
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-sm font-bold text-[#FF6B00]">{elapsed}s</span>
+                <span className="text-sm font-bold text-[#ffff00]">{elapsed}s</span>
               </div>
             </div>
             <div className="text-center">
@@ -171,7 +171,7 @@ export function StepResult({ state }: Props) {
             </div>
             <div className="h-2 rounded-full bg-white/10 overflow-hidden">
               <div
-                className="h-full rounded-full bg-[#FF6B00] transition-all duration-1000"
+                className="h-full rounded-full bg-[#ffff00] transition-all duration-1000"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -193,7 +193,7 @@ export function StepResult({ state }: Props) {
             <a
               href={videoUrl}
               download
-              className="flex items-center justify-center gap-2 rounded-xl bg-[#FF6B00] py-3 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+              className="flex items-center justify-center gap-2 rounded-xl bg-[#ffff00] py-3 text-sm font-bold text-black hover:bg-[#ffff56] transition"
             >
               <Download className="h-4 w-4" />
               Baixar MP4
@@ -231,7 +231,7 @@ export function StepResult({ state }: Props) {
           </div>
 
           <div className="text-center">
-            <Link href="/library" className="text-sm text-[#FF6B00] hover:underline">
+            <Link href="/library" className="text-sm text-[#ffff00] hover:underline">
               Ver todos os vídeos na biblioteca →
             </Link>
           </div>
@@ -254,7 +254,7 @@ export function StepResult({ state }: Props) {
                 setElapsed(0)
                 generateVideo()
               }}
-              className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+              className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-6 py-3 text-sm font-bold text-black hover:bg-[#ffff56] transition"
             >
               <RefreshCw className="h-4 w-4" />
               Tentar novamente

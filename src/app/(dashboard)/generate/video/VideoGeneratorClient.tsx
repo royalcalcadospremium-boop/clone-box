@@ -29,11 +29,11 @@ const VIDEO_MODELS: VideoModel[] = [
     provider: 'BytePlus',
     description: 'Áudio nativo, lip-sync sincronizado, qualidade cinematográfica',
     badge: 'Recomendado',
-    badgeColor: '#7C3AED',
+    badgeColor: '#ffff00',
     icon: '🎬',
     supports: ['text', 'image'],
     maxDuration: 15,
-    color: '#7C3AED',
+    color: '#ffff00',
     creditCost: { 5: CREDIT_COSTS.VIDEO_GENERATION_5S, 10: CREDIT_COSTS.VIDEO_GENERATION_10S, 15: CREDIT_COSTS.VIDEO_GENERATION_15S },
   },
   {
@@ -155,7 +155,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
                 }}
                 className={`w-full flex items-center gap-3 rounded-lg p-3 text-left transition-all ${
                   selectedModel.id === model.id
-                    ? 'border border-[#7C3AED]/40 bg-[#7C3AED]/10'
+                    ? 'border border-[#ffff00]/40 bg-[#ffff00]/10'
                     : 'border border-white/[0.04] bg-white/[0.02] hover:bg-white/[0.04]'
                 }`}
               >
@@ -180,7 +180,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
                   <p className="text-[11px] text-white/40 mt-0.5 truncate">{model.description}</p>
                 </div>
                 {selectedModel.id === model.id && (
-                  <CheckCircle2 className="h-4 w-4 text-[#A78BFA] shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-[#ffff56] shrink-0" />
                 )}
               </button>
             ))}
@@ -195,11 +195,11 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Descreva o vídeo que você quer gerar... ex: 'Close-up of hands holding a smartphone, golden hour lighting, smooth pan left, cinematic'"
             rows={4}
-            className="w-full resize-none rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#7C3AED]/50 focus:bg-white/[0.06] transition-all"
+            className="w-full resize-none rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 focus:bg-white/[0.06] transition-all"
           />
           <div className="mt-2 flex items-center justify-between">
             <span className="text-[11px] text-white/20">{prompt.length}/500 chars</span>
-            <button className="flex items-center gap-1 text-[11px] text-[#A78BFA] hover:text-white transition">
+            <button className="flex items-center gap-1 text-[11px] text-[#ffff56] hover:text-white transition">
               <Wand2 className="h-3 w-3" /> Melhorar prompt
             </button>
           </div>
@@ -215,7 +215,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
               value={productImageUrl}
               onChange={(e) => setProductImageUrl(e.target.value)}
               placeholder="URL da imagem do produto..."
-              className="flex-1 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#7C3AED]/50 transition-all"
+              className="flex-1 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 transition-all"
             />
             <button className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] hover:bg-white/[0.08] transition shrink-0">
               <Upload className="h-4 w-4 text-white/40" />
@@ -235,7 +235,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
                 onClick={() => setAspectRatio(ar.value as typeof aspectRatio)}
                 className={`flex flex-col items-center gap-1 rounded-lg py-2.5 px-2 transition-all text-center ${
                   aspectRatio === ar.value
-                    ? 'border border-[#7C3AED]/50 bg-[#7C3AED]/10 text-white'
+                    ? 'border border-[#ffff00]/50 bg-[#ffff00]/10 text-white'
                     : 'border border-white/[0.06] bg-white/[0.02] text-white/50 hover:bg-white/[0.04] hover:text-white/80'
                 }`}
               >
@@ -273,7 +273,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
                     onClick={() => setDuration(d)}
                     className={`flex-1 rounded-lg py-2 text-sm font-bold transition-all ${
                       duration === d
-                        ? 'border border-[#7C3AED]/50 bg-[#7C3AED]/10 text-white'
+                        ? 'border border-[#ffff00]/50 bg-[#ffff00]/10 text-white'
                         : 'border border-white/[0.06] bg-white/[0.02] text-white/50 hover:text-white/80'
                     }`}
                   >
@@ -295,7 +295,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
                     onClick={() => setResolution(r)}
                     className={`flex-1 rounded-lg py-2 text-sm font-bold transition-all ${
                       resolution === r
-                        ? 'border border-[#7C3AED]/50 bg-[#7C3AED]/10 text-white'
+                        ? 'border border-[#ffff00]/50 bg-[#ffff00]/10 text-white'
                         : 'border border-white/[0.06] bg-white/[0.02] text-white/50 hover:text-white/80'
                     }`}
                   >
@@ -338,8 +338,8 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
 
         {status === 'idle' && (
           <div className="text-center relative z-10 p-8">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/20">
-              <Video className="h-7 w-7 text-[#A78BFA]" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10 border border-[#ffff00]/20">
+              <Video className="h-7 w-7 text-[#ffff56]" />
             </div>
             <h3 className="font-bold text-white mb-2">Seu vídeo aparecerá aqui</h3>
             <p className="text-sm text-white/40 max-w-xs">
@@ -355,8 +355,8 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
 
         {status === 'loading' && (
           <div className="text-center relative z-10 p-8">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#7C3AED]/10 border border-[#7C3AED]/30 animate-pulse">
-              <Loader2 className="h-7 w-7 text-[#A78BFA] animate-spin" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10 border border-[#ffff00]/30 animate-pulse">
+              <Loader2 className="h-7 w-7 text-[#ffff56] animate-spin" />
             </div>
             <h3 className="font-bold text-white mb-2">Gerando seu vídeo...</h3>
             <p className="text-sm text-white/40">
@@ -383,7 +383,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
               <a
                 href={resultVideoUrl}
                 download
-                className="flex-1 flex items-center justify-center gap-2 rounded-lg py-2 text-sm font-bold border border-[#7C3AED]/40 text-[#A78BFA] hover:bg-[#7C3AED]/10 transition"
+                className="flex-1 flex items-center justify-center gap-2 rounded-lg py-2 text-sm font-bold border border-[#ffff00]/40 text-[#ffff56] hover:bg-[#ffff00]/10 transition"
               >
                 Download
               </a>

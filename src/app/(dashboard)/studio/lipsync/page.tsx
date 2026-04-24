@@ -50,7 +50,7 @@ export default function LipsyncPage() {
             value={videoUrl}
             onChange={(e) => setVideoUrl(e.target.value)}
             placeholder="URL do vídeo com avatar falante..."
-            className="w-full rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#7C3AED]/50 transition-all"
+            className="w-full rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 transition-all"
           />
           <p className="mt-2 text-[11px] text-white/25">MP4 com rosto visível e frontal</p>
         </div>
@@ -64,7 +64,7 @@ export default function LipsyncPage() {
             value={audioUrl}
             onChange={(e) => setAudioUrl(e.target.value)}
             placeholder="URL do arquivo de áudio..."
-            className="w-full rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#7C3AED]/50 transition-all"
+            className="w-full rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 transition-all"
           />
           <p className="mt-2 text-[11px] text-white/25">MP3 ou WAV com voz clara</p>
         </div>

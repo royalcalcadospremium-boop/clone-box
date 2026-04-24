@@ -54,8 +54,8 @@ export function PlanButton({ planId, planName, price, isCurrent, isPopular }: Pl
       disabled={loading}
       className={`mt-6 w-full rounded-xl py-3 text-sm font-bold transition disabled:opacity-60 flex items-center justify-center gap-2 ${
         isPopular
-          ? 'bg-[#FF6B00] text-black hover:bg-[#FF8C00]'
-          : 'border border-white/10 hover:border-[#FF6B00] hover:text-[#FF6B00]'
+          ? 'bg-[#ffff00] text-black hover:bg-[#ffff56]'
+          : 'border border-white/10 hover:border-[#ffff00] hover:text-[#ffff00]'
       }`}
     >
       {loading && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -99,7 +99,7 @@ export function TopupButton({ topupId, price, credits }: TopupButtonProps) {
     <button
       onClick={handleBuy}
       disabled={loading}
-      className="mt-3 w-full rounded-lg border border-white/10 py-2 text-xs font-medium hover:border-[#FF6B00] hover:text-[#FF6B00] transition disabled:opacity-60 flex items-center justify-center gap-1"
+      className="mt-3 w-full rounded-lg border border-white/10 py-2 text-xs font-medium hover:border-[#ffff00] hover:text-[#ffff00] transition disabled:opacity-60 flex items-center justify-center gap-1"
     >
       {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
       {loading ? 'Aguarde...' : 'Comprar'}

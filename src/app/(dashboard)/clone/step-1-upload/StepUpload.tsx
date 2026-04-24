@@ -103,7 +103,7 @@ export function StepUpload({ state, onUpdate, onNext }: Props) {
         <button
           onClick={() => setMode('upload')}
           className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
-            mode === 'upload' ? 'bg-[#FF6B00] text-black' : 'text-white/50 hover:text-white'
+            mode === 'upload' ? 'bg-[#ffff00] text-black' : 'text-white/50 hover:text-white'
           }`}
         >
           <Upload className="h-4 w-4 inline mr-2" />
@@ -112,7 +112,7 @@ export function StepUpload({ state, onUpdate, onNext }: Props) {
         <button
           onClick={() => setMode('url')}
           className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
-            mode === 'url' ? 'bg-[#FF6B00] text-black' : 'text-white/50 hover:text-white'
+            mode === 'url' ? 'bg-[#ffff00] text-black' : 'text-white/50 hover:text-white'
           }`}
         >
           <Link2 className="h-4 w-4 inline mr-2" />
@@ -126,20 +126,20 @@ export function StepUpload({ state, onUpdate, onNext }: Props) {
           {...getRootProps()}
           className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition ${
             isDragActive
-              ? 'border-[#FF6B00] bg-[#FF6B00]/5'
+              ? 'border-[#ffff00] bg-[#ffff00]/5'
               : 'border-white/10 hover:border-white/20'
           }`}
         >
           <input {...getInputProps()} />
           {uploading ? (
             <div className="flex flex-col items-center gap-3">
-              <Loader2 className="h-10 w-10 text-[#FF6B00] animate-spin" />
+              <Loader2 className="h-10 w-10 text-[#ffff00] animate-spin" />
               <p className="text-sm text-white/50">Fazendo upload...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF6B00]/10">
-                <Video className="h-8 w-8 text-[#FF6B00]" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10">
+                <Video className="h-8 w-8 text-[#ffff00]" />
               </div>
               <div>
                 <p className="font-medium">Arraste o vídeo aqui ou clique para selecionar</p>
@@ -159,12 +159,12 @@ export function StepUpload({ state, onUpdate, onNext }: Props) {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://www.tiktok.com/@usuario/video/..."
-              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#FF6B00]"
+              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#ffff00]"
             />
             <button
               onClick={handleUrl}
               disabled={!url || uploading}
-              className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-5 py-3 text-sm font-bold text-black disabled:opacity-50 hover:bg-[#FF8C00] transition"
+              className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-5 py-3 text-sm font-bold text-black disabled:opacity-50 hover:bg-[#ffff56] transition"
             >
               {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Baixar'}
             </button>
@@ -207,7 +207,7 @@ export function StepUpload({ state, onUpdate, onNext }: Props) {
         <button
           onClick={onNext}
           disabled={!hasVideo}
-          className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-black disabled:opacity-30 hover:bg-[#FF8C00] transition"
+          className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-6 py-3 text-sm font-bold text-black disabled:opacity-30 hover:bg-[#ffff56] transition"
         >
           Próximo passo
           <ArrowRight className="h-4 w-4" />

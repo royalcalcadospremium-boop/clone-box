@@ -35,8 +35,8 @@ export default function RecuperarSenhaPage() {
       <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <div className="w-full max-w-md text-center">
           <div className="mb-6 flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF6B00]/10">
-              <CheckCircle2 className="h-8 w-8 text-[#FF6B00]" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10">
+              <CheckCircle2 className="h-8 w-8 text-[#ffff00]" />
             </div>
           </div>
           <h1 className="text-2xl font-bold text-foreground">Email enviado!</h1>
@@ -48,7 +48,7 @@ export default function RecuperarSenhaPage() {
           </p>
           <Link
             href="/login"
-            className="mt-8 inline-flex items-center gap-2 text-sm text-[#FF6B00] hover:underline"
+            className="mt-8 inline-flex items-center gap-2 text-sm text-[#ffff00] hover:underline"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Voltar para o login
@@ -63,7 +63,7 @@ export default function RecuperarSenhaPage() {
       <div className="w-full max-w-md">
         <div className="mb-8 flex flex-col items-center">
           <Link href="/" className="flex items-center gap-2 mb-6">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF6B00]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#ffff00]">
               <Zap className="h-5 w-5 text-black" fill="black" />
             </div>
             <span className="text-xl font-black">Ninja Box</span>
@@ -88,7 +88,7 @@ export default function RecuperarSenhaPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
-                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#ffff00] focus:ring-1 focus:ring-[#ffff00]"
               />
             </div>
 
@@ -101,7 +101,7 @@ export default function RecuperarSenhaPage() {
             <button
               type="submit"
               disabled={loading || !email}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#FF6B00] py-3 text-sm font-bold text-black transition hover:bg-[#FF8C00] disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#ffff00] py-3 text-sm font-bold text-black transition hover:bg-[#ffff56] disabled:opacity-50"
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading ? 'Enviando...' : 'Enviar link de redefinição'}

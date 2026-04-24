@@ -45,7 +45,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <Link href="/" className="flex items-center gap-2 mb-6">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF6B00]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#ffff00]">
               <Zap className="h-5 w-5 text-black" fill="black" />
             </div>
             <span className="text-xl font-black">Ninja Box</span>
@@ -100,7 +100,7 @@ export default function LoginPage() {
                 type="email"
                 required
                 placeholder="seu@email.com"
-                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#ffff00] focus:ring-1 focus:ring-[#ffff00]"
               />
             </div>
 
@@ -109,7 +109,7 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
                   Senha
                 </label>
-                <Link href="/recuperar-senha" className="text-xs text-[#FF6B00] hover:underline">
+                <Link href="/recuperar-senha" className="text-xs text-[#ffff00] hover:underline">
                   Esqueceu a senha?
                 </Link>
               </div>
@@ -120,7 +120,7 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   required
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-border bg-muted px-4 py-3 pr-10 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                  className="w-full rounded-xl border border-border bg-muted px-4 py-3 pr-10 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#ffff00] focus:ring-1 focus:ring-[#ffff00]"
                 />
                 <button
                   type="button"
@@ -141,7 +141,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#FF6B00] py-3 text-sm font-bold text-black transition hover:bg-[#FF8C00] disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#ffff00] py-3 text-sm font-bold text-black transition hover:bg-[#ffff56] disabled:opacity-50"
             >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {loading ? 'Entrando...' : 'Entrar'}
@@ -151,7 +151,7 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Não tem conta?{' '}
-          <Link href="/signup" className="text-[#FF6B00] hover:underline">
+          <Link href="/signup" className="text-[#ffff00] hover:underline">
             Criar conta grátis
           </Link>
         </p>

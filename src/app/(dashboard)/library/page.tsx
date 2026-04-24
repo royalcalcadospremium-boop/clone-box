@@ -6,8 +6,8 @@ import { Play, Download, Clock, CheckCircle2, XCircle, Loader2, Zap, Plus, Folde
 
 const STATUS_LABELS: Record<string, { label: string; color: string; icon: typeof CheckCircle2 }> = {
   ready: { label: 'Pronto', color: 'text-green-400', icon: CheckCircle2 },
-  generating_video: { label: 'Gerando', color: 'text-[#FF6B00]', icon: Loader2 },
-  polling: { label: 'Processando', color: 'text-[#FF6B00]', icon: Loader2 },
+  generating_video: { label: 'Gerando', color: 'text-[#ffff00]', icon: Loader2 },
+  polling: { label: 'Processando', color: 'text-[#ffff00]', icon: Loader2 },
   analyzing_reference: { label: 'Analisando', color: 'text-blue-400', icon: Loader2 },
   prompt_ready: { label: 'Aguardando', color: 'text-yellow-400', icon: Clock },
   failed: { label: 'Falhou', color: 'text-red-400', icon: XCircle },
@@ -57,7 +57,7 @@ export default async function LibraryPage() {
         </div>
         <Link
           href="/clone"
-          className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-4 py-2.5 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+          className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-4 py-2.5 text-sm font-bold text-black hover:bg-[#ffff56] transition"
         >
           <Plus className="h-4 w-4" />
           Novo clone
@@ -77,8 +77,8 @@ export default async function LibraryPage() {
         <div className="rounded-xl border border-white/5 bg-[#111111] p-4">
           <p className="text-xs text-white/40 mb-1">Créditos gastos</p>
           <div className="flex items-center gap-1.5">
-            <Zap className="h-4 w-4 text-[#FF6B00]" />
-            <p className="text-2xl font-black text-[#FF6B00]">{totalCreditsSpent}</p>
+            <Zap className="h-4 w-4 text-[#ffff00]" />
+            <p className="text-2xl font-black text-[#ffff00]">{totalCreditsSpent}</p>
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default async function LibraryPage() {
                 key={folder.id}
                 className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm hover:border-white/20 transition"
               >
-                <Folder className="h-4 w-4 text-[#FF6B00]" />
+                <Folder className="h-4 w-4 text-[#ffff00]" />
                 {folder.name}
               </button>
             ))}
@@ -104,8 +104,8 @@ export default async function LibraryPage() {
       {/* Lista de vídeos */}
       {!videos || videos.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-20 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF6B00]/10 mb-4">
-            <Play className="h-8 w-8 text-[#FF6B00]" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10 mb-4">
+            <Play className="h-8 w-8 text-[#ffff00]" />
           </div>
           <h3 className="font-bold text-lg">Nenhum vídeo ainda</h3>
           <p className="mt-2 text-sm text-white/40 max-w-xs">
@@ -113,7 +113,7 @@ export default async function LibraryPage() {
           </p>
           <Link
             href="/clone"
-            className="mt-6 flex items-center gap-2 rounded-xl bg-[#FF6B00] px-5 py-2.5 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+            className="mt-6 flex items-center gap-2 rounded-xl bg-[#ffff00] px-5 py-2.5 text-sm font-bold text-black hover:bg-[#ffff56] transition"
           >
             <Zap className="h-4 w-4" />
             Criar primeiro clone
@@ -149,7 +149,7 @@ export default async function LibraryPage() {
                   ) : (
                     <div className="flex flex-col items-center gap-2 text-white/20">
                       {isProcessing ? (
-                        <Loader2 className="h-10 w-10 animate-spin text-[#FF6B00]" />
+                        <Loader2 className="h-10 w-10 animate-spin text-[#ffff00]" />
                       ) : (
                         <Play className="h-10 w-10" />
                       )}
@@ -162,7 +162,7 @@ export default async function LibraryPage() {
                       <a
                         href={video.output_video_url}
                         download
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FF6B00] text-black hover:bg-[#FF8C00] transition"
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffff00] text-black hover:bg-[#ffff56] transition"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Download className="h-5 w-5" />

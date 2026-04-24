@@ -21,7 +21,7 @@ export default function BillingCancelPage() {
       </div>
       <button
         onClick={() => router.push('/billing')}
-        className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-5 py-2.5 text-sm font-bold text-white hover:border-[#FF6B00] hover:text-[#FF6B00] transition"
+        className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-5 py-2.5 text-sm font-bold text-white hover:border-[#ffff00] hover:text-[#ffff00] transition"
       >
         <ArrowLeft className="h-4 w-4" />
         Voltar para Planos

@@ -36,12 +36,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setResolvedTheme(resolved)
 
     const root = document.documentElement
-    if (resolved === 'dark') {
-      root.classList.add('dark')
-      root.classList.remove('light')
-    } else {
+    if (resolved === 'light') {
       root.classList.add('light')
-      root.classList.remove('dark')
+    } else {
+      root.classList.remove('light')
     }
   }, [theme])
 
@@ -51,12 +49,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const resolved = e.matches ? 'dark' : 'light'
         setResolvedTheme(resolved)
         const root = document.documentElement
-        if (resolved === 'dark') {
-          root.classList.add('dark')
-          root.classList.remove('light')
-        } else {
+        if (resolved === 'light') {
           root.classList.add('light')
-          root.classList.remove('dark')
+        } else {
+          root.classList.remove('light')
         }
       }
     }

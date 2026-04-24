@@ -20,7 +20,7 @@ const APPS: AppItem[] = [
   { id: 'lipsync', name: 'Lipsync Studio', description: 'Sincronize qualquer áudio com vídeo de avatar falante', icon: '🎙️', category: 'Vídeo', color: '#10B981', href: '/studio/lipsync', badge: 'Novo', credits: 20, available: true },
   { id: 'transitions', name: 'Transições', description: 'Crie transições suaves e cinematográficas entre clipes', icon: '🎞️', category: 'Vídeo', color: '#3B82F6', href: '#', credits: 15, available: false },
   { id: 'bg-remover-video', name: 'Remover Fundo (Vídeo)', description: 'Remova o fundo de qualquer vídeo com perfeição por frame', icon: '✂️', category: 'Vídeo', color: '#6366F1', href: '#', credits: 25, available: false },
-  { id: 'upscale-video', name: 'Upscale de Vídeo', description: 'Aumente a resolução do seu vídeo para 4K com IA', icon: '📐', category: 'Vídeo', color: '#7C3AED', href: '#', credits: 30, available: false },
+  { id: 'upscale-video', name: 'Upscale de Vídeo', description: 'Aumente a resolução do seu vídeo para 4K com IA', icon: '📐', category: 'Vídeo', color: '#ffff00', href: '#', credits: 30, available: false },
 
   // Imagem
   { id: 'generate-image', name: 'Gerar Imagem', description: 'Crie imagens incríveis com Flux Schnell e SDXL', icon: '✨', category: 'Imagem', color: '#EC4899', href: '/generate/image', credits: 5, available: true },
@@ -37,7 +37,7 @@ const APPS: AppItem[] = [
 
   // Marketing & Ads
   { id: 'marketing-studio', name: 'Marketing Studio', description: 'Crie UGC ads virais para TikTok Shop, Shopee e Mercado Livre', icon: '📢', category: 'Marketing', color: '#10B981', href: '/studio', badge: 'HOT', credits: 55, available: true },
-  { id: 'click-to-ad', name: 'Link para Anúncio', description: 'Transforme links de produto em UGC e anúncios', icon: '🔗', category: 'Marketing', color: '#7C3AED', href: '#', credits: 40, available: false },
+  { id: 'click-to-ad', name: 'Link para Anúncio', description: 'Transforme links de produto em UGC e anúncios', icon: '🔗', category: 'Marketing', color: '#ffff00', href: '#', credits: 40, available: false },
   { id: 'product-shot', name: 'Foto de Produto', description: 'Fotos profissionais de produto em fundo limpo', icon: '📦', category: 'Marketing', color: '#EC4899', href: '#', credits: 15, available: false },
 
   // Criativo
@@ -59,7 +59,7 @@ export default function AppsPage() {
           </p>
         </div>
         <div className="flex items-center gap-1 text-xs text-white/30">
-          <Star className="h-3 w-3 text-[#A78BFA]" />
+          <Star className="h-3 w-3 text-[#ffff56]" />
           <span>Mais ferramentas chegando toda semana</span>
         </div>
       </div>

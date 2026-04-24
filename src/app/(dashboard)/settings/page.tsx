@@ -126,7 +126,7 @@ export default function SettingsPage() {
               value={form.full_name}
               onChange={(e) => setForm((f) => ({ ...f, full_name: e.target.value }))}
               placeholder="Fellipe Silva"
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#FF6B00]"
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#ffff00]"
             />
           </div>
 
@@ -137,7 +137,7 @@ export default function SettingsPage() {
               value={form.company_name}
               onChange={(e) => setForm((f) => ({ ...f, company_name: e.target.value }))}
               placeholder="Royal Calçados"
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#FF6B00]"
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#ffff00]"
             />
           </div>
 
@@ -148,7 +148,7 @@ export default function SettingsPage() {
               value={form.phone}
               onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
               placeholder="(11) 99999-9999"
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#FF6B00]"
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#ffff00]"
             />
           </div>
 
@@ -156,7 +156,7 @@ export default function SettingsPage() {
             <button
               type="submit"
               disabled={saving}
-              className="flex items-center gap-2 rounded-xl bg-[#FF6B00] px-5 py-2.5 text-sm font-bold text-black disabled:opacity-50 hover:bg-[#FF8C00] transition"
+              className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-5 py-2.5 text-sm font-bold text-black disabled:opacity-50 hover:bg-[#ffff56] transition"
             >
               {saving && <Loader2 className="h-4 w-4 animate-spin" />}
               {saving ? 'Salvando...' : 'Salvar alterações'}
@@ -181,8 +181,8 @@ export default function SettingsPage() {
       <div className="rounded-2xl border border-white/5 bg-[#111111] p-6">
         <h2 className="font-bold mb-1">Seu link de indicação</h2>
         <p className="text-sm text-white/40 mb-4">
-          Indique amigos e ganhe <span className="text-[#FF6B00] font-semibold">100 créditos</span> para cada assinatura convertida.
-          Seu amigo ganha <span className="text-[#FF6B00] font-semibold">50 créditos</span> de bônus.
+          Indique amigos e ganhe <span className="text-[#ffff00] font-semibold">100 créditos</span> para cada assinatura convertida.
+          Seu amigo ganha <span className="text-[#ffff00] font-semibold">50 créditos</span> de bônus.
         </p>
         <div className="flex gap-2">
           <div className="flex-1 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3">
@@ -191,7 +191,7 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={copyReferralLink}
-            className="flex items-center gap-2 rounded-xl border border-[#FF6B00]/30 bg-[#FF6B00]/10 px-4 py-3 text-sm font-medium text-[#FF6B00] hover:bg-[#FF6B00]/20 transition"
+            className="flex items-center gap-2 rounded-xl border border-[#ffff00]/30 bg-[#ffff00]/10 px-4 py-3 text-sm font-medium text-[#ffff00] hover:bg-[#ffff00]/20 transition"
           >
             {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
             {copied ? 'Copiado!' : 'Copiar'}

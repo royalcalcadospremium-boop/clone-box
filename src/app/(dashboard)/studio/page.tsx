@@ -32,7 +32,7 @@ const STUDIO_TOOLS = [
     id: 'ugc-ads',
     href: '#',
     icon: '📢',
-    iconBg: '#7C3AED',
+    iconBg: '#ffff00',
     title: 'UGC Ads Generator',
     subtitle: 'Marketing',
     description: 'Gere anúncios UGC completos — roteiro, vídeo e legenda — para TikTok Shop, Shopee e Mercado Livre em um só lugar.',
@@ -69,12 +69,12 @@ export default function StudioPage() {
     <div className="max-w-[1200px] mx-auto space-y-8">
 
       {/* Hero */}
-      <div className="relative rounded-2xl overflow-hidden border border-[#7C3AED]/20 bg-[#0F0F0F] p-8">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/10 via-transparent to-[#EC4899]/10" />
+      <div className="relative rounded-2xl overflow-hidden border border-[#ffff00]/20 bg-[#0F0F0F] p-8">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#ffff00]/10 via-transparent to-[#EC4899]/10" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="h-5 w-5 text-[#A78BFA]" />
-            <span className="text-sm font-bold text-[#A78BFA]">Marketing Studio</span>
+            <Sparkles className="h-5 w-5 text-[#ffff56]" />
+            <span className="text-sm font-bold text-[#ffff56]">Marketing Studio</span>
           </div>
           <h1 className="text-2xl font-black tracking-tight mb-2">
             Crie conteúdo viral para{' '}
@@ -102,7 +102,7 @@ export default function StudioPage() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { icon: Video, label: 'Vídeos gerados', value: '1.2K+', color: '#7C3AED' },
+          { icon: Video, label: 'Vídeos gerados', value: '1.2K+', color: '#ffff00' },
           { icon: Target, label: 'Taxa de engajamento', value: '3.8x', color: '#EC4899' },
           { icon: ShoppingBag, label: 'Vendas geradas', value: 'R$ 500K+', color: '#10B981' },
         ].map(({ icon: Icon, label, value, color }) => (
@@ -166,8 +166,8 @@ export default function StudioPage() {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1 text-xs">
-                    <Zap className="h-3 w-3 text-[#A78BFA]" />
-                    <span className="text-[#A78BFA] font-bold">{tool.credits}</span>
+                    <Zap className="h-3 w-3 text-[#ffff56]" />
+                    <span className="text-[#ffff56] font-bold">{tool.credits}</span>
                   </div>
                   {tool.available ? (
                     <Link

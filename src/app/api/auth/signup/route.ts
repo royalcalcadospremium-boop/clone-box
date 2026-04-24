@@ -84,11 +84,11 @@ export async function POST(request: Request) {
         subject: 'Confirme seu email — Ninja Box',
         html: `
           <div style="font-family:sans-serif;max-width:480px;margin:0 auto;background:#121212;color:#fff;padding:32px;border-radius:16px;">
-            <h2 style="color:#1DB954;margin-bottom:8px;">Bem-vindo ao Ninja Box!</h2>
+            <h2 style="color:#ffff00;margin-bottom:8px;">Bem-vindo ao Ninja Box!</h2>
             <p style="color:#aaa;">Olá ${name}, sua conta foi criada com sucesso.</p>
-            <p style="color:#aaa;">Clique no botão abaixo para confirmar seu email e ativar seus <strong style="color:#1DB954;">20 créditos grátis</strong>:</p>
+            <p style="color:#aaa;">Clique no botão abaixo para confirmar seu email e ativar seus <strong style="color:#ffff00;">20 créditos grátis</strong>:</p>
             <a href="${linkData.properties.action_link}"
-               style="display:inline-block;background:#1DB954;color:#000;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:15px;margin-top:16px;">
+               style="display:inline-block;background:#ffff00;color:#000;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:15px;margin-top:16px;">
               Confirmar email e ativar créditos
             </a>
             <p style="margin-top:32px;color:#555;font-size:12px;">

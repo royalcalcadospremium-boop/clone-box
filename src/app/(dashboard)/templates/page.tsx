@@ -47,8 +47,8 @@ export default async function TemplatesPage() {
 
         {!myTemplates || myTemplates.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-14 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#FF6B00]/10 mb-3">
-              <LayoutTemplate className="h-7 w-7 text-[#FF6B00]" />
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#ffff00]/10 mb-3">
+              <LayoutTemplate className="h-7 w-7 text-[#ffff00]" />
             </div>
             <h3 className="font-bold">Nenhum template ainda</h3>
             <p className="mt-1 text-sm text-white/40 max-w-xs">
@@ -56,7 +56,7 @@ export default async function TemplatesPage() {
             </p>
             <Link
               href="/clone"
-              className="mt-5 flex items-center gap-2 rounded-xl bg-[#FF6B00] px-5 py-2.5 text-sm font-bold text-black hover:bg-[#FF8C00] transition"
+              className="mt-5 flex items-center gap-2 rounded-xl bg-[#ffff00] px-5 py-2.5 text-sm font-bold text-black hover:bg-[#ffff56] transition"
             >
               <Plus className="h-4 w-4" />
               Criar primeiro clone
@@ -80,7 +80,7 @@ export default async function TemplatesPage() {
                   <div className="flex items-center justify-between">
                     <h3 className="font-semibold text-sm">{tpl.name}</h3>
                     {tpl.is_public && (
-                      <span className="text-xs text-[#FF6B00] border border-[#FF6B00]/30 rounded px-1.5 py-0.5">Público</span>
+                      <span className="text-xs text-[#ffff00] border border-[#ffff00]/30 rounded px-1.5 py-0.5">Público</span>
                     )}
                   </div>
                   {tpl.description && (
@@ -96,7 +96,7 @@ export default async function TemplatesPage() {
                   </div>
                   <Link
                     href={`/clone?template=${tpl.id}`}
-                    className="block mt-2 w-full rounded-xl border border-[#FF6B00]/30 py-2 text-center text-xs font-bold text-[#FF6B00] hover:bg-[#FF6B00]/10 transition"
+                    className="block mt-2 w-full rounded-xl border border-[#ffff00]/30 py-2 text-center text-xs font-bold text-[#ffff00] hover:bg-[#ffff00]/10 transition"
                   >
                     Usar template
                   </Link>
@@ -137,7 +137,7 @@ export default async function TemplatesPage() {
                   </div>
                   <Link
                     href={`/clone?template=${tpl.id}`}
-                    className="block mt-2 w-full rounded-xl border border-white/10 py-2 text-center text-xs font-medium hover:border-[#FF6B00]/30 hover:text-[#FF6B00] transition"
+                    className="block mt-2 w-full rounded-xl border border-white/10 py-2 text-center text-xs font-medium hover:border-[#ffff00]/30 hover:text-[#ffff00] transition"
                   >
                     Usar template
                   </Link>

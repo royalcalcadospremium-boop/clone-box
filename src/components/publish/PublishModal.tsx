@@ -175,7 +175,7 @@ export function PublishModal({ videoId, onClose }: PublishModalProps) {
                       <button
                         key={integration.platform}
                         onClick={() => selectPlatform(integration.platform)}
-                        className="w-full flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 hover:border-[#7C3AED]/40 hover:bg-white/[0.05] transition text-left"
+                        className="w-full flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 hover:border-[#ffff00]/40 hover:bg-white/[0.05] transition text-left"
                       >
                         <span className="text-2xl">{PLATFORM_ICONS[integration.platform] ?? '🛒'}</span>
                         <div>
@@ -211,7 +211,7 @@ export function PublishModal({ videoId, onClose }: PublishModalProps) {
                       placeholder="Buscar produto..."
                       value={search}
                       onChange={e => setSearch(e.target.value)}
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#7C3AED] outline-none transition"
+                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#ffff00] outline-none transition"
                     />
                   </div>
 
