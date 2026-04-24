@@ -82,7 +82,12 @@ async function handleCheckoutCompleted(
 
   if (type === 'topup' && topupId && creditsStr) {
     const credits = parseInt(creditsStr, 10)
-    // Busca saldo atual
+    if (isNaN(credits) || credits <= 0) {
+      logger.error({ creditsStr, topupId }, 'Topup: créditos inválidos na sessão Stripe')
+      return
+    }
+
+    // Busca saldo ANTES da atualização para registrar o balance_before correto
     const { data: profile } = await admin
       .from('profiles')
       .select('credits_balance, credits_bonus_balance')
@@ -102,7 +107,7 @@ async function handleCheckoutCompleted(
       })
       .eq('id', userId)
 
-    // Registra transação
+    // Registra transação com balances corretos (calculados antes da atualização)
     await admin.from('credit_transactions').insert({
       user_id: userId,
       amount: credits,
@@ -221,12 +226,16 @@ async function handleInvoicePaid(
   const balanceBefore = (profile?.credits_balance ?? 0) + (profile?.credits_bonus_balance ?? 0)
   const balanceAfter = balanceBefore + creditsQuota
 
-  // Renova créditos
+  // Renova créditos — usa period_end da invoice ou calcula 30 dias como fallback
+  const periodEndMs = invoice.period_end
+    ? invoice.period_end * 1000
+    : Date.now() + 30 * 24 * 60 * 60 * 1000
+
   await admin
     .from('profiles')
     .update({
       credits_balance: creditsQuota,
-      credits_reset_date: new Date((invoice.period_end ?? 0) * 1000).toISOString(),
+      credits_reset_date: new Date(periodEndMs).toISOString(),
       updated_at: new Date().toISOString(),
     })
     .eq('id', sub.user_id)

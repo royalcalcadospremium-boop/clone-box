@@ -1,5 +1,3 @@
-'use server'
-
 import { eq, sql } from 'drizzle-orm'
 import { db } from '@/server/db'
 import { creditTransactions, profiles } from '@/server/db/schema'

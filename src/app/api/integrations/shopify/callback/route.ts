@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+﻿import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { exchangeShopifyCode } from '@/lib/integrations/shopify/client'
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const shop = searchParams.get('shop')
 
     if (!code || !state || !shop) {
-      return NextResponse.redirect('/integrations?error=missing_params')
+      return NextResponse.redirect(new URL('/integrations?error=missing_params', request.url))
     }
 
     // Valida state via cookie seguro (CSRF protection)
@@ -20,10 +20,10 @@ export async function GET(request: Request) {
     const savedUserId = cookieStore.get('sfy_oauth_user')?.value
 
     if (!savedState || savedState !== state) {
-      return NextResponse.redirect('/integrations?error=invalid_state')
+      return NextResponse.redirect(new URL('/integrations?error=invalid_state', request.url))
     }
     if (!savedUserId) {
-      return NextResponse.redirect('/integrations?error=session_expired')
+      return NextResponse.redirect(new URL('/integrations?error=session_expired', request.url))
     }
 
     // Limpa cookies de OAuth
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
     const apiKey = process.env.SHOPIFY_API_KEY
     const apiSecret = process.env.SHOPIFY_API_SECRET
     if (!apiKey || !apiSecret) {
-      return NextResponse.redirect('/integrations?error=config_missing')
+      return NextResponse.redirect(new URL('/integrations?error=config_missing', request.url))
     }
 
     const { accessToken, shopDomain } = await exchangeShopifyCode(shop, apiKey, apiSecret, code)
@@ -49,8 +49,8 @@ export async function GET(request: Request) {
       connected_at: new Date().toISOString(),
     }, { onConflict: 'user_id,platform,shop_id' })
 
-    return NextResponse.redirect('/integrations?success=shopify')
+    return NextResponse.redirect(new URL('/integrations?success=shopify', request.url))
   } catch {
-    return NextResponse.redirect('/integrations?error=auth_failed')
+    return NextResponse.redirect(new URL('/integrations?error=auth_failed', request.url))
   }
 }

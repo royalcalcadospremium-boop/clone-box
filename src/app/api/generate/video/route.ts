@@ -9,6 +9,7 @@ import { refundCredits } from '@/lib/credits/refund'
 import { assertCanGenerate } from '@/lib/credits/check'
 import { inngest } from '@/server/inngest/client'
 import { logger } from '@/lib/logger'
+import { InsufficientCreditsError } from '@/lib/errors'
 
 const schema = z.object({
   model: z.enum(['seedance', 'kling', 'wan']),
@@ -48,36 +49,56 @@ export async function POST(request: Request) {
     const videoCost = getVideoCost(input.duration)
     const admin = createAdminClient()
 
-    // Create video record
-    const { data: video, error: videoError } = await admin
-      .from('videos')
-      .insert({
-        user_id: user.id,
-        product_description: input.prompt.slice(0, 200),
-        product_image_url: input.productImageUrl ?? null,
-        prompt_final: input.prompt,
-        style: `ai-${input.model}`,
-        duration: input.duration,
-        resolution: input.resolution,
-        aspect_ratio: input.aspectRatio,
-        status: 'generating_video',
-        credits_spent: videoCost,
-        credits_breakdown: { video: videoCost, model: input.model },
-        generation_started_at: new Date().toISOString(),
+    // Cobra créditos ANTES de criar o registro — evita vídeos órfãos se o saldo for insuficiente
+    try {
+      await chargeCredits({
+        userId: user.id,
+        amount: videoCost,
+        type: 'video_generation',
+        referenceType: 'video',
+        description: `Geração de vídeo ${input.duration}s — ${input.model}`,
       })
-      .select('id')
-      .single()
+    } catch (err) {
+      if (err instanceof InsufficientCreditsError) {
+        return NextResponse.json({ error: err.message }, { status: 403 })
+      }
+      throw err
+    }
 
-    if (videoError || !video) throw videoError ?? new Error('Falha ao criar vídeo')
+    // Cria o registro do vídeo após débito bem-sucedido
+    let video: { id: string }
+    try {
+      const { data: videoData, error: videoError } = await admin
+        .from('videos')
+        .insert({
+          user_id: user.id,
+          product_description: input.prompt.slice(0, 200),
+          product_image_url: input.productImageUrl ?? null,
+          prompt_final: input.prompt,
+          style: `ai-${input.model}`,
+          duration: input.duration,
+          resolution: input.resolution,
+          aspect_ratio: input.aspectRatio,
+          status: 'generating_video',
+          credits_spent: videoCost,
+          credits_breakdown: { video: videoCost, model: input.model },
+          generation_started_at: new Date().toISOString(),
+        })
+        .select('id')
+        .single()
 
-    await chargeCredits({
-      userId: user.id,
-      amount: videoCost,
-      type: 'video_generation',
-      referenceId: video.id,
-      referenceType: 'video',
-      description: `Geração de vídeo ${input.duration}s — ${input.model}`,
-    })
+      if (videoError || !videoData) throw videoError ?? new Error('Falha ao criar vídeo')
+      video = videoData
+    } catch {
+      // Estorna créditos se a criação do registro falhar
+      await refundCredits({
+        userId: user.id,
+        amount: videoCost,
+        referenceType: 'video',
+        description: 'Estorno — falha ao criar registro de vídeo',
+      })
+      return NextResponse.json({ error: 'Erro ao criar vídeo. Créditos estornados.' }, { status: 500 })
+    }
 
     const provider = MODEL_PROVIDERS[input.model]
 

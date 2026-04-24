@@ -120,12 +120,12 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
         const pollRes = await fetch(`/api/clone/status/${videoId}`)
         const pollData = await pollRes.json()
         if (pollData.status === 'ready') {
-          setResultVideoUrl(pollData.outputVideoUrl)
+          setResultVideoUrl(pollData.output_video_url)
           setStatus('success')
           return
         }
         if (pollData.status === 'failed') {
-          throw new Error(pollData.errorMessage ?? 'Falha na geração')
+          throw new Error(pollData.error_message ?? 'Falha na geração')
         }
         attempts++
       }

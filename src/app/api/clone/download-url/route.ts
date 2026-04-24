@@ -31,8 +31,9 @@ function isSupportedUrl(url: string): boolean {
 }
 
 async function getDirectVideoUrl(url: string): Promise<string> {
-  // cobalt.tools — serviço open-source de download sem binários
-  const res = await fetch('https://co.wuk.sh/api/json', {
+  // cobalt.tools v10+ API — serviço open-source de download sem binários
+  const cobaltUrl = process.env.COBALT_API_URL ?? 'https://cobalt.tools/api'
+  const res = await fetch(cobaltUrl, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -40,18 +41,20 @@ async function getDirectVideoUrl(url: string): Promise<string> {
     },
     body: JSON.stringify({
       url,
-      vQuality: '1080',
-      isAudioOnly: false,
-      disableMetadata: true,
+      videoQuality: '1080',
+      downloadMode: 'auto',
     }),
     signal: AbortSignal.timeout(30_000),
   })
 
-  if (!res.ok) throw new Error(`cobalt.tools retornou ${res.status}`)
+  if (!res.ok) {
+    const errText = await res.text().catch(() => res.status.toString())
+    throw new Error(`cobalt.tools retornou ${res.status}: ${errText}`)
+  }
 
-  const data = await res.json() as { status: string; url?: string; picker?: { url: string }[] }
+  const data = await res.json() as { status: string; url?: string; picker?: Array<{ url: string }> }
 
-  if (data.status === 'redirect' || data.status === 'stream') {
+  if (data.status === 'redirect' || data.status === 'tunnel') {
     if (!data.url) throw new Error('URL de download não retornada')
     return data.url
   }

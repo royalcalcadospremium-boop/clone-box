@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+﻿import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { exchangeTikTokShopCode, getTikTokShopClient } from '@/lib/integrations/tiktokshop/client'
@@ -10,7 +10,7 @@ export async function GET(request: Request) {
     const state = searchParams.get('state')
 
     if (!code || !state) {
-      return NextResponse.redirect('/integrations?error=missing_params')
+      return NextResponse.redirect(new URL('/integrations?error=missing_params', request.url))
     }
 
     // Valida state via cookie seguro (CSRF protection)
@@ -19,10 +19,10 @@ export async function GET(request: Request) {
     const savedUserId = cookieStore.get('tt_oauth_user')?.value
 
     if (!savedState || savedState !== state) {
-      return NextResponse.redirect('/integrations?error=invalid_state')
+      return NextResponse.redirect(new URL('/integrations?error=invalid_state', request.url))
     }
     if (!savedUserId) {
-      return NextResponse.redirect('/integrations?error=session_expired')
+      return NextResponse.redirect(new URL('/integrations?error=session_expired', request.url))
     }
 
     // Limpa cookies de OAuth
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
     const appSecret = process.env.TIKTOKSHOP_APP_SECRET
     const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/integrations/tiktokshop/callback`
     if (!appKey || !appSecret) {
-      return NextResponse.redirect('/integrations?error=config_missing')
+      return NextResponse.redirect(new URL('/integrations?error=config_missing', request.url))
     }
 
     const { accessToken, refreshToken, shopId } = await exchangeTikTokShopCode(appKey, appSecret, code, redirectUri)
@@ -54,8 +54,8 @@ export async function GET(request: Request) {
       connected_at: new Date().toISOString(),
     }, { onConflict: 'user_id,platform,shop_id' })
 
-    return NextResponse.redirect('/integrations?success=tiktokshop')
+    return NextResponse.redirect(new URL('/integrations?success=tiktokshop', request.url))
   } catch {
-    return NextResponse.redirect('/integrations?error=auth_failed')
+    return NextResponse.redirect(new URL('/integrations?error=auth_failed', request.url))
   }
 }

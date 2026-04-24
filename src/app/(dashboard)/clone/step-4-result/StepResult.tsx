@@ -24,7 +24,12 @@ export function StepResult({ state }: Props) {
   const pollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    if (!state.videoId || !state.promptFinal) return
+    if (!state.videoId) return
+    if (!state.promptFinal) {
+      setStatus('failed')
+      setError('Prompt não encontrado. Volte ao passo anterior e tente novamente.')
+      return
+    }
     generateVideo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.videoId])
@@ -243,7 +248,9 @@ export function StepResult({ state }: Props) {
           <div className="flex justify-center">
             <button
               onClick={() => {
+                if (pollTimeoutRef.current) clearTimeout(pollTimeoutRef.current)
                 setStatus('generating_video')
+                setError('')
                 setElapsed(0)
                 generateVideo()
               }}

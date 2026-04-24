@@ -9,6 +9,7 @@ import { refundCredits } from '@/lib/credits/refund'
 import { assertCanGenerate } from '@/lib/credits/check'
 import { analyzeVideoForCloning } from '@/lib/ai/kimi/video-analyzer'
 import { logger } from '@/lib/logger'
+import { InsufficientCreditsError } from '@/lib/errors'
 
 const schema = z.object({
   referenceVideoUrl: z.string().url(),
@@ -45,37 +46,56 @@ export async function POST(request: Request) {
     const admin = createAdminClient()
 
     // Débito atômico de 10 créditos ANTES de criar o registro
-    await chargeCredits({
-      userId: user.id,
-      amount: CREDIT_COSTS.PROMPT_GENERATION,
-      type: 'analysis',
-      referenceType: 'video',
-      description: 'Análise do vídeo de referência + geração de prompt',
-    })
+    try {
+      await chargeCredits({
+        userId: user.id,
+        amount: CREDIT_COSTS.PROMPT_GENERATION,
+        type: 'analysis',
+        referenceType: 'video',
+        description: 'Análise do vídeo de referência + geração de prompt',
+      })
+    } catch (err) {
+      if (err instanceof InsufficientCreditsError) {
+        return NextResponse.json({ error: err.message }, { status: 403 })
+      }
+      throw err
+    }
 
     // Cria registro do vídeo depois de cobrar
-    const { data: video, error: videoError } = await admin
-      .from('videos')
-      .insert({
-        user_id: user.id,
-        reference_video_url: input.referenceVideoUrl,
-        product_image_url: input.productImageUrl,
-        product_description: input.productDescription,
-        style: input.style,
-        duration: input.duration,
-        resolution: input.resolution,
-        aspect_ratio: input.aspectRatio,
-        camera_movement: input.cameraMovement ?? null,
-        language: input.language,
-        music: input.music ?? null,
-        status: 'analyzing_reference',
-        credits_spent: CREDIT_COSTS.PROMPT_GENERATION,
-        credits_breakdown: { analysis: CREDIT_COSTS.PROMPT_GENERATION },
-      })
-      .select('id')
-      .single()
+    let video: { id: string }
+    try {
+      const { data: videoData, error: videoError } = await admin
+        .from('videos')
+        .insert({
+          user_id: user.id,
+          reference_video_url: input.referenceVideoUrl,
+          product_image_url: input.productImageUrl,
+          product_description: input.productDescription,
+          style: input.style,
+          duration: input.duration,
+          resolution: input.resolution,
+          aspect_ratio: input.aspectRatio,
+          camera_movement: input.cameraMovement ?? null,
+          language: input.language,
+          music: input.music ?? null,
+          status: 'analyzing_reference',
+          credits_spent: CREDIT_COSTS.PROMPT_GENERATION,
+          credits_breakdown: { analysis: CREDIT_COSTS.PROMPT_GENERATION },
+        })
+        .select('id')
+        .single()
 
-    if (videoError || !video) throw videoError ?? new Error('Falha ao criar vídeo')
+      if (videoError || !videoData) throw videoError ?? new Error('Falha ao criar vídeo')
+      video = videoData
+    } catch {
+      await refundCredits({
+        userId: user.id,
+        amount: CREDIT_COSTS.PROMPT_GENERATION,
+        referenceType: 'video',
+        description: 'Estorno — falha ao criar registro de vídeo',
+      })
+      return NextResponse.json({ error: 'Erro ao criar vídeo. Créditos estornados.' }, { status: 500 })
+    }
 
     // Kimi analisa a imagem do produto + contexto do vídeo de referência
     try {

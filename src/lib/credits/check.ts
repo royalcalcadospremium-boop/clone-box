@@ -1,13 +1,9 @@
 import { eq } from 'drizzle-orm'
 import { db } from '@/server/db'
 import { profiles } from '@/server/db/schema'
+import { PlanRestrictionError } from '@/lib/errors'
 
-export class PlanRestrictionError extends Error {
-  constructor(message: string) {
-    super(message)
-    this.name = 'PlanRestrictionError'
-  }
-}
+export { PlanRestrictionError }
 
 export async function assertCanGenerate(userId: string) {
   const [profile] = await db
