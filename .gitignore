@@ -48,3 +48,4 @@ ngrok/
 stripe-cli/
 tunnel-url.txt
 
+.vercel
