@@ -6,6 +6,7 @@ import {
   Play, Loader2, CheckCircle2, AlertCircle, Wand2,
   Clock, Monitor, Ratio, Camera
 } from 'lucide-react'
+import { CREDIT_COSTS } from '@/lib/credits/pricing'
 
 type VideoModel = {
   id: string
@@ -33,7 +34,7 @@ const VIDEO_MODELS: VideoModel[] = [
     supports: ['text', 'image'],
     maxDuration: 15,
     color: '#7C3AED',
-    creditCost: { 5: 30, 10: 50, 15: 65 },
+    creditCost: { 5: CREDIT_COSTS.VIDEO_GENERATION_5S, 10: CREDIT_COSTS.VIDEO_GENERATION_10S, 15: CREDIT_COSTS.VIDEO_GENERATION_15S },
   },
   {
     id: 'kling',

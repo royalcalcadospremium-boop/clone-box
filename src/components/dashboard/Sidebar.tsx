@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import {
   Compass, Video, Image, Grid3x3, Sparkles, BookOpen,
   CreditCard, Settings, LogOut, ChevronRight, Layers,
-  Mic, Wand2, Film, Star
+  Mic, Wand2, Film, Star, Globe
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
@@ -31,6 +31,7 @@ const navGroups = [
     label: 'Conteúdo',
     items: [
       { href: '/library', label: 'Biblioteca', icon: BookOpen, description: 'Seus vídeos e imagens' },
+      { href: '/publish-history', label: 'Publicações', icon: Globe, description: 'Vídeos publicados nas lojas' },
       { href: '/templates', label: 'Templates', icon: Layers, description: 'Modelos salvos' },
       { href: '/originals', label: 'Originais', icon: Film, description: 'Criações em destaque' },
     ],

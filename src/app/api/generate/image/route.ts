@@ -3,7 +3,10 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { rateLimit } from '@/lib/rate-limit'
 import { chargeCredits } from '@/lib/credits/charge'
+import { refundCredits } from '@/lib/credits/refund'
+import { assertCanGenerate } from '@/lib/credits/check'
 import { generateFalImage, type FalImageModel } from '@/lib/ai/fal/image'
+import { logger } from '@/lib/logger'
 
 const schema = z.object({
   model: z.enum(['flux-schnell', 'flux-dev', 'sdxl']),
@@ -28,6 +31,13 @@ export async function POST(request: Request) {
     const limited = await rateLimit(`gen-image:${user.id}`, 20, 60)
     if (limited) return NextResponse.json({ error: 'Muitas requisições. Aguarde.' }, { status: 429 })
 
+    try {
+      await assertCanGenerate(user.id)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Restrição de plano'
+      return NextResponse.json({ error: msg }, { status: 403 })
+    }
+
     const body = await request.json()
     const input = schema.parse(body)
 
@@ -42,24 +52,34 @@ export async function POST(request: Request) {
       description: `Geração de ${input.numImages} imagem(ns) — ${input.model}`,
     })
 
-    const result = await generateFalImage({
-      model: input.model as FalImageModel,
-      prompt: input.prompt,
-      negativePrompt: input.negativePrompt,
-      imageSize: input.imageSize as Parameters<typeof generateFalImage>[0]['imageSize'],
-      numImages: input.numImages as 1 | 2 | 4,
-    })
+    try {
+      const result = await generateFalImage({
+        model: input.model as FalImageModel,
+        prompt: input.prompt,
+        negativePrompt: input.negativePrompt,
+        imageSize: input.imageSize as Parameters<typeof generateFalImage>[0]['imageSize'],
+        numImages: input.numImages as 1 | 2 | 4,
+      })
 
-    return NextResponse.json({
-      images: result.images,
-      seed: result.seed,
-      model: input.model,
-    })
+      return NextResponse.json({
+        images: result.images,
+        seed: result.seed,
+        model: input.model,
+      })
+    } catch {
+      await refundCredits({
+        userId: user.id,
+        amount: totalCost,
+        referenceType: 'image',
+        description: 'Estorno — falha na geração de imagem',
+      })
+      return NextResponse.json({ error: 'Falha na geração. Créditos estornados.' }, { status: 502 })
+    }
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Dados inválidos', details: error.issues }, { status: 400 })
     }
-    console.error('generate-image error:', error)
+    logger.error({ error: error instanceof Error ? error.message : 'unknown' }, 'generate-image error')
     return NextResponse.json({ error: 'Erro interno. Tente novamente.' }, { status: 500 })
   }
 }

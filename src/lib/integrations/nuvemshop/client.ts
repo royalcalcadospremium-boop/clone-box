@@ -70,11 +70,13 @@ export function getNuvemShopClient(integration: IntegrationClient) {
   }
 }
 
-export function getNuvemShopAuthUrl(storeId: string, appId: string): string {
+export function getNuvemShopAuthUrl(storeId: string, appId: string, state?: string): string {
   // NuvemShop usa OAuth: o merchant instala o app via URL do painel
   // Em produção, o fluxo é: merchant clica no link de instalação no painel NuvemShop
   // e é redirecionado para seu redirect_uri com ?code=...
-  return `https://www.nuvemshop.com.br/admin/apps/${appId}/authorize`
+  const url = new URL(`https://www.nuvemshop.com.br/admin/apps/${appId}/authorize`)
+  if (state) url.searchParams.set('state', state)
+  return url.toString()
 }
 
 export async function exchangeNuvemShopCode(

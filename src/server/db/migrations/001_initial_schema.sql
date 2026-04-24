@@ -564,3 +564,13 @@ $$;
 -- ============================================================
 -- FIM DA MIGRAÇÃO
 -- ============================================================
+
+-- referrals
+ALTER TABLE referrals ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "referrals_select_own" ON referrals
+  FOR SELECT USING (auth.uid() = referrer_id OR auth.uid() = referred_id);
+
+CREATE POLICY "referrals_insert_trigger" ON referrals
+  FOR INSERT WITH CHECK (true);  -- Inserido pela trigger de signup
+

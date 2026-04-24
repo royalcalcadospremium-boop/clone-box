@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { getNuvemShopAuthUrl } from '@/lib/integrations/nuvemshop/client'
+import { rateLimit } from '@/lib/rate-limit'
+import crypto from 'crypto'
 
 export async function POST() {
   try {
@@ -8,13 +11,20 @@ export async function POST() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Não autenticado' }, { status: 401 })
 
+    const limited = await rateLimit(`auth-ns:${user.id}`, 10, 60)
+    if (limited) return NextResponse.json({ error: 'Muitas requisições. Aguarde.' }, { status: 429 })
+
     const appId = process.env.NUVEMSHOP_APP_ID
     if (!appId) return NextResponse.json({ error: 'NUVEMSHOP_APP_ID não configurado' }, { status: 500 })
 
+    const state = crypto.randomBytes(32).toString('hex')
+    const cookieStore = await cookies()
+    cookieStore.set('ns_oauth_state', state, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 600, sameSite: 'lax', path: '/' })
+    cookieStore.set('ns_oauth_user', user.id, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 600, sameSite: 'lax', path: '/' })
+
     // NuvemShop usa instalação direta no painel do merchant
     // O redirect vem do painel da NuvemShop para nosso callback
-    const state = Buffer.from(user.id).toString('base64')
-    const url = getNuvemShopAuthUrl('STORE_ID', appId) // STORE_ID será preenchido pelo merchant
+    const url = getNuvemShopAuthUrl('STORE_ID', appId, state) // STORE_ID será preenchido pelo merchant
 
     return NextResponse.json({ url, state })
   } catch {

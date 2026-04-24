@@ -12,6 +12,7 @@ export const CREDIT_COSTS = {
   VIDEO_GENERATION_5S: 30,    // apenas vídeo 5s (passo 4)
   VIDEO_GENERATION_10S: 40,   // apenas vídeo 10s (passo 4)
   VIDEO_VARIATION: 40,        // nova seed, mesmo prompt
+  VIDEO_GENERATION_15S: 65,   // vídeo 15s
 } as const
 
 export const PLAN_CREDITS = {
@@ -37,7 +38,7 @@ export const TRIAL_DAYS = 7
 export function getVideoCost(duration: number): number {
   if (duration <= 5) return CREDIT_COSTS.VIDEO_GENERATION_5S
   if (duration <= 10) return CREDIT_COSTS.VIDEO_GENERATION_10S
-  return 65 // 15s
+  return CREDIT_COSTS.VIDEO_GENERATION_15S
 }
 
 export type CreditCostKey = keyof typeof CREDIT_COSTS

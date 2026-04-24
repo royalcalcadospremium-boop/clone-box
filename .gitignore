@@ -42,3 +42,9 @@ drizzle/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# dev tools
+ngrok/
+stripe-cli/
+tunnel-url.txt
+

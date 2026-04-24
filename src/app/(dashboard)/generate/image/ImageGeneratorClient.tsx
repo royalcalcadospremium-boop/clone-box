@@ -5,6 +5,7 @@ import {
   Image, Loader2, CheckCircle2, AlertCircle, Wand2,
   Download, RefreshCw, Zap, Grid2x2, Grid3x3
 } from 'lucide-react'
+import NextImage from 'next/image'
 
 type ImageModel = {
   id: string
@@ -334,11 +335,11 @@ export function ImageGeneratorClient() {
               <button
                 key={i}
                 onClick={() => setSelectedImage(img.url)}
-                className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+                className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                   selectedImage === img.url ? 'border-[#7C3AED]' : 'border-transparent hover:border-white/20'
                 }`}
               >
-                <img src={img.url} alt={`result ${i + 1}`} className="w-full h-full object-cover" />
+                <NextImage src={img.url} alt={`result ${i + 1}`} fill className="object-cover" unoptimized />
               </button>
             ))}
           </div>

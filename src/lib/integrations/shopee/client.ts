@@ -98,8 +98,13 @@ export function getShopeeClient(integration: IntegrationClient, partnerId: numbe
   }
 }
 
-export function getShopeeAuthUrl(partnerId: number, redirectUri: string): string {
-  const encodedUri = encodeURIComponent(redirectUri)
+export function getShopeeAuthUrl(partnerId: number, redirectUri: string, state?: string): string {
+  let finalRedirect = redirectUri
+  if (state) {
+    const sep = redirectUri.includes('?') ? '&' : '?'
+    finalRedirect = `${redirectUri}${sep}state=${encodeURIComponent(state)}`
+  }
+  const encodedUri = encodeURIComponent(finalRedirect)
   return `https://partner.shopeemobile.com/api/v2/shop/auth_partner?partner_id=${partnerId}&redirect=${encodedUri}`
 }
 

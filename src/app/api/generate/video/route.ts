@@ -5,7 +5,10 @@ import { z } from 'zod'
 import { rateLimit } from '@/lib/rate-limit'
 import { getVideoCost } from '@/lib/credits/pricing'
 import { chargeCredits } from '@/lib/credits/charge'
+import { refundCredits } from '@/lib/credits/refund'
+import { assertCanGenerate } from '@/lib/credits/check'
 import { inngest } from '@/server/inngest/client'
+import { logger } from '@/lib/logger'
 
 const schema = z.object({
   model: z.enum(['seedance', 'kling', 'wan']),
@@ -30,6 +33,14 @@ export async function POST(request: Request) {
 
     const limited = await rateLimit(`gen-video:${user.id}`, 10, 60)
     if (limited) return NextResponse.json({ error: 'Muitas requisições. Aguarde.' }, { status: 429 })
+
+    // Verifica plano, trial e créditos
+    try {
+      await assertCanGenerate(user.id)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Restrição de plano'
+      return NextResponse.json({ error: msg }, { status: 403 })
+    }
 
     const body = await request.json()
     const input = schema.parse(body)
@@ -70,34 +81,43 @@ export async function POST(request: Request) {
 
     const provider = MODEL_PROVIDERS[input.model]
 
-    if (provider === 'fal') {
-      // FAL.ai: submit via Inngest with fal model
-      await inngest.send({
-        name: 'clonebox/video.generate.fal',
-        data: {
-          videoId: video.id,
-          userId: user.id,
-          model: input.model,
-          prompt: input.prompt,
-          imageUrl: input.productImageUrl,
-          duration: input.duration as 5 | 10,
-          aspectRatio: input.aspectRatio,
-        },
+    try {
+      if (provider === 'fal') {
+        await inngest.send({
+          name: 'clonebox/video.generate.fal',
+          data: {
+            videoId: video.id,
+            userId: user.id,
+            model: input.model,
+            prompt: input.prompt,
+            imageUrl: input.productImageUrl,
+            duration: input.duration as 5 | 10,
+            aspectRatio: input.aspectRatio,
+          },
+        })
+      } else {
+        await inngest.send({
+          name: 'clonebox/video.generate',
+          data: {
+            videoId: video.id,
+            userId: user.id,
+            promptFinal: input.prompt,
+            productImageUrl: input.productImageUrl ?? '',
+            duration: input.duration,
+            resolution: input.resolution,
+            aspectRatio: input.aspectRatio,
+          },
+        })
+      }
+    } catch {
+      await refundCredits({
+        userId: user.id,
+        amount: videoCost,
+        referenceId: video.id,
+        referenceType: 'video',
+        description: 'Estorno — falha ao enfileirar geração de vídeo',
       })
-    } else {
-      // BytePlus Seedance — existing flow
-      await inngest.send({
-        name: 'clonebox/video.generate',
-        data: {
-          videoId: video.id,
-          userId: user.id,
-          promptFinal: input.prompt,
-          productImageUrl: input.productImageUrl ?? '',
-          duration: input.duration,
-          resolution: input.resolution,
-          aspectRatio: input.aspectRatio,
-        },
-      })
+      return NextResponse.json({ error: 'Falha ao iniciar geração. Créditos estornados.' }, { status: 502 })
     }
 
     return NextResponse.json({ videoId: video.id, status: 'generating_video', model: input.model })
@@ -105,7 +125,7 @@ export async function POST(request: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Dados inválidos', details: error.issues }, { status: 400 })
     }
-    console.error('generate-video error:', error)
+    logger.error({ error: error instanceof Error ? error.message : 'unknown' }, 'generate-video error')
     return NextResponse.json({ error: 'Erro interno. Tente novamente.' }, { status: 500 })
   }
 }

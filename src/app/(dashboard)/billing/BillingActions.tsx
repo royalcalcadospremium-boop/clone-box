@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
+import { useToast } from '@/components/ui/Toast'
 
 interface PlanButtonProps {
   planId: string
@@ -13,6 +14,7 @@ interface PlanButtonProps {
 
 export function PlanButton({ planId, planName, price, isCurrent, isPopular }: PlanButtonProps) {
   const [loading, setLoading] = useState(false)
+  const { showToast } = useToast()
 
   async function handleSubscribe() {
     setLoading(true)
@@ -26,10 +28,10 @@ export function PlanButton({ planId, planName, price, isCurrent, isPopular }: Pl
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('Erro ao iniciar checkout. Tente novamente.')
+        showToast('Erro ao iniciar checkout. Tente novamente.', 'error')
       }
     } catch {
-      alert('Erro ao conectar. Tente novamente.')
+      showToast('Erro ao conectar. Tente novamente.', 'error')
     } finally {
       setLoading(false)
     }
@@ -70,6 +72,7 @@ interface TopupButtonProps {
 
 export function TopupButton({ topupId, price, credits }: TopupButtonProps) {
   const [loading, setLoading] = useState(false)
+  const { showToast } = useToast()
 
   async function handleBuy() {
     setLoading(true)
@@ -83,10 +86,10 @@ export function TopupButton({ topupId, price, credits }: TopupButtonProps) {
       if (data.url) {
         window.location.href = data.url
       } else {
-        alert('Erro ao iniciar pagamento. Tente novamente.')
+        showToast('Erro ao iniciar pagamento. Tente novamente.', 'error')
       }
     } catch {
-      alert('Erro ao conectar. Tente novamente.')
+      showToast('Erro ao conectar. Tente novamente.', 'error')
     } finally {
       setLoading(false)
     }

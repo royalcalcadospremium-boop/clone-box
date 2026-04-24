@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { validateCPF } from '@/lib/utils/cpf'
 import { Resend } from 'resend'
+import { rateLimit } from '@/lib/rate-limit'
+import { logger } from '@/lib/logger'
 
 const schema = z.object({
   name: z.string().min(3).max(100),
@@ -13,6 +15,11 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
+    // Rate limit por IP para prevenir abuso de signup
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+    const limited = await rateLimit(`signup:${ip}`, 5, 3600)
+    if (limited) return NextResponse.json({ error: 'Muitas tentativas. Tente novamente mais tarde.' }, { status: 429 })
+
     const body = await request.json()
     const { name, email, password, cpf } = schema.parse(body)
 
@@ -97,7 +104,7 @@ export async function POST(request: Request) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Dados inválidos.' }, { status: 400 })
     }
-    console.error('signup error:', error)
+    logger.error({ error: error instanceof Error ? error.message : 'unknown' }, 'signup error')
     return NextResponse.json({ error: 'Erro ao criar conta. Tente novamente.' }, { status: 500 })
   }
 }

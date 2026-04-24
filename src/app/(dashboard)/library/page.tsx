@@ -1,5 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import { PublishButton } from '@/components/publish/PublishButton'
+import { PublishedBadge } from '@/components/publish/PublishedBadge'
 import { Play, Download, Clock, CheckCircle2, XCircle, Loader2, Zap, Plus, Folder } from 'lucide-react'
 
 const STATUS_LABELS: Record<string, { label: string; color: string; icon: typeof CheckCircle2 }> = {
@@ -165,6 +167,14 @@ export default async function LibraryPage() {
                       >
                         <Download className="h-5 w-5" />
                       </a>
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <PublishButton
+                          videoId={video.id}
+                          videoUrl={video.output_video_url}
+                          videoStatus={video.status}
+                          size="sm"
+                        />
+                      </div>
                     </div>
                   )}
 
@@ -194,6 +204,8 @@ export default async function LibraryPage() {
                   {video.product_description && (
                     <p className="text-xs text-white/60 line-clamp-2">{video.product_description}</p>
                   )}
+
+                  <PublishedBadge publishedTo={video.published_to} />
 
                   <div className="flex items-center justify-between pt-1">
                     <div className="flex items-center gap-1 text-xs text-white/30">

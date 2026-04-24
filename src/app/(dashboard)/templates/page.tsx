@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import Image from 'next/image'
 import { LayoutTemplate, Plus, Zap, Lock } from 'lucide-react'
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -69,7 +70,7 @@ export default async function TemplatesPage() {
                 className="rounded-2xl border border-white/5 bg-[#111111] overflow-hidden hover:border-white/10 transition"
               >
                 {tpl.thumbnail_url ? (
-                  <img src={tpl.thumbnail_url} alt={tpl.name} className="w-full h-40 object-cover" />
+                  <Image src={tpl.thumbnail_url} alt={tpl.name} width={400} height={160} className="w-full h-40 object-cover" unoptimized />
                 ) : (
                   <div className="w-full h-40 bg-[#0A0A0A] flex items-center justify-center">
                     <LayoutTemplate className="h-10 w-10 text-white/10" />
@@ -117,7 +118,7 @@ export default async function TemplatesPage() {
                 className="rounded-2xl border border-white/5 bg-[#111111] overflow-hidden hover:border-white/10 transition"
               >
                 {tpl.thumbnail_url ? (
-                  <img src={tpl.thumbnail_url} alt={tpl.name} className="w-full h-40 object-cover" />
+                  <Image src={tpl.thumbnail_url} alt={tpl.name} width={400} height={160} className="w-full h-40 object-cover" unoptimized />
                 ) : (
                   <div className="w-full h-40 bg-[#0A0A0A] flex items-center justify-center">
                     <LayoutTemplate className="h-10 w-10 text-white/10" />

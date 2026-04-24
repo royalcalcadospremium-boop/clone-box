@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { cookies } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { exchangeNuvemShopCode } from '@/lib/integrations/nuvemshop/client'
 
@@ -13,7 +13,21 @@ export async function GET(request: Request) {
       return NextResponse.redirect('/integrations?error=missing_params')
     }
 
-    const userId = Buffer.from(state, 'base64').toString('utf-8')
+    // Valida state via cookie seguro (CSRF protection)
+    const cookieStore = await cookies()
+    const savedState = cookieStore.get('ns_oauth_state')?.value
+    const savedUserId = cookieStore.get('ns_oauth_user')?.value
+
+    if (!savedState || savedState !== state) {
+      return NextResponse.redirect('/integrations?error=invalid_state')
+    }
+    if (!savedUserId) {
+      return NextResponse.redirect('/integrations?error=session_expired')
+    }
+
+    // Limpa cookies de OAuth
+    cookieStore.delete('ns_oauth_state')
+    cookieStore.delete('ns_oauth_user')
 
     const appId = process.env.NUVEMSHOP_APP_ID
     const appSecret = process.env.NUVEMSHOP_APP_SECRET
@@ -25,14 +39,14 @@ export async function GET(request: Request) {
 
     const admin = createAdminClient()
     await admin.from('integrations').upsert({
-      user_id: userId,
+      user_id: savedUserId,
       platform: 'nuvemshop',
       access_token_encrypted: accessToken,
       shop_id: storeId,
       shop_name: storeId,
       status: 'active',
       connected_at: new Date().toISOString(),
-    }, { onConflict: 'user_id,platform' })
+    }, { onConflict: 'user_id,platform,shop_id' })
 
     return NextResponse.redirect('/integrations?success=nuvemshop')
   } catch {

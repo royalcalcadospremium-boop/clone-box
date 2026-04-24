@@ -5,7 +5,10 @@ import { z } from 'zod'
 import { rateLimit } from '@/lib/rate-limit'
 import { CREDIT_COSTS, getVideoCost } from '@/lib/credits/pricing'
 import { chargeCredits } from '@/lib/credits/charge'
+import { refundCredits } from '@/lib/credits/refund'
+import { assertCanGenerate } from '@/lib/credits/check'
 import { inngest } from '@/server/inngest/client'
+import { logger } from '@/lib/logger'
 
 const schema = z.object({
   videoId: z.string().uuid(),
@@ -24,6 +27,14 @@ export async function POST(request: Request) {
 
     const limited = await rateLimit(`generate:${user.id}`, 5, 60)
     if (limited) return NextResponse.json({ error: 'Muitas requisições. Aguarde.' }, { status: 429 })
+
+    // Verifica plano, trial e créditos
+    try {
+      await assertCanGenerate(user.id)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Restrição de plano'
+      return NextResponse.json({ error: msg }, { status: 403 })
+    }
 
     const body = await request.json()
     const input = schema.parse(body)
@@ -71,25 +82,37 @@ export async function POST(request: Request) {
       .eq('id', input.videoId)
 
     // Dispara job assíncrono no Inngest
-    await inngest.send({
-      name: 'clonebox/video.generate',
-      data: {
-        videoId: input.videoId,
+    try {
+      await inngest.send({
+        name: 'clonebox/video.generate',
+        data: {
+          videoId: input.videoId,
+          userId: user.id,
+          promptFinal: input.promptFinal,
+          productImageUrl: input.productImageUrl,
+          duration: input.duration,
+          resolution: input.resolution,
+          aspectRatio: input.aspectRatio,
+        },
+      })
+    } catch {
+      // Reembolsa créditos se falhar ao enfileirar
+      await refundCredits({
         userId: user.id,
-        promptFinal: input.promptFinal,
-        productImageUrl: input.productImageUrl,
-        duration: input.duration,
-        resolution: input.resolution,
-        aspectRatio: input.aspectRatio,
-      },
-    })
+        amount: videoCost,
+        referenceId: input.videoId,
+        referenceType: 'video',
+        description: 'Estorno — falha ao enfileirar geração de vídeo',
+      })
+      return NextResponse.json({ error: 'Falha ao iniciar geração. Créditos estornados.' }, { status: 502 })
+    }
 
     return NextResponse.json({ videoId: input.videoId, status: 'generating_video' })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Dados inválidos' }, { status: 400 })
     }
-    console.error('generate-video error:', error)
+    logger.error({ error: error instanceof Error ? error.message : 'unknown' }, 'generate-video error')
     return NextResponse.json({ error: 'Erro interno. Tente novamente.' }, { status: 500 })
   }
 }

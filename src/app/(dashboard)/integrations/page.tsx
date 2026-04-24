@@ -1,14 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
 import { CheckCircle2, AlertCircle, Clock } from 'lucide-react'
-import { ConnectButton, ManageButtons } from './IntegrationButtons'
+import { ConnectButton, ManageButtons, WooConnectButton } from './IntegrationButtons'
 
 const PLATFORMS = [
   {
-    id: 'nuvemshop',
-    name: 'Nuvem Shop',
-    description: 'Publique vídeos e sincronize produtos com sua loja Nuvem Shop',
-    icon: '☁️',
+    id: 'woocommerce',
+    name: 'WooCommerce',
+    description: 'Conecte sua loja WordPress e adicione vídeos aos produtos',
+    icon: '🟪',
     available: true,
+    manual: true,
   },
   {
     id: 'shopify',
@@ -16,6 +17,15 @@ const PLATFORMS = [
     description: 'Adicione vídeos aos produtos e coleções da sua loja Shopify',
     icon: '🛍️',
     available: true,
+    manual: false,
+  },
+  {
+    id: 'nuvemshop',
+    name: 'Nuvem Shop',
+    description: 'Publique vídeos e sincronize produtos com sua loja Nuvem Shop',
+    icon: '☁️',
+    available: true,
+    manual: false,
   },
   {
     id: 'mercado_livre',
@@ -23,6 +33,7 @@ const PLATFORMS = [
     description: 'Anexe vídeos aos seus anúncios do Mercado Livre',
     icon: '🟡',
     available: true,
+    manual: false,
   },
   {
     id: 'shopee',
@@ -30,6 +41,7 @@ const PLATFORMS = [
     description: 'Adicione mídia aos seus produtos na Shopee',
     icon: '🛒',
     available: true,
+    manual: false,
   },
   {
     id: 'tiktok_shop',
@@ -37,6 +49,7 @@ const PLATFORMS = [
     description: 'Publique vídeos diretamente no TikTok Shop',
     icon: '🎵',
     available: true,
+    manual: false,
   },
 ]
 
@@ -126,6 +139,8 @@ export default async function IntegrationsPage() {
                   </div>
                 ) : connected?.status === 'active' ? (
                   <ManageButtons platformId={platform.id} />
+                ) : platform.manual ? (
+                  <WooConnectButton />
                 ) : (
                   <ConnectButton platformId={platform.id} platformName={platform.name} />
                 )}
@@ -137,9 +152,8 @@ export default async function IntegrationsPage() {
 
       <div className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-5 text-sm text-white/40">
         <p>
-          <span className="text-white font-medium">Nota:</span> As integrações usam OAuth 2.0 para conectar com segurança.
-          Seus tokens são criptografados e nunca expostos no frontend. Para conectar, você precisa ter uma conta de vendedor
-          ativa em cada plataforma e preencher as credenciais de API em <code className="text-[#A78BFA]">.env.local</code>.
+          <span className="text-white font-medium">Nota:</span> As integrações OAuth (Shopify, Mercado Livre, Shopee, TikTok Shop, Nuvem Shop) usam OAuth 2.0 para conectar com segurança.
+          WooCommerce usa autenticação direta via Consumer Key + Secret. Seus tokens são criptografados e nunca expostos no frontend.
         </p>
       </div>
     </div>

@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Loader2, Download, RefreshCw, Copy, Trash2, Check } from 'lucide-react'
+import { PublishButton } from '@/components/publish/PublishButton'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import type { CloneState } from '../page'
@@ -20,11 +21,12 @@ export function StepResult({ state }: Props) {
   const [copied, setCopied] = useState(false)
   const [elapsed, setElapsed] = useState(0)
   const [deleting, setDeleting] = useState(false)
+  const pollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (!state.videoId || !state.promptFinal) return
     generateVideo()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.videoId])
 
   useEffect(() => {
@@ -32,6 +34,13 @@ export function StepResult({ state }: Props) {
     const interval = setInterval(() => setElapsed((e) => e + 1), 1000)
     return () => clearInterval(interval)
   }, [status])
+
+  // Limpa polling ao desmontar componente
+  useEffect(() => {
+    return () => {
+      if (pollTimeoutRef.current) clearTimeout(pollTimeoutRef.current)
+    }
+  }, [])
 
   async function generateVideo() {
     try {
@@ -75,22 +84,22 @@ export function StepResult({ state }: Props) {
 
         if (data.status === 'ready') {
           setStatus('ready')
-          setVideoUrl(data.outputVideoUrl)
+          setVideoUrl(data.output_video_url)
         } else if (data.status === 'failed') {
           setStatus('failed')
-          setError(data.errorMessage ?? 'A geração falhou. Créditos foram estornados.')
+          setError(data.error_message ?? 'A geração falhou. Créditos foram estornados.')
         } else if (attempts < maxAttempts) {
-          setTimeout(poll, 10000)
+          pollTimeoutRef.current = setTimeout(poll, 10000)
         } else {
           setStatus('failed')
           setError('Timeout: a geração demorou mais do que o esperado.')
         }
       } catch {
-        if (attempts < maxAttempts) setTimeout(poll, 10000)
+        if (attempts < maxAttempts) pollTimeoutRef.current = setTimeout(poll, 10000)
       }
     }
 
-    setTimeout(poll, 5000) // primeira poll em 5s
+    pollTimeoutRef.current = setTimeout(poll, 5000) // primeira poll em 5s
   }
 
   function copyLink() {
@@ -111,8 +120,8 @@ export function StepResult({ state }: Props) {
       const supabase = createClient()
       await supabase.from('videos').delete().eq('id', state.videoId)
       router.push('/library')
-    } catch {
-      alert('Erro ao excluir vídeo. Tente novamente.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao excluir vídeo. Tente novamente.')
     } finally {
       setDeleting(false)
     }
@@ -198,6 +207,14 @@ export function StepResult({ state }: Props) {
               <RefreshCw className="h-4 w-4" />
               Gerar variação (+{(state.duration ?? 5) <= 5 ? 30 : 50} créditos)
             </Link>
+            {state.videoId && videoUrl && (
+              <PublishButton
+                videoId={state.videoId}
+                videoUrl={videoUrl}
+                videoStatus="ready"
+                size="md"
+              />
+            )}
             <button
               onClick={handleDelete}
               disabled={deleting}

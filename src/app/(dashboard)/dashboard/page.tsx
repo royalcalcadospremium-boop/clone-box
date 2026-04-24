@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import { PublishButton } from '@/components/publish/PublishButton'
 import {
   Video, Image, Sparkles, Grid3x3, ArrowRight,
   Wand2, Mic, Film, Zap, Play, Plus, TrendingUp
@@ -262,6 +263,16 @@ export default async function DashboardHome() {
                   <p className="mt-0.5 text-[10px] text-white/30">
                     {video.credits_spent} créditos · {video.duration ?? 5}s
                   </p>
+                  {video.status === 'ready' && video.output_video_url && (
+                    <div className="mt-2">
+                      <PublishButton
+                        videoId={video.id}
+                        videoUrl={video.output_video_url}
+                        videoStatus={video.status}
+                        size="sm"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

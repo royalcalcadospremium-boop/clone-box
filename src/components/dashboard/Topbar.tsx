@@ -2,6 +2,7 @@
 
 import { Bell, Search, Zap, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 interface TopbarProps {
@@ -65,7 +66,7 @@ export function Topbar({ profile }: TopbarProps) {
         <button className="flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.03] pl-1 pr-2 h-8 transition hover:bg-white/[0.07]">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-[#7C3AED] to-[#EC4899] text-[10px] font-bold text-white shrink-0 overflow-hidden">
             {profile?.avatar_url ? (
-              <img src={profile.avatar_url} alt="avatar" className="h-full w-full object-cover" />
+              <Image src={profile.avatar_url} alt="avatar" width={24} height={24} className="h-full w-full object-cover" unoptimized />
             ) : (
               initials
             )}

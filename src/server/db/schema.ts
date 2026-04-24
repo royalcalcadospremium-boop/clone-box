@@ -32,7 +32,7 @@ export const profiles = pgTable(
     trialEndsAt: timestamp('trial_ends_at'),
 
     // Créditos
-    creditsBalance: integer('credits_balance').notNull().default(100), // 100 grátis no signup
+    creditsBalance: integer('credits_balance').notNull().default(20), // 20 créditos grátis no signup (sincronizado com email)
     creditsMonthlyQuota: integer('credits_monthly_quota').notNull().default(0),
     creditsResetDate: timestamp('credits_reset_date'),
     creditsBonusBalance: integer('credits_bonus_balance').notNull().default(0),

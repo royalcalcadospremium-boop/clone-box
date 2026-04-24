@@ -20,5 +20,5 @@ export async function GET(
 
   if (!video) return NextResponse.json({ error: 'Não encontrado' }, { status: 404 })
 
-  return NextResponse.json(video)
+  return NextResponse.json(video, { headers: { 'Cache-Control': 'private, no-cache' } })
 }

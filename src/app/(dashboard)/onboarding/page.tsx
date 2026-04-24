@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Zap, ShoppingBag, Video, TrendingUp, Loader2, CheckCircle2 } from 'lucide-react'
+import { Zap, ShoppingBag, Video, TrendingUp, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
 
 const PLATFORMS = [
   { id: 'tiktok_shop', label: 'TikTok Shop' },
@@ -44,6 +44,7 @@ export default function OnboardingPage() {
     painPoints: [] as string[],
     companyName: '',
   })
+  const [error, setError] = useState('')
 
   function toggle<K extends 'platforms' | 'painPoints'>(key: K, value: string) {
     setData((prev) => ({
@@ -56,13 +57,17 @@ export default function OnboardingPage() {
 
   async function finish() {
     setLoading(true)
+    setError('')
     try {
       const { createClient } = await import('@/lib/supabase/client')
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
+      if (!user) {
+        setError('Sessão expirada. Faça login novamente.')
+        return
+      }
 
-      await supabase
+      const { error: updateError } = await supabase
         .from('profiles')
         .update({
           company_name: data.companyName || null,
@@ -76,7 +81,10 @@ export default function OnboardingPage() {
         })
         .eq('id', user.id)
 
+      if (updateError) throw updateError
       router.push('/dashboard')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao salvar. Tente novamente.')
     } finally {
       setLoading(false)
     }
@@ -250,6 +258,13 @@ export default function OnboardingPage() {
         {/* Conteúdo do passo atual */}
         <div className="rounded-2xl border border-white/5 bg-[#111111] p-8">
           {steps[step]}
+
+          {error && (
+            <div className="mt-4 flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              {error}
+            </div>
+          )}
 
           <div className="mt-8 flex items-center justify-between">
             {step > 0 ? (

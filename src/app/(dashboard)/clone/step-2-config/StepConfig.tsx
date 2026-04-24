@@ -3,6 +3,8 @@
 import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { ArrowRight, Image, Zap } from 'lucide-react'
+import NextImage from 'next/image'
+import { CREDIT_COSTS } from '@/lib/credits/pricing'
 import type { CloneState } from '../page'
 
 const STYLES = [
@@ -17,9 +19,9 @@ const STYLES = [
 ]
 
 const DURATIONS = [
-  { value: 5, label: '5s', credits: 30 },
-  { value: 10, label: '10s', credits: 50 },
-  { value: 15, label: '15s', credits: 65 },
+  { value: 5, label: '5s', credits: CREDIT_COSTS.VIDEO_GENERATION_5S },
+  { value: 10, label: '10s', credits: CREDIT_COSTS.VIDEO_GENERATION_10S },
+  { value: 15, label: '15s', credits: CREDIT_COSTS.VIDEO_GENERATION_15S },
 ]
 
 const RESOLUTIONS = [
@@ -238,7 +240,7 @@ export function StepConfig({ state, onUpdate, onNext }: Props) {
         <h3 className="text-sm font-semibold text-white/70 mb-3">Foto do produto *</h3>
         {productPreview ? (
           <div className="relative w-32 h-32">
-            <img src={productPreview} alt="produto" className="h-full w-full rounded-xl object-cover" />
+            <NextImage src={productPreview} alt="produto" fill className="rounded-xl object-cover" unoptimized />
             <button
               onClick={() => { setProductPreview(null); setUploadError(''); onUpdate({ productImageUrl: undefined }) }}
               className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white text-xs"

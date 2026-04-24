@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Loader2, Zap, ArrowRight, RefreshCw } from 'lucide-react'
+import { CREDIT_COSTS } from '@/lib/credits/pricing'
 import type { CloneState } from '../page'
 
 interface Props {
@@ -19,7 +20,7 @@ export function StepPrompt({ state, onUpdate, onNext }: Props) {
   const [videoId, setVideoId] = useState<string>()
 
   const selectedDuration = state.duration ?? 5
-  const videoCredits = selectedDuration === 5 ? 30 : selectedDuration === 10 ? 50 : 65
+  const videoCredits = selectedDuration === 5 ? CREDIT_COSTS.VIDEO_GENERATION_5S : selectedDuration === 10 ? CREDIT_COSTS.VIDEO_GENERATION_10S : CREDIT_COSTS.VIDEO_GENERATION_15S
 
   async function generatePrompt() {
     setLoading(true)

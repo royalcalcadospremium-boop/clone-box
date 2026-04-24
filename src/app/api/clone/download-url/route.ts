@@ -98,15 +98,27 @@ export async function POST(request: Request) {
       )
     }
 
+    // Valida URL resolvida para prevenir SSRF
+    let resolvedUrl: URL
+    try {
+      resolvedUrl = new URL(directUrl)
+      if (resolvedUrl.protocol !== 'https:') {
+        return NextResponse.json({ error: 'Protocolo de download inválido.' }, { status: 422 })
+      }
+    } catch {
+      return NextResponse.json({ error: 'URL de download inválida.' }, { status: 422 })
+    }
+
     // Baixa o vídeo via fetch e faz upload para Supabase Storage
     const videoRes = await fetch(directUrl, { signal: AbortSignal.timeout(60_000) })
     if (!videoRes.ok) {
       return NextResponse.json({ error: 'Erro ao baixar o arquivo de vídeo.' }, { status: 422 })
     }
 
-    const videoBuffer = Buffer.from(await videoRes.arrayBuffer())
+    // Usa Uint8Array em vez de Buffer.from para compatibilidade Edge/Node
+    const videoBuffer = new Uint8Array(await videoRes.arrayBuffer())
 
-    if (videoBuffer.length > 100 * 1024 * 1024) {
+    if (videoBuffer.byteLength > 100 * 1024 * 1024) {
       return NextResponse.json({ error: 'Vídeo muito grande. Máximo 100MB.' }, { status: 422 })
     }
 
@@ -124,7 +136,7 @@ export async function POST(request: Request) {
       .from('reference-videos')
       .getPublicUrl(storageFileName)
 
-    logger.info({ userId: user.id, url }, 'Video downloaded from URL')
+    logger.info({ userId: user.id, host: resolvedUrl.hostname }, 'Video downloaded from URL')
 
     return NextResponse.json({ videoUrl: publicUrl })
   } catch (error) {

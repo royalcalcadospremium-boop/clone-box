@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { exchangeTikTokShopCode, getTikTokShopClient } from '@/lib/integrations/tiktokshop/client'
 
@@ -12,7 +13,21 @@ export async function GET(request: Request) {
       return NextResponse.redirect('/integrations?error=missing_params')
     }
 
-    const userId = Buffer.from(state, 'base64').toString('utf-8')
+    // Valida state via cookie seguro (CSRF protection)
+    const cookieStore = await cookies()
+    const savedState = cookieStore.get('tt_oauth_state')?.value
+    const savedUserId = cookieStore.get('tt_oauth_user')?.value
+
+    if (!savedState || savedState !== state) {
+      return NextResponse.redirect('/integrations?error=invalid_state')
+    }
+    if (!savedUserId) {
+      return NextResponse.redirect('/integrations?error=session_expired')
+    }
+
+    // Limpa cookies de OAuth
+    cookieStore.delete('tt_oauth_state')
+    cookieStore.delete('tt_oauth_user')
 
     const appKey = process.env.TIKTOKSHOP_APP_KEY
     const appSecret = process.env.TIKTOKSHOP_APP_SECRET
@@ -24,12 +39,12 @@ export async function GET(request: Request) {
     const { accessToken, refreshToken, shopId } = await exchangeTikTokShopCode(appKey, appSecret, code, redirectUri)
 
     // Buscar info da loja
-    const client = getTikTokShopClient({ platform: 'tiktokshop', userId, accessToken, shopId }, appKey, appSecret)
+    const client = getTikTokShopClient({ platform: 'tiktokshop', userId: savedUserId, accessToken, shopId }, appKey, appSecret)
     const shopInfo = await client.getShopInfo()
 
     const admin = createAdminClient()
     await admin.from('integrations').upsert({
-      user_id: userId,
+      user_id: savedUserId,
       platform: 'tiktok_shop',
       access_token_encrypted: accessToken,
       refresh_token_encrypted: refreshToken,
@@ -37,7 +52,7 @@ export async function GET(request: Request) {
       shop_name: shopInfo.shop_name,
       status: 'active',
       connected_at: new Date().toISOString(),
-    }, { onConflict: 'user_id,platform' })
+    }, { onConflict: 'user_id,platform,shop_id' })
 
     return NextResponse.redirect('/integrations?success=tiktokshop')
   } catch {

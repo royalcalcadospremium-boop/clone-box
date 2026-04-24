@@ -5,7 +5,10 @@ import { z } from 'zod'
 import { rateLimit } from '@/lib/rate-limit'
 import { CREDIT_COSTS } from '@/lib/credits/pricing'
 import { chargeCredits } from '@/lib/credits/charge'
+import { refundCredits } from '@/lib/credits/refund'
+import { assertCanGenerate } from '@/lib/credits/check'
 import { analyzeVideoForCloning } from '@/lib/ai/kimi/video-analyzer'
+import { logger } from '@/lib/logger'
 
 const schema = z.object({
   referenceVideoUrl: z.string().url(),
@@ -29,12 +32,28 @@ export async function POST(request: Request) {
     const limited = await rateLimit(`clone:${user.id}`, 10, 60)
     if (limited) return NextResponse.json({ error: 'Muitas requisições. Aguarde.' }, { status: 429 })
 
+    try {
+      await assertCanGenerate(user.id)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Restrição de plano'
+      return NextResponse.json({ error: msg }, { status: 403 })
+    }
+
     const body = await request.json()
     const input = schema.parse(body)
 
     const admin = createAdminClient()
 
-    // Cria registro do vídeo antes de cobrar
+    // Débito atômico de 10 créditos ANTES de criar o registro
+    await chargeCredits({
+      userId: user.id,
+      amount: CREDIT_COSTS.PROMPT_GENERATION,
+      type: 'analysis',
+      referenceType: 'video',
+      description: 'Análise do vídeo de referência + geração de prompt',
+    })
+
+    // Cria registro do vídeo depois de cobrar
     const { data: video, error: videoError } = await admin
       .from('videos')
       .insert({
@@ -58,51 +77,52 @@ export async function POST(request: Request) {
 
     if (videoError || !video) throw videoError ?? new Error('Falha ao criar vídeo')
 
-    // Débito atômico de 10 créditos
-    await chargeCredits({
-      userId: user.id,
-      amount: CREDIT_COSTS.PROMPT_GENERATION,
-      type: 'analysis',
-      referenceId: video.id,
-      referenceType: 'video',
-      description: 'Análise do vídeo de referência + geração de prompt',
-    })
-
     // Kimi analisa a imagem do produto + contexto do vídeo de referência
-    const result = await analyzeVideoForCloning({
-      referenceVideoUrl: input.referenceVideoUrl,
-      productImageUrl: input.productImageUrl,
-      productDescription: input.productDescription,
-      style: input.style,
-      duration: input.duration,
-      language: input.language,
-    })
-
-    // Salva o prompt gerado
-    await admin
-      .from('videos')
-      .update({
-        status: 'prompt_ready',
-        reference_video_analysis: result.analysis,
-        prompt_generated: result.prompt_for_seedance,
+    try {
+      const result = await analyzeVideoForCloning({
+        referenceVideoUrl: input.referenceVideoUrl,
+        productImageUrl: input.productImageUrl,
+        productDescription: input.productDescription,
+        style: input.style,
+        duration: input.duration,
+        language: input.language,
       })
-      .eq('id', video.id)
 
-    const analysisText =
-      `Estilo ${input.style} detectado — arco narrativo: "${result.analysis.narrative_arc}", ` +
-      `mood: ${result.analysis.mood}, câmera: ${result.analysis.camera_style}. ` +
-      `${result.analysis.shot_types.length} tipos de shot identificados.`
+      // Salva o prompt gerado
+      await admin
+        .from('videos')
+        .update({
+          status: 'prompt_ready',
+          reference_video_analysis: result.analysis,
+          prompt_generated: result.prompt_for_seedance,
+        })
+        .eq('id', video.id)
 
-    return NextResponse.json({
-      videoId: video.id,
-      analysis: analysisText,
-      prompt: result.prompt_for_seedance,
-    })
+      const analysisText =
+        `Estilo ${input.style} detectado — arco narrativo: "${result.analysis.narrative_arc}", ` +
+        `mood: ${result.analysis.mood}, câmera: ${result.analysis.camera_style}. ` +
+        `${result.analysis.shot_types.length} tipos de shot identificados.`
+
+      return NextResponse.json({
+        videoId: video.id,
+        analysis: analysisText,
+        prompt: result.prompt_for_seedance,
+      })
+    } catch {
+      // Reembolsa créditos se análise falhar
+      await refundCredits({
+        userId: user.id,
+        amount: CREDIT_COSTS.PROMPT_GENERATION,
+        referenceType: 'video',
+        description: 'Estorno — falha na análise do vídeo de referência',
+      })
+      return NextResponse.json({ error: 'Falha na análise. Créditos estornados.' }, { status: 502 })
+    }
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: 'Dados inválidos', details: error.issues }, { status: 400 })
     }
-    console.error('generate-prompt error:', error)
+    logger.error({ error: error instanceof Error ? error.message : 'unknown' }, 'generate-prompt error')
     return NextResponse.json({ error: 'Erro interno. Tente novamente.' }, { status: 500 })
   }
 }

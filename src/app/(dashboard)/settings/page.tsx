@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Loader2, CheckCircle2, Link2, Copy, Check } from 'lucide-react'
+import { Loader2, CheckCircle2, Link2, Copy, Check, AlertCircle } from 'lucide-react'
 
 export default function SettingsPage() {
   const [profile, setProfile] = useState<{
@@ -13,6 +13,7 @@ export default function SettingsPage() {
   } | null>(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState('')
   const [copied, setCopied] = useState(false)
   const [form, setForm] = useState({ full_name: '', company_name: '', phone: '' })
 
@@ -45,24 +46,34 @@ export default function SettingsPage() {
     e.preventDefault()
     setSaving(true)
     setSaved(false)
+    setSaveError('')
 
-    const { createClient } = await import('@/lib/supabase/client')
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    try {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        setSaveError('Sessão expirada. Faça login novamente.')
+        return
+      }
 
-    await supabase
-      .from('profiles')
-      .update({
-        full_name: form.full_name || null,
-        company_name: form.company_name || null,
-        phone: form.phone || null,
-      })
-      .eq('id', user.id)
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({
+          full_name: form.full_name || null,
+          company_name: form.company_name || null,
+          phone: form.phone || null,
+        })
+        .eq('id', user.id)
 
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 3000)
+      if (updateError) throw updateError
+      setSaved(true)
+      setTimeout(() => setSaved(false), 3000)
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : 'Erro ao salvar. Tente novamente.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   async function handleDeleteAccount() {
@@ -70,7 +81,8 @@ export default function SettingsPage() {
       'Tem certeza? Esta ação é irreversível. Todos os seus vídeos e créditos serão removidos permanentemente.'
     )
     if (!confirmed) return
-    alert('Entre em contato com suporte@clonebox.com.br para solicitar a exclusão da conta.')
+    // TODO: Implementar exclusão de conta via API
+    window.location.href = 'mailto:suporte@clonebox.com.br?subject=Solicitação de exclusão de conta'
   }
 
   function copyReferralLink() {
@@ -153,6 +165,12 @@ export default function SettingsPage() {
               <div className="flex items-center gap-1.5 text-sm text-green-400">
                 <CheckCircle2 className="h-4 w-4" />
                 Salvo!
+              </div>
+            )}
+            {saveError && (
+              <div className="flex items-center gap-1.5 text-sm text-red-400">
+                <AlertCircle className="h-4 w-4" />
+                {saveError}
               </div>
             )}
           </div>
