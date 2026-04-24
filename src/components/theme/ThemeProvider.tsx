@@ -24,9 +24,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('ninja-theme') as Theme | null
-      return saved ?? 'system'
+      return saved ?? 'dark'
     }
-    return 'system'
+    return 'dark'
   })
 
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark')
