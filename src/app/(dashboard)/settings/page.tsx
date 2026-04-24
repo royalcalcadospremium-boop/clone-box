@@ -18,6 +18,23 @@ export default function SettingsPage() {
   const [form, setForm] = useState({ full_name: '', company_name: '', phone: '' })
 
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_DESIGN_PREVIEW === '1') {
+      const data = {
+        full_name: 'Royal Calcados',
+        email: 'royal@example.com',
+        company_name: 'Royal Calcados Premium',
+        phone: '(11) 99999-9999',
+        referral_code: 'ROYAL2026',
+      }
+      setProfile(data)
+      setForm({
+        full_name: data.full_name,
+        company_name: data.company_name,
+        phone: data.phone,
+      })
+      return
+    }
+
     async function load() {
       const { createClient } = await import('@/lib/supabase/client')
       const supabase = createClient()

@@ -1,13 +1,23 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { Sidebar } from '@/components/dashboard/Sidebar'
-import { Topbar } from '@/components/dashboard/Topbar'
+import { TopNav } from '@/components/higgsfield/TopNav'
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  if (process.env.NEXT_PUBLIC_DESIGN_PREVIEW === '1') {
+    return (
+      <div className="min-h-screen bg-[#0f1011] text-white">
+        <TopNav />
+        <main className="min-h-[calc(100vh-58px)] overflow-x-hidden">
+          {children}
+        </main>
+      </div>
+    )
+  }
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -24,14 +34,11 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
-      <Sidebar profile={profile} />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <Topbar profile={profile} />
-        <main className="flex-1 overflow-y-auto p-6">
-          {children}
-        </main>
-      </div>
+    <div className="min-h-screen bg-[#0f1011] text-white">
+      <TopNav />
+      <main className="min-h-[calc(100vh-58px)] overflow-x-hidden">
+        {children}
+      </main>
     </div>
   )
 }

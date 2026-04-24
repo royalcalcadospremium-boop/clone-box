@@ -5,6 +5,7 @@ import {
   Video, Image, Sparkles, Grid3x3, ArrowRight,
   Wand2, Mic, Film, Zap, Play, Plus, TrendingUp
 } from 'lucide-react'
+import { galleryImages } from '@/components/higgsfield/CreationCards'
 
 const quickStartItems = [
   {
@@ -93,6 +94,24 @@ const featuredModels = [
 ]
 
 export default async function DashboardHome() {
+  if (process.env.NEXT_PUBLIC_DESIGN_PREVIEW === '1') {
+    return (
+      <div className="min-h-[calc(100vh-58px)] bg-[#101112]">
+        <div className="flex h-14 items-center gap-2 border-b border-white/[0.06] bg-[#111214] px-4">
+          <button className="rounded-xl bg-white/[0.06] px-4 py-2 text-sm font-black text-white">History</button>
+          <button className="rounded-xl bg-white/[0.06] px-4 py-2 text-sm font-black text-white/55">Community</button>
+        </div>
+        <section className="columns-1 gap-2 p-2 sm:columns-2 lg:columns-4">
+          {galleryImages.concat(galleryImages, galleryImages).map((src, index) => (
+            <figure key={`${src}-${index}`} className="mb-2 break-inside-avoid overflow-hidden rounded-[3px] bg-[#202123]">
+              <img src={src} alt="" className="w-full object-cover" />
+            </figure>
+          ))}
+        </section>
+      </div>
+    )
+  }
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
