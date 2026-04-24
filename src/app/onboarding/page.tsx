@@ -99,8 +99,8 @@ export default function OnboardingPage() {
         </div>
       </div>
       <div className="text-center">
-        <h1 className="text-2xl font-black">Bem-vindo ao CloneBox!</h1>
-        <p className="mt-2 text-white/50 text-sm leading-relaxed">
+        <h1 className="text-2xl font-black">Bem-vindo ao Ninja Box!</h1>
+        <p className="mt-2 text-muted-foreground text-sm leading-relaxed">
           Em 4 perguntas rápidas vamos personalizar sua experiência.
           <br />
           Você já ganhou <span className="text-[#FF6B00] font-bold">20 créditos grátis</span> para começar.
@@ -129,7 +129,7 @@ export default function OnboardingPage() {
           <ShoppingBag className="h-5 w-5 text-[#FF6B00]" />
           <h2 className="text-lg font-bold">Onde você vende?</h2>
         </div>
-        <p className="text-sm text-white/40">Selecione todas que se aplicam</p>
+        <p className="text-sm text-muted-foreground">Selecione todas que se aplicam</p>
       </div>
       <div className="grid grid-cols-2 gap-2">
         {PLATFORMS.map((p) => (
@@ -139,7 +139,7 @@ export default function OnboardingPage() {
             className={`rounded-xl border px-4 py-3 text-sm font-medium text-left transition ${
               data.platforms.includes(p.id)
                 ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
-                : 'border-white/10 hover:border-white/20'
+                : 'border-border hover:border-foreground/20'
             }`}
           >
             {data.platforms.includes(p.id) && <CheckCircle2 className="inline h-3.5 w-3.5 mr-1.5" />}
@@ -156,7 +156,7 @@ export default function OnboardingPage() {
           <Video className="h-5 w-5 text-[#FF6B00]" />
           <h2 className="text-lg font-bold">Quantos vídeos você posta?</h2>
         </div>
-        <p className="text-sm text-white/40">Média semanal nas redes sociais</p>
+        <p className="text-sm text-muted-foreground">Média semanal nas redes sociais</p>
       </div>
       <div className="space-y-2">
         {VOLUMES.map((v) => (
@@ -166,11 +166,11 @@ export default function OnboardingPage() {
             className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition ${
               data.videoVolume === v.id
                 ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
-                : 'border-white/10 hover:border-white/20'
+                : 'border-border hover:border-foreground/20'
             }`}
           >
             <div className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-              data.videoVolume === v.id ? 'border-[#FF6B00]' : 'border-white/30'
+              data.videoVolume === v.id ? 'border-[#FF6B00]' : 'border-muted-foreground/30'
             }`}>
               {data.videoVolume === v.id && <div className="h-2 w-2 rounded-full bg-[#FF6B00]" />}
             </div>
@@ -187,7 +187,7 @@ export default function OnboardingPage() {
           <TrendingUp className="h-5 w-5 text-[#FF6B00]" />
           <h2 className="text-lg font-bold">Qual sua maior dor com vídeos?</h2>
         </div>
-        <p className="text-sm text-white/40">Selecione todas que se aplicam</p>
+        <p className="text-sm text-muted-foreground">Selecione todas que se aplicam</p>
       </div>
       <div className="space-y-2">
         {PAIN_POINTS.map((p) => (
@@ -197,11 +197,11 @@ export default function OnboardingPage() {
             className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium text-left transition ${
               data.painPoints.includes(p.id)
                 ? 'border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]'
-                : 'border-white/10 hover:border-white/20'
+                : 'border-border hover:border-foreground/20'
             }`}
           >
             <div className={`h-4 w-4 shrink-0 rounded border-2 flex items-center justify-center ${
-              data.painPoints.includes(p.id) ? 'border-[#FF6B00] bg-[#FF6B00]' : 'border-white/30'
+              data.painPoints.includes(p.id) ? 'border-[#FF6B00] bg-[#FF6B00]' : 'border-muted-foreground/30'
             }`}>
               {data.painPoints.includes(p.id) && (
                 <svg className="h-2.5 w-2.5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -214,7 +214,7 @@ export default function OnboardingPage() {
         ))}
       </div>
       <div>
-        <label className="block text-sm font-medium text-white/60 mb-1.5">
+        <label className="block text-sm font-medium text-muted-foreground mb-1.5">
           Nome da loja (opcional)
         </label>
         <input
@@ -222,7 +222,7 @@ export default function OnboardingPage() {
           value={data.companyName}
           onChange={(e) => setData((prev) => ({ ...prev, companyName: e.target.value }))}
           placeholder="Royal Calçados"
-          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-[#FF6B00]"
+          className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none focus:border-[#FF6B00]"
         />
       </div>
     </div>,
@@ -236,7 +236,7 @@ export default function OnboardingPage() {
     (step === 3 && data.painPoints.length > 0)
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         {/* Progresso */}
         <div className="mb-8">
@@ -245,18 +245,18 @@ export default function OnboardingPage() {
               <div
                 key={i}
                 className={`h-1 flex-1 rounded-full transition-all ${
-                  i <= step ? 'bg-[#FF6B00]' : 'bg-white/10'
+                  i <= step ? 'bg-[#FF6B00]' : 'bg-muted'
                 }`}
               />
             ))}
           </div>
-          <p className="text-xs text-white/30 text-right">
+          <p className="text-xs text-muted-foreground text-right">
             {step + 1} de {steps.length}
           </p>
         </div>
 
         {/* Conteúdo do passo atual */}
-        <div className="rounded-2xl border border-white/5 bg-[#111111] p-8">
+        <div className="rounded-2xl border border-border bg-card p-8">
           {steps[step]}
 
           {error && (
@@ -270,7 +270,7 @@ export default function OnboardingPage() {
             {step > 0 ? (
               <button
                 onClick={() => setStep((s) => s - 1)}
-                className="text-sm text-white/40 hover:text-white transition"
+                className="text-sm text-muted-foreground hover:text-foreground transition"
               >
                 Voltar
               </button>

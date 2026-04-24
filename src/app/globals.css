@@ -59,6 +59,29 @@
 }
 
 :root {
+  --background: #F8F7FB;
+  --foreground: #0A0A0A;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0A0A0A;
+  --primary: #7C3AED;
+  --primary-foreground: #ffffff;
+  --secondary: #F0EEF5;
+  --secondary-foreground: #0A0A0A;
+  --muted: #E8E5EF;
+  --muted-foreground: #6B6B7B;
+  --accent: #7C3AED;
+  --accent-foreground: #ffffff;
+  --destructive: #EF4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0,0,0,0.08);
+  --input: #E8E5EF;
+  --ring: #7C3AED;
+  --radius: 0.75rem;
+}
+
+.dark {
   --background: #080808;
   --foreground: #ffffff;
   --card: #0F0F0F;
@@ -78,7 +101,6 @@
   --border: rgba(255,255,255,0.06);
   --input: #1A1A1A;
   --ring: #7C3AED;
-  --radius: 0.75rem;
 }
 
 @keyframes accordion-down {

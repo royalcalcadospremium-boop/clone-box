@@ -78,7 +78,7 @@ export default async function IntegrationsPage() {
       <div>
         <h1 className="text-2xl font-black tracking-tight">Integrações</h1>
         <p className="mt-1 text-sm text-white/50">
-          Conecte suas plataformas de e-commerce para publicar vídeos diretamente do CloneBox
+          Conecte suas plataformas de e-commerce para publicar vídeos diretamente do Ninja Box
         </p>
       </div>
 

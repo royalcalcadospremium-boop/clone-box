@@ -82,7 +82,7 @@ export default function SettingsPage() {
     )
     if (!confirmed) return
     // TODO: Implementar exclusão de conta via API
-    window.location.href = 'mailto:suporte@clonebox.com.br?subject=Solicitação de exclusão de conta'
+    window.location.href = 'mailto:suporte@ninjabox.com.br?subject=Solicitação de exclusão de conta'
   }
 
   function copyReferralLink() {
@@ -94,7 +94,7 @@ export default function SettingsPage() {
   }
 
   const referralLink = profile?.referral_code
-    ? `${typeof window !== 'undefined' ? window.location.origin : 'https://clonebox.com.br'}/signup?ref=${profile.referral_code}`
+    ? `${typeof window !== 'undefined' ? window.location.origin : 'https://ninjabox.com.br'}/signup?ref=${profile.referral_code}`
     : ''
 
   return (

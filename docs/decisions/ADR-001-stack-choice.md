@@ -8,7 +8,7 @@
 
 ## Contexto
 
-CloneBox é um SaaS B2B para lojistas brasileiros que precisam de vídeos UGC virais com IA. O produto precisa:
+Ninja Box é um SaaS B2B para lojistas brasileiros que precisam de vídeos UGC virais com IA. O produto precisa:
 - Processar vídeos de forma assíncrona (60–120s por geração)
 - Gerenciar sistema de créditos com alta integridade transacional
 - Suportar pagamentos via PIX, boleto e cartão (mercado BR)

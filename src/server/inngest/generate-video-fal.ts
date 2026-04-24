@@ -16,7 +16,7 @@ export const generateVideoFal = inngest.createFunction(
     retries: 1,
     concurrency: { limit: 5, key: 'event.data.userId' },
   },
-  { event: 'clonebox/video.generate.fal' },
+  { event: 'ninjabox/video.generate.fal' },
   async ({ event, step }) => {
     const { videoId, userId, model, prompt, imageUrl, duration, aspectRatio } = event.data as {
       videoId: string

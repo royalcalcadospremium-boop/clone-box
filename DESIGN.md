@@ -1,4 +1,4 @@
-# Spotify-Inspired Design System — CloneBox
+# Spotify-Inspired Design System — Ninja Box
 
 ## Colors
 

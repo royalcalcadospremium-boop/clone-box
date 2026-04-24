@@ -53,7 +53,7 @@ export async function POST(request: Request) {
         {
           price_data: {
             currency: 'brl',
-            product_data: { name: `CloneBox — Plano ${plan.name}` },
+            product_data: { name: `Ninja Box — Plano ${plan.name}` },
             unit_amount: plan.priceCents,
             recurring: { interval: 'month' },
           },

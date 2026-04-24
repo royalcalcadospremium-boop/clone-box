@@ -13,7 +13,7 @@ export function getNuvemShopClient(integration: IntegrationClient) {
       ...options,
       headers: {
         'Authentication': `bearer ${token}`,
-        'User-Agent': 'CloneBox (integrations@clonebox.com.br)',
+        'User-Agent': 'Ninja Box (integrations@ninjabox.com.br)',
         'Content-Type': 'application/json',
         ...options.headers,
       },

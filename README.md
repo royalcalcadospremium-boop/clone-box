@@ -1,4 +1,4 @@
-# CloneBox
+# Ninja Box
 
 SaaS B2B para lojistas brasileiros clonarem vídeos virais com IA.
 

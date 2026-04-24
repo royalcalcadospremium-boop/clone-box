@@ -105,7 +105,7 @@ export async function POST(request: Request) {
     try {
       if (provider === 'fal') {
         await inngest.send({
-          name: 'clonebox/video.generate.fal',
+          name: 'ninjabox/video.generate.fal',
           data: {
             videoId: video.id,
             userId: user.id,
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
         })
       } else {
         await inngest.send({
-          name: 'clonebox/video.generate',
+          name: 'ninjabox/video.generate',
           data: {
             videoId: video.id,
             userId: user.id,

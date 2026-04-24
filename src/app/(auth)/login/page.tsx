@@ -40,7 +40,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
@@ -48,18 +48,18 @@ export default function LoginPage() {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF6B00]">
               <Zap className="h-5 w-5 text-black" fill="black" />
             </div>
-            <span className="text-xl font-black">CloneBox</span>
+            <span className="text-xl font-black">Ninja Box</span>
           </Link>
-          <h1 className="text-2xl font-bold text-white">Bem-vindo de volta</h1>
-          <p className="mt-1 text-sm text-white/50">Entre na sua conta para continuar</p>
+          <h1 className="text-2xl font-bold text-foreground">Bem-vindo de volta</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Entre na sua conta para continuar</p>
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl border border-white/5 bg-[#111111] p-8">
+        <div className="rounded-2xl border border-border bg-card p-8">
           {/* Google */}
           <button
             onClick={handleGoogle}
-            className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-medium transition hover:bg-white/10"
+            className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-muted py-3 text-sm font-medium transition hover:bg-secondary"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24">
               <path
@@ -83,15 +83,15 @@ export default function LoginPage() {
           </button>
 
           <div className="my-6 flex items-center gap-3">
-            <div className="h-px flex-1 bg-white/5" />
-            <span className="text-xs text-white/30">ou com email</span>
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-xs text-muted-foreground">ou com email</span>
+            <div className="h-px flex-1 bg-border" />
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-white/70 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-1.5">
                 Email
               </label>
               <input
@@ -100,13 +100,13 @@ export default function LoginPage() {
                 type="email"
                 required
                 placeholder="seu@email.com"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label htmlFor="password" className="block text-sm font-medium text-white/70">
+                <label htmlFor="password" className="block text-sm font-medium text-muted-foreground">
                   Senha
                 </label>
                 <Link href="/recuperar-senha" className="text-xs text-[#FF6B00] hover:underline">
@@ -120,12 +120,12 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   required
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                  className="w-full rounded-xl border border-border bg-muted px-4 py-3 pr-10 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -149,7 +149,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="mt-6 text-center text-sm text-white/40">
+        <p className="mt-6 text-center text-sm text-muted-foreground">
           Não tem conta?{' '}
           <Link href="/signup" className="text-[#FF6B00] hover:underline">
             Criar conta grátis

@@ -18,7 +18,7 @@ export const generateVideo = inngest.createFunction(
       key: 'event.data.userId',
     },
   },
-  { event: 'clonebox/video.generate' },
+  { event: 'ninjabox/video.generate' },
   async ({ event, step }) => {
     const { videoId, userId } = event.data as { videoId: string; userId: string }
 
@@ -56,7 +56,7 @@ export const generateVideo = inngest.createFunction(
 
     // Dispara evento de polling separado
     await step.sendEvent('trigger-polling', {
-      name: 'clonebox/video.poll',
+      name: 'ninjabox/video.poll',
       data: { videoId, userId, jobId },
     })
 
@@ -71,7 +71,7 @@ export const generateVideoFailed = inngest.createFunction(
   { event: 'inngest/function.failed' },
   async ({ event, step }) => {
     const originalEvent = event.data.event
-    if (originalEvent.name !== 'clonebox/video.generate') return
+    if (originalEvent.name !== 'ninjabox/video.generate') return
 
     const { videoId, userId } = originalEvent.data as { videoId: string; userId: string }
 

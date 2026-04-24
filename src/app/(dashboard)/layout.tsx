@@ -24,7 +24,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen bg-[#0A0A0A] overflow-hidden">
+    <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar profile={profile} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Topbar profile={profile} />

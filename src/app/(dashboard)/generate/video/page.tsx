@@ -1,6 +1,6 @@
 import { VideoGeneratorClient } from './VideoGeneratorClient'
 
-export const metadata = { title: 'Geração de Vídeo — CloneBox' }
+export const metadata = { title: 'Geração de Vídeo — Ninja Box' }
 
 export default function VideoGeneratorPage({
   searchParams,

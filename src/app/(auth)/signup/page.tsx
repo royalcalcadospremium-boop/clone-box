@@ -65,15 +65,15 @@ export default function SignupPage() {
 
   if (success) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#121212] px-4">
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <div className="w-full max-w-md text-center">
           <div className="mb-6 flex justify-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#1DB954]/10">
               <CheckCircle2 className="h-8 w-8 text-[#1DB954]" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold">Confirme seu email</h1>
-          <p className="mt-3 text-white/50">
+          <h1 className="text-2xl font-bold text-foreground">Confirme seu email</h1>
+          <p className="mt-3 text-muted-foreground">
             Enviamos um link de confirmação para o seu email. Clique nele para ativar sua conta e
             receber seus <span className="text-[#1DB954] font-semibold">20 créditos grátis</span>.
           </p>
@@ -93,18 +93,18 @@ export default function SignupPage() {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1DB954]">
               <Zap className="h-5 w-5 text-black" fill="black" />
             </div>
-            <span className="text-xl font-black">CloneBox</span>
+            <span className="text-xl font-black">Ninja Box</span>
           </Link>
-          <h1 className="text-2xl font-bold text-white">Criar conta grátis</h1>
-          <p className="mt-1 text-sm text-white/50">
+          <h1 className="text-2xl font-bold text-foreground">Criar conta grátis</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             Ganhe <span className="text-[#1DB954]">20 créditos grátis</span> para começar
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/5 bg-[#181818] p-8">
+        <div className="rounded-2xl border border-border bg-card p-8">
           <button
             onClick={handleGoogle}
-            className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-medium transition hover:bg-white/10"
+            className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-muted py-3 text-sm font-medium transition hover:bg-secondary"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -116,24 +116,24 @@ export default function SignupPage() {
           </button>
 
           <div className="my-6 flex items-center gap-3">
-            <div className="h-px flex-1 bg-white/5" />
-            <span className="text-xs text-white/30">ou com email</span>
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-xs text-muted-foreground">ou com email</span>
+            <div className="h-px flex-1 bg-border" />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-white/70 mb-1.5">
+              <label htmlFor="name" className="block text-sm font-medium text-muted-foreground mb-1.5">
                 Nome completo
               </label>
               <input
                 id="name" name="name" type="text" required placeholder="Fellipe Silva"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
               />
             </div>
 
             <div>
-              <label htmlFor="cpf" className="block text-sm font-medium text-white/70 mb-1.5">
+              <label htmlFor="cpf" className="block text-sm font-medium text-muted-foreground mb-1.5">
                 CPF
               </label>
               <input
@@ -141,28 +141,28 @@ export default function SignupPage() {
                 placeholder="000.000.000-00"
                 value={cpf}
                 onChange={handleCPFChange}
-                className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:ring-1 ${
+                className={`w-full rounded-xl border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:ring-1 ${
                   cpfError
                     ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                    : 'border-white/10 focus:border-[#1DB954] focus:ring-[#1DB954]'
+                    : 'border-border focus:border-[#1DB954] focus:ring-[#1DB954]'
                 }`}
               />
               {cpfError && <p className="mt-1 text-xs text-red-400">{cpfError}</p>}
-              <p className="mt-1 text-xs text-white/30">Usado para evitar contas duplicadas</p>
+              <p className="mt-1 text-xs text-muted-foreground">Usado para evitar contas duplicadas</p>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-white/70 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-1.5">
                 Email
               </label>
               <input
                 id="email" name="email" type="email" required placeholder="seu@email.com"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-white/70 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-muted-foreground mb-1.5">
                 Senha
               </label>
               <div className="relative">
@@ -170,12 +170,12 @@ export default function SignupPage() {
                   id="password" name="password"
                   type={showPassword ? 'text' : 'password'}
                   required minLength={8} placeholder="Mínimo 8 caracteres"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
+                  className="w-full rounded-xl border border-border bg-muted px-4 py-3 pr-10 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#1DB954] focus:ring-1 focus:ring-[#1DB954]"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -205,7 +205,7 @@ export default function SignupPage() {
           </form>
         </div>
 
-        <p className="mt-6 text-center text-sm text-white/40">
+        <p className="mt-6 text-center text-sm text-muted-foreground">
           Já tem conta?{' '}
           <Link href="/login" className="text-[#1DB954] hover:underline">Entrar</Link>
         </p>

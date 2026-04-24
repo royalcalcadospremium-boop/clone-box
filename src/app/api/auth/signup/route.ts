@@ -79,12 +79,12 @@ export async function POST(request: Request) {
     if (linkData?.properties?.action_link) {
       const resend = new Resend(process.env.RESEND_API_KEY)
       await resend.emails.send({
-        from: 'CloneBox <onboarding@resend.dev>',
+        from: 'Ninja Box <onboarding@resend.dev>',
         to: email,
-        subject: 'Confirme seu email — CloneBox',
+        subject: 'Confirme seu email — Ninja Box',
         html: `
           <div style="font-family:sans-serif;max-width:480px;margin:0 auto;background:#121212;color:#fff;padding:32px;border-radius:16px;">
-            <h2 style="color:#1DB954;margin-bottom:8px;">Bem-vindo ao CloneBox!</h2>
+            <h2 style="color:#1DB954;margin-bottom:8px;">Bem-vindo ao Ninja Box!</h2>
             <p style="color:#aaa;">Olá ${name}, sua conta foi criada com sucesso.</p>
             <p style="color:#aaa;">Clique no botão abaixo para confirmar seu email e ativar seus <strong style="color:#1DB954;">20 créditos grátis</strong>:</p>
             <a href="${linkData.properties.action_link}"
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
               Confirmar email e ativar créditos
             </a>
             <p style="margin-top:32px;color:#555;font-size:12px;">
-              Se você não criou uma conta no CloneBox, ignore este email.
+              Se você não criou uma conta no Ninja Box, ignore este email.
             </p>
           </div>
         `,

@@ -1,4 +1,4 @@
-# CloneBox — Progress Tracker
+# Ninja Box — Progress Tracker
 
 > Atualizado ao final de cada sessão de trabalho.
 > Status: ✅ Concluído | 🔄 Em andamento | ⏳ Pendente | ❌ Bloqueado
@@ -11,8 +11,8 @@
 |---|---|---|
 | Ler PROMPT-MESTRE.md completo | ✅ | — |
 | Criar PROGRESS.md | ✅ | Este arquivo |
-| Definir nome do produto | ✅ | **CloneBox** |
-| Definir domínio | ✅ | clonebox.com.br |
+| Definir nome do produto | ✅ | **Ninja Box** |
+| Definir domínio | ✅ | ninjabox.com.br |
 | Definir paleta de cores | ✅ | Bold/Agressivo: preto + laranja neon + vermelho |
 | Definir política de trial | ✅ | 100 créditos + 7 dias de prazo |
 | Definir política de reembolso | ✅ | 7 dias |
@@ -20,7 +20,7 @@
 | Criar package.json | ✅ | Next.js 15, TypeScript, todas as deps |
 | Criar tsconfig.json (strict) | ✅ | strict: true habilitado |
 | Criar biome.json | ✅ | Linter + formatter |
-| Criar tailwind.config.ts | ✅ | Paleta CloneBox + shadcn/ui |
+| Criar tailwind.config.ts | ✅ | Paleta Ninja Box + shadcn/ui |
 | Criar drizzle.config.ts | ✅ | Apontando pra DATABASE_URL |
 | Criar .env.local.example | ✅ | Todas as vars documentadas |
 | Criar .gitignore | ✅ | Inclui .env*.local |
@@ -45,7 +45,7 @@
 | Item | Status | Notas |
 |---|---|---|
 | Setup Next.js 15 + TypeScript strict + Biome | ✅ | Configurado |
-| Setup TailwindCSS + shadcn/ui | ✅ | Paleta CloneBox configurada |
+| Setup TailwindCSS + shadcn/ui | ✅ | Paleta Ninja Box configurada |
 | Setup Drizzle ORM + migrar schema | ✅ | 8 tabelas + índices em schema.ts |
 | Setup Supabase Auth (email + Google OAuth) | ✅ | client/server/admin configurados |
 | RLS policies em todas as tabelas | ✅ | migrations/001_initial_schema.sql |

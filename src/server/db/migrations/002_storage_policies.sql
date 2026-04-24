@@ -1,5 +1,5 @@
 -- ============================================================
--- CloneBox — Storage Buckets e Policies
+-- Ninja Box — Storage Buckets e Policies
 -- Execute APÓS criar os buckets no Supabase Dashboard
 -- ============================================================
 

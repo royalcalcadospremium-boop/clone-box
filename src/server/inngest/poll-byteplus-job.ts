@@ -15,7 +15,7 @@ export const pollByteplusJob = inngest.createFunction(
     name: 'Poll BytePlus Job',
     retries: 0,
   },
-  { event: 'clonebox/video.poll' },
+  { event: 'ninjabox/video.poll' },
   async ({ event, step }) => {
     const { videoId, userId, jobId } = event.data as {
       videoId: string

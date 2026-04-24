@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { ToastProvider } from '@/components/ui/Toast'
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import './globals.css'
 
 const geistSans = Geist({
@@ -15,25 +16,25 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'CloneBox — Clone vídeos virais em 2 minutos',
-    template: '%s | CloneBox',
+    default: 'Ninja Box — Clone vídeos virais em 2 minutos',
+    template: '%s | Ninja Box',
   },
   description:
     'Cole um vídeo viral do TikTok, envie a foto do seu produto e receba um vídeo UGC pronto pra publicar por R$ 2,64.',
   keywords: ['ugc', 'video marketing', 'tiktok', 'e-commerce', 'inteligência artificial'],
-  authors: [{ name: 'CloneBox' }],
+  authors: [{ name: 'Ninja Box' }],
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://clonebox.com.br',
-    siteName: 'CloneBox',
-    title: 'CloneBox — Clone vídeos virais em 2 minutos',
+    url: 'https://ninjabox.com.br',
+    siteName: 'Ninja Box',
+    title: 'Ninja Box — Clone vídeos virais em 2 minutos',
     description:
       'Cole um vídeo viral do TikTok, envie a foto do seu produto e receba um vídeo UGC pronto pra publicar por R$ 2,64.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CloneBox — Clone vídeos virais em 2 minutos',
+    title: 'Ninja Box — Clone vídeos virais em 2 minutos',
     description:
       'Cole um vídeo viral do TikTok, envie a foto do seu produto e receba um vídeo UGC pronto pra publicar por R$ 2,64.',
   },
@@ -51,9 +52,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ToastProvider>
-          {children}
-        </ToastProvider>
+        <ThemeProvider>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

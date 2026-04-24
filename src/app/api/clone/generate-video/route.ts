@@ -84,7 +84,7 @@ export async function POST(request: Request) {
     // Dispara job assíncrono no Inngest
     try {
       await inngest.send({
-        name: 'clonebox/video.generate',
+        name: 'ninjabox/video.generate',
         data: {
           videoId: input.videoId,
           userId: user.id,

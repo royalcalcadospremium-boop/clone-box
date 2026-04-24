@@ -1,6 +1,6 @@
 import { ImageGeneratorClient } from './ImageGeneratorClient'
 
-export const metadata = { title: 'Geração de Imagem — CloneBox' }
+export const metadata = { title: 'Geração de Imagem — Ninja Box' }
 
 export default function ImageGeneratorPage() {
   return (

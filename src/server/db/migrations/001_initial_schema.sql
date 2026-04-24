@@ -1,5 +1,5 @@
 -- ============================================================
--- CloneBox — Migração Inicial
+-- Ninja Box — Migração Inicial
 -- Execute no Supabase SQL Editor
 -- ============================================================
 

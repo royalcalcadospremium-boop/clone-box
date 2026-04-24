@@ -58,20 +58,20 @@ export function Sidebar({ profile }: SidebarProps) {
   }
 
   return (
-    <aside className="flex w-[220px] flex-col border-r border-white/[0.06] bg-[#080808] shrink-0">
+    <aside className="flex w-[220px] flex-col border-r border-border bg-card shrink-0">
       {/* Logo */}
-      <div className="flex h-14 items-center gap-2.5 px-4 border-b border-white/[0.06]">
+      <div className="flex h-14 items-center gap-2.5 px-4 border-b border-border">
         <div className="flex h-7 w-7 items-center justify-center rounded-lg gradient-purple shrink-0">
           <Video className="h-3.5 w-3.5 text-white" />
         </div>
-        <span className="font-black text-[15px] tracking-tight">CloneBox</span>
+        <span className="font-black text-[15px] tracking-tight">Ninja Box</span>
       </div>
 
       {/* Navigation groups */}
       <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-4">
         {navGroups.map((group) => (
           <div key={group.label}>
-            <p className="px-2 mb-1 text-[10px] font-semibold uppercase tracking-widest text-white/25">
+            <p className="px-2 mb-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
               {group.label}
             </p>
             <div className="space-y-0.5">
@@ -84,8 +84,8 @@ export function Sidebar({ profile }: SidebarProps) {
                     href={item.href}
                     className={`group relative flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-all duration-150 ${
                       active
-                        ? 'bg-[#7C3AED]/15 text-white'
-                        : 'text-white/45 hover:bg-white/[0.04] hover:text-white/80'
+                        ? 'bg-[#7C3AED]/15 text-foreground'
+                        : 'text-foreground/45 hover:bg-accent/5 hover:text-foreground/80'
                     }`}
                   >
                     {active && (
@@ -103,7 +103,7 @@ export function Sidebar({ profile }: SidebarProps) {
                       </span>
                     )}
                     {!item.badge && active && (
-                      <ChevronRight className="ml-auto h-3 w-3 text-white/30" />
+                      <ChevronRight className="ml-auto h-3 w-3 text-foreground/30" />
                     )}
                   </Link>
                 )
@@ -114,15 +114,15 @@ export function Sidebar({ profile }: SidebarProps) {
       </nav>
 
       {/* Credits card */}
-      <div className="mx-2 mb-2 rounded-xl border border-[#7C3AED]/20 bg-[#7C3AED]/5 p-3">
+      <div className="mx-2 mb-2 rounded-xl border border-[#7C3AED]/20 bg-primary/5 p-3">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-1.5">
             <Star className="h-3 w-3 text-[#A78BFA]" />
-            <span className="text-[11px] font-medium text-white/50">Créditos</span>
+            <span className="text-[11px] font-medium text-muted-foreground">Créditos</span>
           </div>
           <span className="text-[13px] font-black text-[#A78BFA]">{totalCredits.toLocaleString('pt-BR')}</span>
         </div>
-        <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">
+        <div className="h-1 rounded-full bg-border overflow-hidden">
           <div
             className="h-full rounded-full gradient-purple transition-all"
             style={{ width: `${Math.min((totalCredits / 2000) * 100, 100)}%` }}
@@ -137,7 +137,7 @@ export function Sidebar({ profile }: SidebarProps) {
       </div>
 
       {/* Bottom nav */}
-      <div className="px-2 pb-3 space-y-0.5 border-t border-white/[0.06] pt-2">
+      <div className="px-2 pb-3 space-y-0.5 border-t border-border pt-2">
         {[
           { href: '/billing', label: 'Planos', icon: CreditCard },
           { href: '/settings', label: 'Configurações', icon: Settings },
@@ -149,7 +149,7 @@ export function Sidebar({ profile }: SidebarProps) {
               key={item.href}
               href={item.href}
               className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-all ${
-                active ? 'bg-white/[0.06] text-white' : 'text-white/40 hover:bg-white/[0.04] hover:text-white/70'
+                active ? 'bg-accent/10 text-foreground' : 'text-foreground/40 hover:bg-accent/5 hover:text-foreground/70'
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
@@ -159,7 +159,7 @@ export function Sidebar({ profile }: SidebarProps) {
         })}
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-white/40 hover:bg-white/[0.04] hover:text-red-400 transition-all"
+          className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-foreground/40 hover:bg-accent/5 hover:text-red-400 transition-all"
         >
           <LogOut className="h-4 w-4 shrink-0" />
           Sair

@@ -32,17 +32,17 @@ export default function RecuperarSenhaPage() {
 
   if (sent) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A] px-4">
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <div className="w-full max-w-md text-center">
           <div className="mb-6 flex justify-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF6B00]/10">
               <CheckCircle2 className="h-8 w-8 text-[#FF6B00]" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold">Email enviado!</h1>
-          <p className="mt-3 text-white/50 text-sm leading-relaxed">
+          <h1 className="text-2xl font-bold text-foreground">Email enviado!</h1>
+          <p className="mt-3 text-muted-foreground text-sm leading-relaxed">
             Enviamos um link de redefinição para{' '}
-            <span className="text-white font-medium">{email}</span>.
+            <span className="text-foreground font-medium">{email}</span>.
             <br />
             Verifique sua caixa de entrada e spam.
           </p>
@@ -59,25 +59,25 @@ export default function RecuperarSenhaPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         <div className="mb-8 flex flex-col items-center">
           <Link href="/" className="flex items-center gap-2 mb-6">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF6B00]">
               <Zap className="h-5 w-5 text-black" fill="black" />
             </div>
-            <span className="text-xl font-black">CloneBox</span>
+            <span className="text-xl font-black">Ninja Box</span>
           </Link>
-          <h1 className="text-2xl font-bold text-white">Recuperar senha</h1>
-          <p className="mt-1 text-sm text-white/50">
+          <h1 className="text-2xl font-bold text-foreground">Recuperar senha</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             Digite seu email e enviaremos um link de redefinição
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/5 bg-[#111111] p-8">
+        <div className="rounded-2xl border border-border bg-card p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-white/70 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-muted-foreground mb-1.5">
                 Email da conta
               </label>
               <input
@@ -88,7 +88,7 @@ export default function RecuperarSenhaPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/20 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
+                className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder-muted-foreground/50 outline-none transition focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
               />
             </div>
 
@@ -112,7 +112,7 @@ export default function RecuperarSenhaPage() {
         <div className="mt-6 text-center">
           <Link
             href="/login"
-            className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-white transition"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Voltar para o login

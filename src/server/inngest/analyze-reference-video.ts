@@ -13,7 +13,7 @@ export const analyzeReferenceVideo = inngest.createFunction(
     name: 'Analyze Reference Video',
     retries: 2,
   },
-  { event: 'clonebox/video.analyze' },
+  { event: 'ninjabox/video.analyze' },
   async ({ event, step }) => {
     const { videoId, userId } = event.data as { videoId: string; userId: string }
 
@@ -66,7 +66,7 @@ export const analyzeReferenceVideoFailed = inngest.createFunction(
   { event: 'inngest/function.failed' },
   async ({ event, step }) => {
     const originalEvent = event.data.event
-    if (originalEvent.name !== 'clonebox/video.analyze') return
+    if (originalEvent.name !== 'ninjabox/video.analyze') return
 
     const { videoId, userId } = originalEvent.data as { videoId: string; userId: string }
 

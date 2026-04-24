@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         {
           price_data: {
             currency: 'brl',
-            product_data: { name: `CloneBox — ${pkg.credits} créditos` },
+            product_data: { name: `Ninja Box — ${pkg.credits} créditos` },
             unit_amount: pkg.priceCents,
           },
           quantity: 1,

@@ -66,17 +66,17 @@ const STEPS = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#080808] text-white">
+    <div className="min-h-screen bg-background text-foreground">
 
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#080808]/80 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-14 items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg gradient-purple">
                 <Video className="h-3.5 w-3.5 text-white" />
               </div>
-              <span className="text-[15px] font-black tracking-tight">CloneBox</span>
+              <span className="text-[15px] font-black tracking-tight">Ninja Box</span>
             </div>
 
             <div className="hidden items-center gap-6 md:flex">
@@ -86,14 +86,14 @@ export default function LandingPage() {
                 { href: '#precos', label: 'Preços' },
                 { href: '#faq', label: 'FAQ' },
               ].map(item => (
-                <Link key={item.href} href={item.href} className="text-sm text-white/50 transition hover:text-white">
+                <Link key={item.href} href={item.href} className="text-sm text-muted-foreground transition hover:text-foreground">
                   {item.label}
                 </Link>
               ))}
             </div>
 
             <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm text-white/50 transition hover:text-white">
+              <Link href="/login" className="text-sm text-muted-foreground transition hover:text-foreground">
                 Entrar
               </Link>
               <Link
@@ -137,7 +137,7 @@ export default function LandingPage() {
           </h1>
 
           {/* Subheadline */}
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/50 sm:text-xl leading-relaxed">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl leading-relaxed">
             Seedance 2.0, Kling 1.6, WAN 2.1, Flux — todos os melhores modelos de IA em uma plataforma.
             Crie vídeos virais, imagens e conteúdo de marketing para e-commerce brasileiro.
           </p>
@@ -151,15 +151,15 @@ export default function LandingPage() {
               Começar com 20 créditos grátis
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </Link>
-            <button className="flex items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-6 py-4 text-sm font-semibold text-white/70 transition hover:bg-white/[0.06] hover:text-white">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10">
+            <button className="flex items-center gap-2.5 rounded-xl border border-border bg-muted px-6 py-4 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-secondary">
                 <Play className="h-3 w-3 fill-white ml-0.5" />
               </div>
               Ver demonstração
             </button>
           </div>
 
-          <p className="mt-6 text-sm text-white/30">
+          <p className="mt-6 text-sm text-muted-foreground">
             Sem cartão de crédito · Acesso imediato · Cancele quando quiser
           </p>
 
@@ -180,14 +180,14 @@ export default function LandingPage() {
       </section>
 
       {/* MODELOS */}
-      <section id="modelos" className="py-20 border-t border-white/[0.06]">
+      <section id="modelos" className="py-20 border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-black sm:text-4xl">
               Os melhores modelos de IA{' '}
               <span className="gradient-text">em um só lugar</span>
             </h2>
-            <p className="mt-4 text-white/50 max-w-xl mx-auto">
+            <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
               Acesse todos os modelos líderes de vídeo e imagem sem precisar de múltiplas assinaturas.
             </p>
           </div>
@@ -196,7 +196,7 @@ export default function LandingPage() {
             {AI_MODELS.map(model => (
               <div
                 key={model.name}
-                className="group relative rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-5 overflow-hidden hover:border-white/[0.12] transition-all"
+                className="group relative rounded-xl border border-border bg-card p-5 overflow-hidden hover:border-border transition-all"
               >
                 <div
                   className="absolute -top-6 -right-6 h-16 w-16 rounded-full opacity-10 blur-xl group-hover:opacity-20 transition-opacity"
@@ -215,7 +215,7 @@ export default function LandingPage() {
                   {model.type}
                 </span>
                 <h3 className="font-bold text-base text-white">{model.name}</h3>
-                <p className="text-sm text-white/40 mt-1">{model.desc}</p>
+                <p className="text-sm text-muted-foreground mt-1">{model.desc}</p>
               </div>
             ))}
           </div>
@@ -223,20 +223,20 @@ export default function LandingPage() {
       </section>
 
       {/* FEATURES */}
-      <section className="py-20 border-t border-white/[0.06]">
+      <section className="py-20 border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-black sm:text-4xl">
               Tudo que você precisa para criar
             </h2>
-            <p className="mt-4 text-white/50">Uma plataforma. Todos os modelos. Infinitas possibilidades.</p>
+            <p className="mt-4 text-muted-foreground">Uma plataforma. Todos os modelos. Infinitas possibilidades.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             {FEATURES.map(({ icon: Icon, title, description, color }) => (
               <div
                 key={title}
-                className="group relative rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-6 overflow-hidden hover:border-white/[0.12] transition-all"
+                className="group relative rounded-xl border border-border bg-card p-6 overflow-hidden hover:border-border transition-all"
               >
                 <div
                   className="absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-8 blur-2xl group-hover:opacity-15 transition-opacity"
@@ -249,7 +249,7 @@ export default function LandingPage() {
                   <Icon className="h-6 w-6" style={{ color }} />
                 </div>
                 <h3 className="font-bold text-lg text-white mb-2">{title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
               </div>
             ))}
           </div>
@@ -257,23 +257,23 @@ export default function LandingPage() {
       </section>
 
       {/* COMO FUNCIONA */}
-      <section id="como-funciona" className="py-20 border-t border-white/[0.06]">
+      <section id="como-funciona" className="py-20 border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-black sm:text-4xl">Como funciona</h2>
-            <p className="mt-4 text-white/50">4 passos. 2 minutos. Vídeo viral pronto.</p>
+            <p className="mt-4 text-muted-foreground">4 passos. 2 minutos. Vídeo viral pronto.</p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-4">
             {STEPS.map((item) => (
-              <div key={item.step} className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-5">
+              <div key={item.step} className="rounded-xl border border-border bg-card p-5">
                 <div
                   className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${item.gradient} text-sm font-black text-white`}
                 >
                   {item.step}
                 </div>
                 <h3 className="mb-2 font-bold text-white">{item.title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -281,11 +281,11 @@ export default function LandingPage() {
       </section>
 
       {/* PREÇOS */}
-      <section id="precos" className="py-20 border-t border-white/[0.06]">
+      <section id="precos" className="py-20 border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-black sm:text-4xl">Preços simples</h2>
-            <p className="mt-4 text-white/50">Comece grátis com 20 créditos. Sem cartão de crédito.</p>
+            <p className="mt-4 text-muted-foreground">Comece grátis com 20 créditos. Sem cartão de crédito.</p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3 max-w-5xl mx-auto">
@@ -320,7 +320,7 @@ export default function LandingPage() {
                 className={`relative rounded-xl p-6 ${
                   plan.highlight
                     ? 'border border-[#7C3AED]/50 bg-[#7C3AED]/5'
-                    : 'border border-white/[0.06] bg-[#0F0F0F]'
+                    : 'border border-border bg-card'
                 }`}
               >
                 {plan.highlight && (
@@ -331,14 +331,14 @@ export default function LandingPage() {
                 <h3 className="text-lg font-bold">{plan.name}</h3>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-3xl font-black">{plan.price}</span>
-                  <span className="text-white/40 text-sm">/mês</span>
+                  <span className="text-muted-foreground text-sm">/mês</span>
                 </div>
-                <p className="mt-1 text-sm text-white/40">{plan.credits}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{plan.credits}</p>
                 <ul className="mt-5 space-y-2.5">
                   {plan.features.map(f => (
                     <li key={f} className="flex items-center gap-2 text-sm">
                       <CheckCircle2 className="h-4 w-4 shrink-0 text-[#A78BFA]" />
-                      <span className="text-white/70">{f}</span>
+                      <span className="text-muted-foreground">{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -347,7 +347,7 @@ export default function LandingPage() {
                   className={`mt-6 block rounded-xl py-3 text-center text-sm font-bold transition ${
                     plan.highlight
                       ? 'gradient-purple text-white hover:opacity-90'
-                      : 'border border-white/[0.08] text-white/70 hover:border-[#7C3AED]/40 hover:text-[#A78BFA]'
+                      : 'border border-border text-muted-foreground hover:border-[#7C3AED]/40 hover:text-[#A78BFA]'
                   }`}
                 >
                   {plan.cta}
@@ -359,14 +359,14 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-20 border-t border-white/[0.06]">
+      <section id="faq" className="py-20 border-t border-border">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-10 text-center text-3xl font-black">Perguntas frequentes</h2>
           <div className="space-y-3">
             {[
               {
                 q: 'Os vídeos violam direitos autorais?',
-                a: 'O CloneBox clona o ESTILO do vídeo — pacing, arco narrativo, tipos de shot — não o conteúdo. Os vídeos gerados são 100% originais com seu produto, criados por IA do zero.',
+                a: 'O Ninja Box clona o ESTILO do vídeo — pacing, arco narrativo, tipos de shot — não o conteúdo. Os vídeos gerados são 100% originais com seu produto, criados por IA do zero.',
               },
               {
                 q: 'Quanto tempo leva para gerar?',
@@ -385,9 +385,9 @@ export default function LandingPage() {
                 a: 'Se houver erro técnico no servidor, os créditos são devolvidos automaticamente. Você pode gerar variações com seeds diferentes sem custo adicional.',
               },
             ].map(({ q, a }) => (
-              <div key={q} className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-5">
+              <div key={q} className="rounded-xl border border-border bg-card p-5">
                 <h3 className="font-semibold text-white">{q}</h3>
-                <p className="mt-2 text-sm text-white/50 leading-relaxed">{a}</p>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{a}</p>
               </div>
             ))}
           </div>
@@ -395,7 +395,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA FINAL */}
-      <section className="py-24 border-t border-white/[0.06]">
+      <section className="py-24 border-t border-border">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <div className="relative">
             <div className="absolute inset-0 bg-[#7C3AED]/8 blur-3xl rounded-full" />
@@ -404,7 +404,7 @@ export default function LandingPage() {
                 Infraestrutura de IA para{' '}
                 <span className="gradient-text">criadores brasileiros</span>
               </h2>
-              <p className="mt-6 text-lg text-white/50">
+              <p className="mt-6 text-lg text-muted-foreground">
                 Crie vídeos virais, imagens profissionais e conteúdo de marketing com os melhores modelos de IA.
               </p>
               <Link
@@ -414,26 +414,26 @@ export default function LandingPage() {
                 Criar conta grátis
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <p className="mt-4 text-sm text-white/30">20 créditos grátis · Sem cartão · Acesso imediato</p>
+              <p className="mt-4 text-sm text-muted-foreground">20 créditos grátis · Sem cartão · Acesso imediato</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/[0.06] py-8">
+      <footer className="border-t border-border py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2">
               <div className="flex h-6 w-6 items-center justify-center rounded-md gradient-purple">
                 <Video className="h-3 w-3 text-white" />
               </div>
-              <span className="text-sm font-bold">CloneBox</span>
+              <span className="text-sm font-bold">Ninja Box</span>
             </div>
-            <p className="text-sm text-white/25">© 2026 CloneBox. Todos os direitos reservados.</p>
-            <div className="flex gap-4 text-sm text-white/30">
-              <Link href="/privacidade" className="hover:text-white/60 transition">Privacidade</Link>
-              <Link href="/termos" className="hover:text-white/60 transition">Termos</Link>
+            <p className="text-sm text-muted-foreground">© 2026 Ninja Box. Todos os direitos reservados.</p>
+            <div className="flex gap-4 text-sm text-muted-foreground">
+              <Link href="/privacidade" className="hover:text-foreground/60 transition">Privacidade</Link>
+              <Link href="/termos" className="hover:text-foreground/60 transition">Termos</Link>
             </div>
           </div>
         </div>
