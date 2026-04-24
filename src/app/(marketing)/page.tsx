@@ -1,443 +1,611 @@
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Gem,
+  ImageIcon,
+  Instagram,
+  Menu,
+  Play,
+  Sparkles,
+  Video,
+  Wand2,
+  Zap,
+} from 'lucide-react'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, Play, Star, Zap, Video, Image, Grid3x3, Sparkles, ChevronRight } from 'lucide-react'
 
-const AI_MODELS = [
-  { name: 'Seedance 2.0', type: 'Vídeo', icon: '🎬', color: '#ffff00', desc: 'Áudio nativo + lip-sync' },
-  { name: 'Kling 1.6', type: 'Vídeo', icon: '🎥', color: '#3B82F6', desc: 'Ultra-fotorrealista' },
-  { name: 'WAN 2.1', type: 'Vídeo', icon: '⚡', color: '#06B6D4', desc: 'Geração veloz' },
-  { name: 'Flux Schnell', type: 'Imagem', icon: '✨', color: '#EC4899', desc: 'Imagem em 2 segundos' },
-  { name: 'Flux Dev', type: 'Imagem', icon: '🎨', color: '#ffff56', desc: 'Qualidade máxima' },
-  { name: 'SDXL Turbo', type: 'Imagem', icon: '🖼️', color: '#F59E0B', desc: 'Versátil e rápido' },
-]
-
-const FEATURES = [
+const heroCards = [
   {
-    icon: Video,
-    title: 'Multi-Modelo de Vídeo',
-    description: 'Acesse Seedance 2.0, Kling 1.6 e WAN 2.1 em uma única plataforma. Escolha o modelo ideal para cada projeto.',
-    color: '#ffff00',
+    title: 'THE BEST VIDEO MODEL NOW EVEN BETTER',
+    label: 'SEEDANCE 2.0 IN 1080P',
+    description: 'Now generating in 1080p - sharper detail, smoother motion output',
+    image: '/higgsfield-home/hero-seedance.png',
   },
   {
-    icon: Image,
-    title: 'Geração de Imagem IA',
-    description: 'Flux Schnell, Flux Dev e SDXL. Imagens profissionais de produto em segundos para seus anúncios.',
-    color: '#EC4899',
-  },
-  {
-    icon: Sparkles,
     title: 'Marketing Studio',
-    description: 'Crie UGC ads virais otimizados para TikTok Shop, Shopee e Mercado Livre com IA adaptada ao Brasil.',
-    color: '#10B981',
+    label: 'MARKETING STUDIO',
+    description: 'Different Formats. One Product. Powered by Seedance 2.0.',
+    image: '/higgsfield-home/hero-marketing.png',
   },
   {
-    icon: Grid3x3,
-    title: '20+ Apps de IA',
-    description: 'Lipsync, face swap, remoção de fundo, upscale, transições e muito mais em um único lugar.',
-    color: '#F59E0B',
+    title: 'Cinema Studio 3.5',
+    label: 'CINEMA STUDIO 3.5',
+    description: 'AI Director, collaborative elements, and per-shot camera control',
+    image: '/higgsfield-home/hero-cinema.png',
+  },
+  {
+    title: 'Seedance 2.0',
+    label: 'URL TO VIDEO',
+    description: 'One URL. Professional ads. Powered by Ninja Box.',
+    image: '/higgsfield-home/hero-url.png',
   },
 ]
 
-const STEPS = [
+const imageSet = [
+  '/higgsfield-home/gpt-01.png',
+  '/higgsfield-home/gpt-02.png',
+  '/higgsfield-home/gpt-03.png',
+  '/higgsfield-home/gpt-04.png',
+  '/higgsfield-home/gpt-05.png',
+  '/higgsfield-home/gpt-06.png',
+]
+
+const marketingImages = [
+  '/higgsfield-home/marketing-02.png',
+  '/higgsfield-home/marketing-03.png',
+  '/higgsfield-home/marketing-04.png',
+  '/higgsfield-home/marketing-01.png',
+  '/higgsfield-home/marketing-05.png',
+]
+
+const seedanceImages = [
+  '/higgsfield-home/seedance-01.png',
+  '/higgsfield-home/seedance-02.png',
+  '/higgsfield-home/seedance-03.png',
+  '/higgsfield-home/seedance-04.png',
+  '/higgsfield-home/seedance-05.png',
+  '/higgsfield-home/seedance-06.png',
+]
+
+const tools = [
   {
-    step: '01',
-    title: 'Cole o vídeo viral',
-    desc: 'Insira o link do TikTok ou faça upload do vídeo que quer clonar para seu produto.',
-    gradient: 'from-[#ffff00] to-[#ffff56]',
+    name: 'Create Image',
+    desc: 'Generate AI images',
+    icon: ImageIcon,
+    image: '/higgsfield-home/tool-create-image.png',
+    tag: '',
   },
   {
-    step: '02',
-    title: 'Configure o estilo',
-    desc: 'Escolha modelo de IA, duração, resolução e envie a foto do seu produto.',
-    gradient: 'from-[#ffff56] to-[#EC4899]',
+    name: 'Create Video',
+    desc: 'Generate AI videos',
+    icon: Video,
+    image: '/higgsfield-home/tool-create-video.png',
+    tag: '',
   },
   {
-    step: '03',
-    title: 'IA gera o prompt',
-    desc: 'Kimi Vision analisa o viral, extrai pacing e gera prompt cinematográfico otimizado.',
-    gradient: 'from-[#EC4899] to-[#F59E0B]',
+    name: 'Motion Control',
+    desc: 'Precise actions and expressions',
+    icon: Play,
+    image: '/higgsfield-home/tool-motion-control.png',
+    tag: 'NEW',
   },
   {
-    step: '04',
-    title: 'Vídeo pronto em 2 min',
-    desc: 'O modelo de IA gera o vídeo com seu produto. Baixe em HD e publique imediatamente.',
-    gradient: 'from-[#F59E0B] to-[#10B981]',
+    name: 'Soul 2.0',
+    desc: 'Ultra-realistic fashion visuals',
+    icon: Sparkles,
+    image: '/higgsfield-home/tool-soul.png',
+    tag: 'NEW',
+  },
+  {
+    name: 'Soul ID',
+    desc: 'Create unique character',
+    icon: Wand2,
+    image: '/higgsfield-home/tool-soul-id.png',
+    tag: '',
+  },
+  {
+    name: 'Upscale',
+    desc: 'Enhance media quality',
+    icon: Zap,
+    image: '/higgsfield-home/tool-upscale.png',
+    tag: '',
+  },
+  {
+    name: 'Edit Image',
+    desc: 'Brush areas to edit images',
+    icon: ImageIcon,
+    image: '/higgsfield-home/tool-edit-image.png',
+    tag: '',
+  },
+  {
+    name: 'Edit Video',
+    desc: 'Advanced video editing',
+    icon: Video,
+    image: '/higgsfield-home/tool-create-video.png',
+    tag: '',
+  },
+]
+
+const chipGroups = [
+  {
+    title: 'Mixed Media',
+    desc: 'Explore stylized community creations with layered references.',
+    chips: [
+      'Layer mixed media',
+      'Sketch',
+      'Canvas',
+      'Flash comic',
+      'Overexposed',
+      'Paper',
+      'Noir',
+      'Particles',
+      'Hand paint',
+      'Toxic',
+      'Tracking',
+      'Ultraviolet',
+      'Windows',
+      'Acid',
+      'Palette',
+      'Comic',
+    ],
+  },
+  {
+    title: 'Visual Effects',
+    desc: 'Big-budget visual effects, from explosions to surreal transformations.',
+    chips: [
+      'Raven Transition',
+      'Air Bending',
+      'Animalization',
+      'Water Bending',
+      'Earth Zoom Out',
+      'Giant Grab',
+      'Shadow Smoke',
+      'Splash Transition',
+      'Firelava',
+      'Explosion',
+      'Flame On',
+      'Train Rush',
+      'Point Cloud',
+      'Money Rain',
+    ],
+  },
+  {
+    title: 'Ninja Box Apps',
+    desc: 'Ready-to-share content in one click, from viral effects to commercials.',
+    chips: [
+      'Angles 2.0',
+      'AI Stylist',
+      'Relight',
+      'Shots',
+      'Zooms',
+      'Skin Enhancer',
+      'ClipCut',
+      'Outfit Swap',
+      'Style Snap',
+      'Click to Ad',
+      'Face Swap',
+      'Packshot',
+      'Billboard Ad',
+      'Background Remover',
+    ],
   },
 ]
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-[#0f1113] text-[#fbfbfe]">
+      <Header />
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-14 items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg gradient-purple">
-                <Video className="h-3.5 w-3.5 text-white" />
-              </div>
-              <span className="text-[15px] font-black tracking-tight">Ninja Box</span>
+      <section className="mx-auto max-w-[1380px] px-3 pb-5 pt-[76px] sm:px-5">
+        <div className="relative">
+          <button
+            type="button"
+            className="absolute left-0 top-24 z-20 hidden h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur md:flex"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            className="absolute right-0 top-24 z-20 hidden h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur md:flex"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <div className="flex gap-3 overflow-hidden lg:grid lg:grid-cols-[1.2fr_1.2fr_1.2fr_.45fr]">
+            {heroCards.map((card) => (
+              <article key={card.label} className="group w-[278px] flex-none lg:w-auto lg:min-w-0">
+                <div
+                  aria-label={card.title}
+                  className="relative h-[142px] overflow-hidden rounded-xl bg-[#171717] md:h-[198px]"
+                >
+                  <img
+                    src={card.image}
+                    alt=""
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="mt-3 space-y-1">
+                  <h3 className="text-xs font-black uppercase text-white">{card.label}</h3>
+                  <p className="line-clamp-1 text-[11px] font-medium text-white/45">
+                    {card.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1380px] space-y-4 px-3 pb-5 sm:px-5">
+        <FeatureBlock
+          eyebrow="NEW MODEL"
+          title="Meet GPT Image 2"
+          description="4K images with near-perfect text rendering"
+          button="Try Model"
+          variant="dark"
+          images={imageSet}
+          panelImage="/higgsfield-home/gpt-panel-glow.png"
+        />
+        <FeatureBlock
+          eyebrow=""
+          title="One link in. Marketing out."
+          description="Create UGC, demos, and ads across channels"
+          button="Try Marketing Studio"
+          variant="pink"
+          images={marketingImages}
+          panelImage="/higgsfield-home/marketing-panel-products.png"
+        />
+        <FeatureBlock
+          eyebrow="AVAILABLE FOR EVERYONE"
+          title="Seedance 2.0"
+          description="World's best video model available with up to 30% OFF with special offer"
+          button="Get Seedance 2.0"
+          variant="blue"
+          images={seedanceImages}
+        />
+      </section>
+
+      <section className="mx-auto max-w-[1380px] px-3 pb-5 sm:px-5">
+        <div className="rounded-3xl border border-white/[0.08] bg-[#14151a] p-5 md:p-8">
+          <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p className="mb-2 text-xs font-black uppercase tracking-[.2em] text-[#d1fe17]">
+                Explore all tools
+              </p>
+              <h2 className="max-w-xl text-4xl font-black uppercase leading-[.9] tracking-[-.05em] md:text-6xl">
+                What will you create today?
+              </h2>
             </div>
+            <Link
+              href="/apps"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-black text-black"
+            >
+              Explore all tools <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {tools.map(({ name, desc, icon: Icon, image, tag }) => (
+              <Link
+                key={name}
+                href="/apps"
+                className="group overflow-hidden rounded-2xl border border-white/[0.08] bg-[#1c1e20] transition hover:border-[#d1fe17]/30"
+              >
+                <div className="relative aspect-video overflow-hidden bg-[#101113]">
+                  <img
+                    src={image}
+                    alt=""
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  {tag && (
+                    <span className="absolute left-3 top-3 rounded-md bg-[#d1fe17] px-2 py-1 text-[10px] font-black text-black">
+                      {tag}
+                    </span>
+                  )}
+                  <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-base font-black text-white">{name}</h3>
+                  <p className="mt-1 text-sm text-white/45">{desc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <div className="hidden items-center gap-6 md:flex">
-              {[
-                { href: '#modelos', label: 'Modelos' },
-                { href: '#como-funciona', label: 'Como funciona' },
-                { href: '#precos', label: 'Preços' },
-                { href: '#faq', label: 'FAQ' },
-              ].map(item => (
-                <Link key={item.href} href={item.href} className="text-sm text-muted-foreground transition hover:text-foreground">
-                  {item.label}
+      <section className="mx-auto grid max-w-[1380px] gap-4 px-3 pb-5 sm:px-5 lg:grid-cols-[1fr_1fr]">
+        <PosterCard
+          title="Cinematic VFX ready to use"
+          subtitle="Turn any shot cinematic"
+          image="/higgsfield-home/poster-cinematic.png"
+          cta="Explore All Presets"
+        />
+        <PosterCard
+          title="Different scenes. Same star."
+          subtitle="Build your character. One click does the rest"
+          image="/higgsfield-home/poster-photodump.png"
+          cta="Try Photodump"
+        />
+      </section>
+
+      <section className="mx-auto max-w-[1380px] space-y-4 px-3 pb-8 sm:px-5">
+        {chipGroups.map((group) => (
+          <div
+            key={group.title}
+            className="rounded-3xl border border-white/[0.08] bg-[#14151a] p-5 md:p-7"
+          >
+            <div className="mb-5 max-w-2xl">
+              <h2 className="text-3xl font-black uppercase tracking-[-.04em] md:text-5xl">
+                {group.title}
+              </h2>
+              <p className="mt-2 text-sm font-medium text-white/50 md:text-base">{group.desc}</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {group.chips.map((chip) => (
+                <Link
+                  key={chip}
+                  href="/apps"
+                  className="rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-sm font-bold text-white/70 transition hover:border-[#d1fe17]/30 hover:text-[#d1fe17]"
+                >
+                  {chip}
                 </Link>
               ))}
             </div>
-
-            <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm text-muted-foreground transition hover:text-foreground">
-                Entrar
-              </Link>
-              <Link
-                href="/signup"
-                className="flex items-center gap-1.5 rounded-lg gradient-purple px-4 py-2 text-sm font-bold text-white transition hover:opacity-90 glow-purple-sm"
-              >
-                Começar grátis
-                <ChevronRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
           </div>
-        </div>
-      </nav>
-
-      {/* HERO */}
-      <section className="relative overflow-hidden pt-32 pb-24">
-        {/* Background glows */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[#ffff00]/12 blur-[120px]" />
-          <div className="absolute top-32 right-0 h-[500px] w-[500px] rounded-full bg-[#EC4899]/8 blur-[100px]" />
-          <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-[#3B82F6]/6 blur-[80px]" />
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.025]" style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-          backgroundSize: '40px 40px',
-        }} />
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          {/* Badge */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#ffff00]/30 bg-[#ffff00]/10 px-4 py-1.5 text-sm">
-            <Star className="h-3.5 w-3.5 text-[#ffff56]" fill="currentColor" />
-            <span className="text-[#ffff56] font-medium">Plataforma multi-modelo de IA para criadores</span>
-          </div>
-
-          {/* Headline */}
-          <h1 className="mx-auto max-w-5xl text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl leading-[1.1]">
-            Infraestrutura de IA para{' '}
-            <span className="gradient-text">Vídeo & Imagem</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl leading-relaxed">
-            Seedance 2.0, Kling 1.6, WAN 2.1, Flux — todos os melhores modelos de IA em uma plataforma.
-            Crie vídeos virais, imagens e conteúdo de marketing para e-commerce brasileiro.
-          </p>
-
-          {/* CTAs */}
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/signup"
-              className="group flex items-center gap-2 rounded-xl gradient-purple px-8 py-4 text-base font-bold text-white transition hover:opacity-90 glow-purple"
-            >
-              Começar com 20 créditos grátis
-              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-            </Link>
-            <button className="flex items-center gap-2.5 rounded-xl border border-border bg-muted px-6 py-4 text-sm font-semibold text-muted-foreground transition hover:bg-muted hover:text-foreground">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-secondary">
-                <Play className="h-3 w-3 fill-white ml-0.5" />
-              </div>
-              Ver demonstração
-            </button>
-          </div>
-
-          <p className="mt-6 text-sm text-muted-foreground">
-            Sem cartão de crédito · Acesso imediato · Cancele quando quiser
-          </p>
-
-          {/* Model pills */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
-            {AI_MODELS.map(model => (
-              <div
-                key={model.name}
-                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold"
-                style={{ background: `${model.color}15`, color: model.color, border: `1px solid ${model.color}25` }}
-              >
-                <span>{model.icon}</span>
-                <span>{model.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </section>
 
-      {/* MODELOS */}
-      <section id="modelos" className="py-20 border-t border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-black sm:text-4xl">
-              Os melhores modelos de IA{' '}
-              <span className="gradient-text">em um só lugar</span>
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-              Acesse todos os modelos líderes de vídeo e imagem sem precisar de múltiplas assinaturas.
+      <footer className="border-t border-white/[0.08] bg-[#0f1113] px-5 py-10">
+        <div className="mx-auto grid max-w-[1380px] gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <div className="mb-4 flex items-center gap-3">
+              <LogoMark />
+              <span className="text-lg font-black">Ninja Box</span>
+            </div>
+            <p className="max-w-sm text-sm leading-6 text-white/50">
+              AI-powered camera control, image generation, marketing studio, and video creation for
+              ecommerce creators.
             </p>
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {AI_MODELS.map(model => (
-              <div
-                key={model.name}
-                className="group relative rounded-xl border border-border bg-card p-5 overflow-hidden hover:border-border transition-all"
-              >
-                <div
-                  className="absolute -top-6 -right-6 h-16 w-16 rounded-full opacity-10 blur-xl group-hover:opacity-20 transition-opacity"
-                  style={{ background: model.color }}
-                />
-                <div
-                  className="mb-3 h-10 w-10 flex items-center justify-center rounded-xl text-xl"
-                  style={{ background: `${model.color}15`, border: `1px solid ${model.color}25` }}
-                >
-                  {model.icon}
-                </div>
-                <span
-                  className="text-[10px] font-bold px-2 py-0.5 rounded-full mb-2 inline-block"
-                  style={{ background: `${model.color}20`, color: model.color }}
-                >
-                  {model.type}
-                </span>
-                <h3 className="font-bold text-base text-white">{model.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{model.desc}</p>
+          {[
+            [
+              'Image',
+              'AI Image',
+              'Soul ID Character',
+              'Edit Image',
+              'Image Upscale',
+              'GPT Image 2',
+            ],
+            ['Video', 'AI Video', 'Create Video', 'Lipsync Studio', 'UGC Factory', 'Seedance 2.0'],
+            ['Ninja Box', 'Pricing', 'Apps', 'Marketing Studio', 'Community', 'Enterprise'],
+          ].map(([title, ...links]) => (
+            <div key={title}>
+              <h3 className="mb-3 text-sm font-black">{title}</h3>
+              <div className="space-y-2">
+                {links.map((item) => (
+                  <Link
+                    key={item}
+                    href="/apps"
+                    className="block text-sm text-white/45 hover:text-white"
+                  >
+                    {item}
+                  </Link>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURES */}
-      <section className="py-20 border-t border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-black sm:text-4xl">
-              Tudo que você precisa para criar
-            </h2>
-            <p className="mt-4 text-muted-foreground">Uma plataforma. Todos os modelos. Infinitas possibilidades.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {FEATURES.map(({ icon: Icon, title, description, color }) => (
-              <div
-                key={title}
-                className="group relative rounded-xl border border-border bg-card p-6 overflow-hidden hover:border-border transition-all"
-              >
-                <div
-                  className="absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-8 blur-2xl group-hover:opacity-15 transition-opacity"
-                  style={{ background: color }}
-                />
-                <div
-                  className="mb-4 h-12 w-12 flex items-center justify-center rounded-xl"
-                  style={{ background: `${color}15`, border: `1px solid ${color}25` }}
-                >
-                  <Icon className="h-6 w-6" style={{ color }} />
-                </div>
-                <h3 className="font-bold text-lg text-white mb-2">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* COMO FUNCIONA */}
-      <section id="como-funciona" className="py-20 border-t border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-black sm:text-4xl">Como funciona</h2>
-            <p className="mt-4 text-muted-foreground">4 passos. 2 minutos. Vídeo viral pronto.</p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-4">
-            {STEPS.map((item) => (
-              <div key={item.step} className="rounded-xl border border-border bg-card p-5">
-                <div
-                  className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${item.gradient} text-sm font-black text-white`}
-                >
-                  {item.step}
-                </div>
-                <h3 className="mb-2 font-bold text-white">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PREÇOS */}
-      <section id="precos" className="py-20 border-t border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-black sm:text-4xl">Preços simples</h2>
-            <p className="mt-4 text-muted-foreground">Comece grátis com 20 créditos. Sem cartão de crédito.</p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3 max-w-5xl mx-auto">
-            {[
-              {
-                name: 'Starter',
-                price: 'R$ 47',
-                credits: '700 créditos/mês',
-                features: ['~23 vídeos de 5s', '~14 imagens Flux HD', '~12 clonagens completas'],
-                cta: 'Começar grátis',
-                highlight: false,
-              },
-              {
-                name: 'Growth',
-                price: 'R$ 97',
-                credits: '1.500 créditos/mês',
-                features: ['~50 vídeos de 5s', '~50 imagens Flux HD', '~27 clonagens completas', 'Templates ilimitados'],
-                cta: 'Mais popular',
-                highlight: true,
-              },
-              {
-                name: 'Pro',
-                price: 'R$ 197',
-                credits: '3.000 créditos/mês',
-                features: ['~100 vídeos de 5s', '100+ imagens HD', '~54 clonagens', 'Download sem marca d\'água', 'API access'],
-                cta: 'Começar grátis',
-                highlight: false,
-              },
-            ].map(plan => (
-              <div
-                key={plan.name}
-                className={`relative rounded-xl p-6 ${
-                  plan.highlight
-                    ? 'border border-[#ffff00]/50 bg-[#ffff00]/5'
-                    : 'border border-border bg-card'
-                }`}
-              >
-                {plan.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full gradient-purple px-4 py-1 text-xs font-bold text-white">
-                    MAIS POPULAR
-                  </div>
-                )}
-                <h3 className="text-lg font-bold">{plan.name}</h3>
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-3xl font-black">{plan.price}</span>
-                  <span className="text-muted-foreground text-sm">/mês</span>
-                </div>
-                <p className="mt-1 text-sm text-muted-foreground">{plan.credits}</p>
-                <ul className="mt-5 space-y-2.5">
-                  {plan.features.map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-[#ffff56]" />
-                      <span className="text-muted-foreground">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/signup"
-                  className={`mt-6 block rounded-xl py-3 text-center text-sm font-bold transition ${
-                    plan.highlight
-                      ? 'gradient-purple text-white hover:opacity-90'
-                      : 'border border-border text-muted-foreground hover:border-[#ffff00]/40 hover:text-[#ffff56]'
-                  }`}
-                >
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section id="faq" className="py-20 border-t border-border">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-10 text-center text-3xl font-black">Perguntas frequentes</h2>
-          <div className="space-y-3">
-            {[
-              {
-                q: 'Os vídeos violam direitos autorais?',
-                a: 'O Ninja Box clona o ESTILO do vídeo — pacing, arco narrativo, tipos de shot — não o conteúdo. Os vídeos gerados são 100% originais com seu produto, criados por IA do zero.',
-              },
-              {
-                q: 'Quanto tempo leva para gerar?',
-                a: 'Entre 30 segundos e 3 minutos dependendo do modelo e duração. O Flux Schnell gera imagens em 2-4 segundos. Você recebe notificação quando ficar pronto.',
-              },
-              {
-                q: 'Posso usar qualquer modelo de IA?',
-                a: 'Sim. Seedance 2.0, Kling 1.6, WAN 2.1 para vídeo. Flux Schnell, Flux Dev e SDXL para imagem. Todos incluídos em todos os planos.',
-              },
-              {
-                q: 'Os créditos acumulam de um mês para o outro?',
-                a: 'Créditos mensais do plano NÃO acumulam — expiram no fim do ciclo. Pacotes avulsos de recarga acumulam por 12 meses.',
-              },
-              {
-                q: 'E se o vídeo gerado falhar?',
-                a: 'Se houver erro técnico no servidor, os créditos são devolvidos automaticamente. Você pode gerar variações com seeds diferentes sem custo adicional.',
-              },
-            ].map(({ q, a }) => (
-              <div key={q} className="rounded-xl border border-border bg-card p-5">
-                <h3 className="font-semibold text-white">{q}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA FINAL */}
-      <section className="py-24 border-t border-border">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="relative">
-            <div className="absolute inset-0 bg-[#ffff00]/8 blur-3xl rounded-full" />
-            <div className="relative">
-              <h2 className="text-4xl font-black sm:text-5xl leading-tight">
-                Infraestrutura de IA para{' '}
-                <span className="gradient-text">criadores brasileiros</span>
-              </h2>
-              <p className="mt-6 text-lg text-muted-foreground">
-                Crie vídeos virais, imagens profissionais e conteúdo de marketing com os melhores modelos de IA.
-              </p>
-              <Link
-                href="/signup"
-                className="mt-10 inline-flex items-center gap-2 rounded-xl gradient-purple px-10 py-4 text-base font-bold text-white transition hover:opacity-90 glow-purple"
-              >
-                Criar conta grátis
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-              <p className="mt-4 text-sm text-muted-foreground">20 créditos grátis · Sem cartão · Acesso imediato</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-border py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="flex items-center gap-2">
-              <div className="flex h-6 w-6 items-center justify-center rounded-md gradient-purple">
-                <Video className="h-3 w-3 text-white" />
-              </div>
-              <span className="text-sm font-bold">Ninja Box</span>
-            </div>
-            <p className="text-sm text-muted-foreground">© 2026 Ninja Box. Todos os direitos reservados.</p>
-            <div className="flex gap-4 text-sm text-muted-foreground">
-              <Link href="/privacidade" className="hover:text-foreground/60 transition">Privacidade</Link>
-              <Link href="/termos" className="hover:text-foreground/60 transition">Termos</Link>
-            </div>
-          </div>
+          ))}
         </div>
       </footer>
+    </main>
+  )
+}
+
+function Header() {
+  return (
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.08] bg-[#0f1113]/95 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-[1380px] items-center gap-2 px-3 sm:px-5">
+        <Link href="/" className="flex items-center gap-3">
+          <LogoMark />
+          <span className="text-lg font-black">Ninja Box</span>
+        </Link>
+        <nav className="ml-2 hidden min-w-0 flex-1 items-center gap-0.5 overflow-hidden lg:flex">
+          {['Explore', 'Image', 'Video', 'Audio', 'Collab', 'Edit', 'Character'].map(
+            (item, index) => (
+              <Link
+                key={item}
+                href={index === 0 ? '/' : '/apps'}
+                className="rounded-xl px-2.5 py-2 text-[13px] font-black text-white/68 hover:bg-white/[0.06] hover:text-white"
+              >
+                {item}
+              </Link>
+            )
+          )}
+          <Link
+            href="/studio"
+            className="flex rounded-xl px-2.5 py-2 text-[13px] font-black leading-tight text-white/68 hover:bg-white/[0.06]"
+          >
+            Marketing Studio
+            <span className="ml-1 rounded bg-[#d1fe17] px-1 text-[9px] font-black text-black">
+              New
+            </span>
+          </Link>
+          <Link
+            href="/studio"
+            className="flex rounded-xl px-2.5 py-2 text-[13px] font-black leading-tight text-white/68 hover:bg-white/[0.06]"
+          >
+            Cinema Studio
+            <span className="ml-1 rounded bg-[#d1fe17] px-1 text-[9px] font-black text-black">
+              3.5
+            </span>
+          </Link>
+          <Link
+            href="/originals"
+            className="rounded-xl px-2.5 py-2 text-[13px] font-black text-white/68 hover:bg-white/[0.06]"
+          >
+            Originals
+          </Link>
+          <Link
+            href="/apps"
+            className="rounded-xl px-2.5 py-2 text-[13px] font-black text-white/68 hover:bg-white/[0.06]"
+          >
+            Apps
+          </Link>
+          <Link
+            href="/dashboard"
+            className="rounded-xl px-2.5 py-2 text-[13px] font-black text-white/68 hover:bg-white/[0.06]"
+          >
+            Assist
+          </Link>
+          <Link
+            href="/dashboard"
+            className="rounded-xl px-2.5 py-2 text-[13px] font-black text-white/68 hover:bg-white/[0.06]"
+          >
+            Community
+          </Link>
+        </nav>
+        <div className="ml-auto flex items-center gap-2">
+          <Link
+            href="/billing"
+            className="relative flex h-10 items-center gap-2 rounded-xl bg-white/[0.08] px-3 text-sm font-black text-white"
+          >
+            <Gem className="h-4 w-4" />
+            <span>Pricing</span>
+            <span className="absolute -bottom-4 left-3 rounded-full bg-[#ff005b] px-3 py-0.5 text-[10px] font-black text-white">
+              30% OFF
+            </span>
+          </Link>
+          <Link
+            href="https://www.instagram.com"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.1] text-white/70"
+          >
+            <Instagram className="h-5 w-5" />
+          </Link>
+          <Link
+            href="/signup"
+            className="hidden h-10 items-center rounded-xl bg-white px-4 text-sm font-black text-black sm:flex"
+          >
+            Try Free
+          </Link>
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-white lg:hidden"
+          >
+            <Menu className="h-7 w-7" />
+          </button>
+        </div>
+      </div>
+    </header>
+  )
+}
+
+function LogoMark() {
+  return (
+    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-black">
+      <Wand2 className="h-5 w-5" />
     </div>
+  )
+}
+
+function FeatureBlock({
+  eyebrow,
+  title,
+  description,
+  button,
+  variant,
+  images,
+  panelImage,
+}: {
+  eyebrow: string
+  title: string
+  description: string
+  button: string
+  variant: 'dark' | 'pink' | 'blue'
+  images: string[]
+  panelImage?: string
+}) {
+  const panel =
+    variant === 'pink'
+      ? 'from-[#280013] via-[#140b12] to-[#111214] border-[#ff005b]/30'
+      : variant === 'blue'
+        ? 'from-[#081a2a] via-[#101820] to-[#111214] border-[#2fc7ff]/20'
+        : 'from-[#050505] via-[#101010] to-[#111214] border-white/[0.08]'
+
+  return (
+    <div
+      className={`grid overflow-hidden rounded-3xl border bg-gradient-to-br ${panel} lg:grid-cols-[.72fr_1.28fr]`}
+    >
+      <div className="relative flex min-h-[360px] flex-col items-center justify-start overflow-hidden px-8 pb-8 pt-20 text-center">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_75%,rgba(255,255,255,.12),transparent_42%)]" />
+        {panelImage && (
+          <img
+            src={panelImage}
+            alt=""
+            className="absolute inset-x-0 bottom-0 mx-auto h-52 max-w-[82%] rounded-2xl object-cover opacity-70"
+          />
+        )}
+        {eyebrow && (
+          <p className="relative mb-8 text-xs font-black uppercase tracking-[.32em] text-white/34">
+            {eyebrow}
+          </p>
+        )}
+        <h2 className="relative max-w-sm text-3xl font-black tracking-[-.04em] text-white md:text-4xl">
+          {title}
+        </h2>
+        <p className="relative mt-3 max-w-xs text-base font-medium leading-7 text-white/45">
+          {description}
+        </p>
+        <Link
+          href="/signup"
+          className="relative mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-white px-5 text-sm font-black text-black"
+        >
+          <Sparkles className="h-4 w-4" />
+          {button}
+        </Link>
+      </div>
+      <div className="relative grid min-h-[360px] grid-cols-2 gap-1 p-1 sm:grid-cols-3">
+        {images.slice(0, 6).map((src, index) => (
+          <div
+            key={src}
+            className={`${index === 0 ? 'row-span-2' : ''} relative min-h-[160px] overflow-hidden rounded-2xl bg-[#1c1e20]`}
+          >
+            <img src={src} alt="" className="h-full w-full object-cover" />
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
+          </div>
+        ))}
+        <Link
+          href="/apps"
+          className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-xl bg-[#54700d]/95 px-5 py-3 text-sm font-black text-[#d1fe17] shadow-2xl"
+        >
+          View all {title.split(' ')[0]} <ArrowUpRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+function PosterCard({
+  title,
+  subtitle,
+  image,
+  cta,
+}: { title: string; subtitle: string; image: string; cta: string }) {
+  return (
+    <article className="relative min-h-[520px] overflow-hidden rounded-3xl border border-white/[0.08] bg-[#14151a]">
+      <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-80" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10" />
+      <div className="relative flex h-full min-h-[520px] flex-col justify-end p-7">
+        <h2 className="max-w-xl text-5xl font-black uppercase leading-[.9] tracking-[-.06em] text-white md:text-7xl">
+          {title}
+        </h2>
+        <p className="mt-3 text-base font-bold text-white/55">{subtitle}</p>
+        <Link
+          href="/apps"
+          className="mt-6 inline-flex h-12 w-fit items-center gap-2 rounded-xl bg-white px-5 text-sm font-black text-black"
+        >
+          {cta} <ArrowUpRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </article>
   )
 }
