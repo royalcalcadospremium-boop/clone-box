@@ -38,11 +38,10 @@ export const generateVideo = inngest.createFunction(
     const jobId = await step.run('submit-to-byteplus', async () => {
       const params: SeedanceSubmitParams = {
         prompt: video.promptFinal ?? video.promptEdited ?? video.promptGenerated ?? '',
-        referenceImageUrl: video.productImageUrl ?? '',
+        referenceImageUrl: video.productImageUrl || undefined,
         duration: video.duration as 5 | 10 | 15,
         resolution: video.resolution as '480p' | '720p' | '1080p',
         aspectRatio: video.aspectRatio as '9:16' | '16:9' | '1:1',
-        cameraMovement: video.cameraMovement ?? undefined,
       }
       return submitVideoJob(params)
     })

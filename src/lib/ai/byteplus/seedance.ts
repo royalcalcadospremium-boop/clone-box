@@ -1,37 +1,50 @@
 import { byteplusGet, byteplusRequest } from './client'
 import type {
-  SeedanceJobResponse,
+  ContentItem,
+  SeedanceCreateResponse,
+  SeedanceTaskResponse,
   SeedanceSubmitParams,
-  SeedanceSubmitResponse,
 } from './types'
 import { APITimeoutError, VideoGenerationFailedError } from '@/lib/errors'
 
-const MODEL_ID = process.env.BYTEPLUS_SEEDANCE_MODEL_ID ?? 'seedance-2-0-fast'
+const MODEL_ID = process.env.BYTEPLUS_SEEDANCE_MODEL_ID ?? 'dreamina-seedance-2-0-260128'
 
 export async function submitVideoJob(params: SeedanceSubmitParams): Promise<string> {
-  const response = await byteplusRequest<SeedanceSubmitResponse>('/videos/generations', {
+  const content: ContentItem[] = [
+    { type: 'text', text: params.prompt },
+  ]
+
+  if (params.referenceImageUrl) {
+    content.push({
+      type: 'image_url',
+      image_url: { url: params.referenceImageUrl },
+      role: 'reference_image',
+    })
+  }
+
+  const response = await byteplusRequest<SeedanceCreateResponse>('/content_generation/tasks', {
     model: MODEL_ID,
-    prompt: params.prompt,
-    image_url: params.referenceImageUrl,
+    content,
+    generate_audio: params.generateAudio ?? false,
+    ratio: params.aspectRatio,
     duration: params.duration,
     resolution: params.resolution,
-    ratio: params.aspectRatio,
-    camera_movement: params.cameraMovement,
-    seed: params.seed,
+    watermark: false,
+    ...(params.seed !== undefined && { seed: params.seed }),
   })
 
   return response.id
 }
 
-export async function getJobStatus(jobId: string): Promise<SeedanceJobResponse> {
-  return byteplusGet<SeedanceJobResponse>(`/videos/generations/${jobId}`)
+export async function getJobStatus(jobId: string): Promise<SeedanceTaskResponse> {
+  return byteplusGet<SeedanceTaskResponse>(`/content_generation/tasks/${jobId}`)
 }
 
 // Polling com backoff exponencial — máx 3 minutos
 export async function pollUntilComplete(
   jobId: string,
   maxWaitMs = 180_000
-): Promise<SeedanceJobResponse> {
+): Promise<SeedanceTaskResponse> {
   const delays = [10_000, 20_000, 40_000, 60_000, 60_000] // 10s, 20s, 40s, 1m, 1m
   let elapsed = 0
 

@@ -1,33 +1,32 @@
-export type SeedanceJobStatus = 'queued' | 'processing' | 'succeeded' | 'failed'
+export type SeedanceJobStatus = 'queued' | 'running' | 'succeeded' | 'failed'
 
-export type SeedanceSubmitResponse = {
+export type ContentItem =
+  | { type: 'text'; text: string }
+  | { type: 'image_url'; image_url: { url: string }; role?: string }
+  | { type: 'video_url'; video_url: { url: string }; role?: string }
+  | { type: 'audio_url'; audio_url: { url: string }; role?: string }
+
+export type SeedanceCreateResponse = {
   id: string
   status: SeedanceJobStatus
-  created_at: number
 }
 
-export type SeedanceJobResponse = {
+export type SeedanceTaskResponse = {
   id: string
   status: SeedanceJobStatus
-  output?: {
-    video_url: string
-    thumbnail_url?: string
-    duration_seconds: number
-  }
+  content?: ContentItem[]
   error?: {
     code: string
     message: string
   }
-  created_at: number
-  updated_at: number
 }
 
 export type SeedanceSubmitParams = {
   prompt: string
-  referenceImageUrl: string
+  referenceImageUrl?: string
   duration: 5 | 10 | 15
   resolution: '480p' | '720p' | '1080p'
-  aspectRatio: '9:16' | '16:9' | '1:1'
-  cameraMovement?: string
+  aspectRatio: '9:16' | '16:9' | '1:1' | '4:3' | '3:4'
+  generateAudio?: boolean
   seed?: number
 }

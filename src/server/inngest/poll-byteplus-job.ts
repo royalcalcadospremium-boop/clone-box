@@ -32,23 +32,30 @@ export const pollByteplusJob = inngest.createFunction(
         return getJobStatus(jobId)
       })
 
-      if (job.status === 'succeeded' && job.output) {
-        await step.run('save-result', async () => {
-          await db
-            .update(videos)
-            .set({
-              status: 'ready',
-              outputVideoUrl: job.output!.video_url,
-              thumbnailUrl: job.output!.thumbnail_url ?? null,
-              byteplusResponse: job,
-              generationCompletedAt: new Date(),
-              updatedAt: new Date(),
-            })
-            .where(eq(videos.id, videoId))
-        })
+      if (job.status === 'succeeded') {
+        const videoItem = job.content?.find((c) => c.type === 'video_url') as
+          | { type: 'video_url'; video_url: { url: string } }
+          | undefined
+        const videoUrl = videoItem?.video_url.url
 
-        logger.info({ videoId, jobId }, 'Video generation complete')
-        return { videoId, status: 'ready' }
+        if (videoUrl) {
+          await step.run('save-result', async () => {
+            await db
+              .update(videos)
+              .set({
+                status: 'ready',
+                outputVideoUrl: videoUrl,
+                thumbnailUrl: null,
+                byteplusResponse: job,
+                generationCompletedAt: new Date(),
+                updatedAt: new Date(),
+              })
+              .where(eq(videos.id, videoId))
+          })
+
+          logger.info({ videoId, jobId }, 'Video generation complete')
+          return { videoId, status: 'ready' }
+        }
       }
 
       if (job.status === 'failed') {
