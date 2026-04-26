@@ -15,7 +15,9 @@ import {
   Zap,
 } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
 
 const sections = [
   { href: '/dashboard', label: 'Explore' },
@@ -55,6 +57,39 @@ const mega = {
 
 export function TopNav() {
   const pathname = usePathname()
+  const router = useRouter()
+  const [userName, setUserName] = useState('Usuário')
+  const [userPlan, setUserPlan] = useState('Free')
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('full_name, plan')
+          .eq('id', user.id)
+          .single()
+        if (profile?.full_name) setUserName(profile.full_name.split(' ')[0])
+        if (profile?.plan) setUserPlan(profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1))
+      } catch {
+        // silently ignore
+      }
+    }
+    loadUser()
+  }, [])
+
+  async function handleSignOut() {
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+      router.push('/')
+    } catch {
+      window.location.href = '/'
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#0b0c0d]/95 backdrop-blur-xl">
@@ -202,11 +237,11 @@ export function TopNav() {
             <div className="invisible absolute right-0 top-12 w-64 rounded-2xl border border-white/[0.08] bg-[#222325] p-3 opacity-0 shadow-2xl transition group-hover:visible group-hover:opacity-100">
               <div className="flex items-center gap-3 rounded-xl p-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.08] text-xs font-black">
-                  R
+                  {userName.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <div className="text-sm font-black text-white">Royal Calcados</div>
-                  <div className="text-xs text-white/40">Ultimate Plan</div>
+                  <div className="text-sm font-black text-white">{userName}</div>
+                  <div className="text-xs text-white/40">{userPlan} Plan</div>
                 </div>
               </div>
               <button
@@ -218,27 +253,27 @@ export function TopNav() {
               </button>
               <div className="mt-3 space-y-1 border-t border-white/[0.08] pt-3 text-sm font-bold text-white/85">
                 {[
-                  'Boost speed',
-                  'Top-up credits',
-                  'View profile',
-                  'Manage account',
-                  'Join our community',
-                ].map((label) => (
+                  { label: 'Top-up credits', href: '/billing' },
+                  { label: 'View profile', href: '/settings' },
+                  { label: 'Manage account', href: '/settings' },
+                  { label: 'Meus planos', href: '/billing' },
+                ].map((item) => (
                   <Link
-                    key={label}
-                    href="/settings"
+                    key={item.label}
+                    href={item.href}
                     className="flex items-center justify-between rounded-xl px-3 py-2 hover:bg-white/[0.06]"
                   >
-                    {label}
+                    {item.label}
                     <ChevronDown className="h-3 w-3 -rotate-90 text-white/30" />
                   </Link>
                 ))}
                 <button
                   type="button"
-                  className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-white/75 hover:bg-white/[0.06]"
+                  onClick={handleSignOut}
+                  className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-white/75 hover:bg-white/[0.06] hover:text-red-400 transition"
                 >
                   <LogOut className="h-4 w-4" />
-                  Sign out
+                  Sair
                 </button>
               </div>
             </div>

@@ -199,7 +199,12 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
           />
           <div className="mt-2 flex items-center justify-between">
             <span className="text-[11px] text-white/20">{prompt.length}/500 chars</span>
-            <button className="flex items-center gap-1 text-[11px] text-[#ffff56] hover:text-white transition">
+            <button
+              type="button"
+              title="Em breve: melhoria automática de prompt com IA"
+              className="flex items-center gap-1 text-[11px] text-white/20 cursor-not-allowed"
+              disabled
+            >
               <Wand2 className="h-3 w-3" /> Melhorar prompt
             </button>
           </div>
@@ -217,7 +222,12 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
               placeholder="URL da imagem do produto..."
               className="flex-1 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 transition-all"
             />
-            <button className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] hover:bg-white/[0.08] transition shrink-0">
+            <button
+              type="button"
+              title="Cole a URL da imagem no campo ao lado"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.04] hover:bg-white/[0.08] transition shrink-0 cursor-not-allowed opacity-50"
+              disabled
+            >
               <Upload className="h-4 w-4 text-white/40" />
             </button>
           </div>

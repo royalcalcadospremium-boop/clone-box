@@ -1,128 +1,184 @@
-import { CreationCard } from '@/components/higgsfield/CreationCards'
-import { BookOpen, Folder, LayoutGrid, List, Upload, Wand2, Zap } from 'lucide-react'
+'use client'
 
-export const metadata = { title: 'Video - Ninja Box' }
+import { useState, useEffect, useCallback } from 'react'
+import { VideoGeneratorClient } from './VideoGeneratorClient'
+import { CreationCard } from '@/components/higgsfield/CreationCards'
+import { Video, Wand2, Clock, Download } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
+
+type Tab = 'criar' | 'historico'
+
+type UserVideo = {
+  id: string
+  status: string
+  output_video_url: string | null
+  thumbnail_url: string | null
+  style: string | null
+  created_at: string
+  credits_spent: number
+  duration: number
+}
 
 export default function VideoGeneratorPage() {
+  const [tab, setTab] = useState<Tab>('criar')
+  const [videos, setVideos] = useState<UserVideo[]>([])
+  const [loading, setLoading] = useState(false)
+
+  const loadHistory = useCallback(async () => {
+    setLoading(true)
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      const { data } = await supabase
+        .from('videos')
+        .select('id, status, output_video_url, thumbnail_url, style, created_at, credits_spent, duration')
+        .eq('user_id', user.id)
+        .like('style', 'ai-%')
+        .order('created_at', { ascending: false })
+        .limit(30)
+      setVideos(data ?? [])
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (tab === 'historico') loadHistory()
+  }, [tab, loadHistory])
+
   return (
-    <div className="grid min-h-[calc(100vh-58px)] grid-cols-1 bg-[#101112] lg:grid-cols-[336px_1fr_256px]">
-      <aside className="border-r border-white/[0.06] bg-[#111214] p-4">
-        <div className="mb-4 flex gap-4 border-b border-white/[0.08] text-sm font-black">
-          {['Create Video', 'Edit Video', 'Motion Control'].map((tab, index) => (
-            <button
-              key={tab}
-              type="button"
-              className={`pb-3 ${index === 0 ? 'border-b-2 border-white text-white' : 'text-white/55'}`}
-            >
-              {tab}
-            </button>
-          ))}
+    <div className="min-h-[calc(100vh-58px)] bg-[#101112]">
+      <div className="flex h-14 items-center gap-2 border-b border-white/[0.06] bg-[#111214] px-4">
+        <button
+          type="button"
+          onClick={() => setTab('criar')}
+          className={`flex h-10 items-center gap-2 rounded-xl px-4 text-sm font-bold transition ${
+            tab === 'criar'
+              ? 'bg-white/[0.08] text-white'
+              : 'text-white/55 hover:text-white/80'
+          }`}
+        >
+          <Wand2 className="h-4 w-4" />
+          Criar vídeo
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab('historico')}
+          className={`flex h-10 items-center gap-2 rounded-xl px-4 text-sm font-bold transition ${
+            tab === 'historico'
+              ? 'bg-white/[0.08] text-white'
+              : 'text-white/55 hover:text-white/80'
+          }`}
+        >
+          <Clock className="h-4 w-4" />
+          Histórico
+        </button>
+      </div>
+
+      {tab === 'criar' ? (
+        <div className="p-6">
+          <VideoGeneratorClient />
         </div>
-        <div className="space-y-3">
-          <div className="overflow-hidden rounded-2xl bg-black">
-            <div className="flex aspect-video items-end bg-[linear-gradient(135deg,#1a1a1a,#383838)] p-4">
+      ) : (
+        <div className="p-6">
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#ffff00] border-t-transparent" />
+            </div>
+          ) : videos.length > 0 ? (
+            <>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/30">
+                Seus vídeos gerados — {videos.length} total
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {videos.map((video) => (
+                  <div
+                    key={video.id}
+                    className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[#111111]"
+                  >
+                    <div className="relative aspect-[9/16] bg-[#0A0A0A]">
+                      {video.thumbnail_url ? (
+                        <img
+                          src={video.thumbnail_url}
+                          alt=""
+                          className="h-full w-full object-cover"
+                        />
+                      ) : video.output_video_url ? (
+                        <video
+                          src={video.output_video_url}
+                          className="h-full w-full object-cover"
+                          muted
+                          playsInline
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center">
+                          <Video className="h-8 w-8 text-white/20" />
+                        </div>
+                      )}
+                      <div className={`absolute right-2 top-2 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                        video.status === 'ready'
+                          ? 'bg-green-500/20 text-green-400'
+                          : video.status === 'failed'
+                          ? 'bg-red-500/20 text-red-400'
+                          : 'bg-[#ffff00]/20 text-[#ffff56]'
+                      }`}>
+                        {video.status === 'ready' ? 'Pronto' : video.status === 'failed' ? 'Falhou' : 'Gerando...'}
+                      </div>
+                    </div>
+                    <div className="p-3">
+                      <p className="text-[11px] text-white/40">
+                        {new Date(video.created_at).toLocaleDateString('pt-BR')} · {video.duration}s · {video.credits_spent} créditos
+                      </p>
+                      {video.output_video_url && (
+                        <a
+                          href={video.output_video_url}
+                          download
+                          className="mt-2 flex items-center justify-center gap-1.5 rounded-lg border border-[#ffff00]/20 py-1.5 text-xs font-bold text-[#ffff56] transition hover:bg-[#ffff00]/10"
+                        >
+                          <Download className="h-3.5 w-3.5" />
+                          Download
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="space-y-8">
+              <div className="rounded-2xl border border-dashed border-white/[0.08] py-12 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-[#ffff00]/20 bg-[#ffff00]/10">
+                  <Video className="h-7 w-7 text-[#ffff56]" />
+                </div>
+                <h3 className="font-bold text-white">Nenhum vídeo gerado ainda</h3>
+                <p className="mx-auto mt-2 max-w-xs text-sm text-white/40">
+                  Veja abaixo exemplos do que pode ser criado com IA
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setTab('criar')}
+                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#ffff00] px-5 py-2.5 text-sm font-bold text-black hover:bg-[#ffff56] transition"
+                >
+                  <Wand2 className="h-4 w-4" />
+                  Criar meu primeiro vídeo
+                </button>
+              </div>
+
               <div>
-                <div className="text-2xl font-black text-[#d8ff00]">GENERAL</div>
-                <div className="text-xs font-bold">Higgsfield DoP</div>
+                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/30">
+                  Exemplos — o que pode ser criado
+                </p>
+                <div className="space-y-6">
+                  <CreationCard index={0} wide />
+                  <CreationCard index={1} wide />
+                  <CreationCard index={2} wide />
+                </div>
               </div>
             </div>
-          </div>
-          <button
-            type="button"
-            className="flex h-34 w-full flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/[0.12] bg-white/[0.04] text-center text-sm font-bold text-white/45"
-          >
-            <Upload className="h-6 w-6" />
-            Upload image or generate it
-            <span className="text-xs font-medium">PNG, JPG or paste from clipboard</span>
-          </button>
-          <div className="rounded-2xl bg-[#1d1e20] p-4">
-            <div className="mb-2 text-sm font-black text-[#b7c8ff]">Prompt</div>
-            <p className="text-sm leading-6 text-white/55">
-              Describe the scene you imagine, with details.
-            </p>
-            <button
-              type="button"
-              className="mt-4 rounded-lg bg-black px-3 py-2 text-xs font-black text-white"
-            >
-              Enhance on
-            </button>
-          </div>
-          <button
-            type="button"
-            className="flex w-full items-center justify-between rounded-2xl bg-[#1d1e20] p-4 text-left"
-          >
-            <span>
-              <span className="block text-sm font-black text-white">Model</span>
-              <span className="text-sm text-white/55">Select model</span>
-            </span>
-            <Wand2 className="h-4 w-4 text-white/35" />
-          </button>
-          <button
-            type="button"
-            className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#d8ff00] text-base font-black text-black"
-          >
-            Generate <Zap className="h-4 w-4" /> 0
-          </button>
+          )}
         </div>
-      </aside>
-
-      <main className="min-w-0">
-        <div className="flex h-14 items-center justify-between border-b border-white/[0.06] px-5">
-          <div className="flex gap-2">
-            <button
-              type="button"
-              className="flex h-10 items-center gap-2 rounded-xl bg-white/[0.06] px-4 text-sm font-black"
-            >
-              <Folder className="h-4 w-4" />
-              History
-            </button>
-            <button
-              type="button"
-              className="flex h-10 items-center gap-2 rounded-xl px-4 text-sm font-black text-white/45"
-            >
-              <BookOpen className="h-4 w-4" />
-              How it works
-            </button>
-          </div>
-          <div className="flex items-center gap-2 text-sm font-bold text-white/70">
-            <button type="button" className="rounded-xl bg-white/[0.06] px-3 py-2">
-              <List className="h-4 w-4" />
-            </button>
-            <button type="button" className="rounded-xl px-3 py-2 text-white/40">
-              <LayoutGrid className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-        <div className="space-y-6 p-5">
-          <CreationCard index={0} wide />
-          <CreationCard index={1} wide />
-          <CreationCard index={2} wide />
-        </div>
-      </main>
-
-      <aside className="hidden space-y-5 border-l border-white/[0.06] bg-[#111214] p-4 xl:block">
-        {[0, 1, 2].map((item) => (
-          <div key={item} className="rounded-2xl border border-white/[0.06] bg-[#151617] p-4">
-            <span className="rounded-xl border border-white/[0.08] px-3 py-1 text-xs font-black">
-              Seedance 2
-            </span>
-            <p className="mt-5 line-clamp-6 text-sm leading-6 text-white/55">
-              ROTEIRO DE VIDEO VIRAL - CAMISETA NIKE "NSKE JUST DO IT" (RENAISSANCE DROP).
-              Duracao-alvo: 20 segundos. Conceito: Um brand film onde a pintura renascentista nasce
-              em movimento real.
-            </p>
-            <div className="mt-4 flex gap-2">
-              <div className="h-11 w-11 rounded-lg bg-white" />
-              <div className="h-11 w-11 rounded-lg bg-black" />
-            </div>
-            <div className="mt-4 flex gap-2 text-[11px] font-black text-white/65">
-              <span className="rounded-full bg-white/[0.06] px-2 py-1">1080p</span>
-              <span className="rounded-full bg-white/[0.06] px-2 py-1">8.0s</span>
-              <span className="rounded-full bg-white/[0.06] px-2 py-1">9:16</span>
-            </div>
-          </div>
-        ))}
-      </aside>
+      )}
     </div>
   )
 }

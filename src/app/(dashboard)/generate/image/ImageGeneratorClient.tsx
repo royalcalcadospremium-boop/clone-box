@@ -169,7 +169,12 @@ export function ImageGeneratorClient() {
             className="w-full resize-none rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 transition-all"
           />
           <div className="mt-2 flex justify-end">
-            <button className="flex items-center gap-1 text-[11px] text-[#ffff56] hover:text-white transition">
+            <button
+              type="button"
+              title="Em breve: melhoria automática de prompt com IA"
+              className="flex items-center gap-1 text-[11px] text-white/20 cursor-not-allowed"
+              disabled
+            >
               <Wand2 className="h-3 w-3" /> Melhorar prompt
             </button>
           </div>

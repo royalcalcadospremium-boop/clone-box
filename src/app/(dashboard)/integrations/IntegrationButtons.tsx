@@ -30,7 +30,7 @@ export function ConnectButton({ platformId, platformName }: ConnectButtonProps) 
       if (data.url) {
         window.location.href = data.url
       } else {
-        showToast('Erro ao iniciar conexão. Verifique se as variáveis de ambiente estão configuradas.', 'error')
+        showToast(data.error ?? 'Erro ao iniciar conexão. Verifique as configurações.', 'error')
       }
     } catch {
       showToast('Erro ao conectar. Tente novamente.', 'error')
@@ -48,6 +48,97 @@ export function ConnectButton({ platformId, platformName }: ConnectButtonProps) 
       {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plug className="h-4 w-4" />}
       {loading ? 'Conectando...' : `Conectar ${platformName}`}
     </button>
+  )
+}
+
+// ═══════════════════════════════════════════════════════
+// SHOPIFY CONNECT BUTTON (requer shopDomain)
+// ═══════════════════════════════════════════════════════
+
+export function ShopifyConnectButton() {
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [shopDomain, setShopDomain] = useState('')
+  const { showToast } = useToast()
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const normalized = shopDomain.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/$/, '')
+      const domain = normalized.includes('.myshopify.com') ? normalized : `${normalized}.myshopify.com`
+
+      const res = await fetch('/api/integrations/shopify/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ shopDomain: domain }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        showToast(data.error ?? 'Erro ao conectar Shopify', 'error')
+      }
+    } catch {
+      showToast('Erro ao conectar. Tente novamente.', 'error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="w-full rounded-xl gradient-purple py-2.5 text-sm font-bold text-white hover:opacity-90 transition flex items-center justify-center gap-2"
+      >
+        <Plug className="h-4 w-4" />
+        Conectar Shopify
+      </button>
+
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="w-full max-w-md mx-4 rounded-2xl border border-white/[0.08] bg-[#141414] p-6 space-y-5">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold">Conectar Shopify</h3>
+              <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white transition">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="text-sm text-white/50">
+              Informe o domínio da sua loja Shopify. Você será redirecionado para autorizar o acesso.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div>
+                <label className="text-xs font-medium text-white/60 mb-1 block">Domínio da loja</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="minhaloja.myshopify.com"
+                  value={shopDomain}
+                  onChange={e => setShopDomain(e.target.value)}
+                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-[#ffff00] outline-none transition"
+                />
+                <p className="mt-1 text-[11px] text-white/30">
+                  Ex: minhaloja.myshopify.com
+                </p>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading || !shopDomain.trim()}
+                className="w-full rounded-xl gradient-purple py-2.5 text-sm font-bold text-white hover:opacity-90 transition disabled:opacity-60 flex items-center justify-center gap-2"
+              >
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Link2 className="h-4 w-4" />}
+                {loading ? 'Conectando...' : 'Conectar Loja'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

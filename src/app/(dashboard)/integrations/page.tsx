@@ -1,26 +1,29 @@
 import { createClient } from '@/lib/supabase/server'
 import { CheckCircle2, AlertCircle, Clock } from 'lucide-react'
-import { ConnectButton, ManageButtons, WooConnectButton } from './IntegrationButtons'
+import { ConnectButton, ManageButtons, WooConnectButton, ShopifyConnectButton } from './IntegrationButtons'
 
 const PLATFORMS = [
   {
     id: 'woocommerce',
+    routeId: 'woocommerce',
     name: 'WooCommerce',
     description: 'Conecte sua loja WordPress e adicione vídeos aos produtos',
     icon: '🟪',
     available: true,
-    manual: true,
+    manual: 'woo' as const,
   },
   {
     id: 'shopify',
+    routeId: 'shopify',
     name: 'Shopify',
     description: 'Adicione vídeos aos produtos e coleções da sua loja Shopify',
     icon: '🛍️',
     available: true,
-    manual: false,
+    manual: 'shopify' as const,
   },
   {
     id: 'nuvemshop',
+    routeId: 'nuvemshop',
     name: 'Nuvem Shop',
     description: 'Publique vídeos e sincronize produtos com sua loja Nuvem Shop',
     icon: '☁️',
@@ -29,6 +32,7 @@ const PLATFORMS = [
   },
   {
     id: 'mercado_livre',
+    routeId: 'mercadolivre',
     name: 'Mercado Livre',
     description: 'Anexe vídeos aos seus anúncios do Mercado Livre',
     icon: '🟡',
@@ -37,6 +41,7 @@ const PLATFORMS = [
   },
   {
     id: 'shopee',
+    routeId: 'shopee',
     name: 'Shopee',
     description: 'Adicione mídia aos seus produtos na Shopee',
     icon: '🛒',
@@ -45,6 +50,7 @@ const PLATFORMS = [
   },
   {
     id: 'tiktok_shop',
+    routeId: 'tiktokshop',
     name: 'TikTok Shop',
     description: 'Publique vídeos diretamente no TikTok Shop',
     icon: '🎵',
@@ -139,10 +145,12 @@ export default async function IntegrationsPage() {
                   </div>
                 ) : connected?.status === 'active' ? (
                   <ManageButtons platformId={platform.id} />
-                ) : platform.manual ? (
+                ) : platform.manual === 'woo' ? (
                   <WooConnectButton />
+                ) : platform.manual === 'shopify' ? (
+                  <ShopifyConnectButton />
                 ) : (
-                  <ConnectButton platformId={platform.id} platformName={platform.name} />
+                  <ConnectButton platformId={platform.routeId} platformName={platform.name} />
                 )}
               </div>
             </div>
