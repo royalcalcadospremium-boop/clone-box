@@ -16,27 +16,28 @@ import Link from 'next/link'
 
 const heroCards = [
   {
-    title: 'THE BEST VIDEO MODEL NOW EVEN BETTER',
-    label: 'SEEDANCE 2.0 IN 1080P',
+    title: 'GPT Image 2',
+    description: '4K images with near-perfect text rendering',
+    image: '/higgsfield-home/gpt-panel-glow.png',
+  },
+  {
+    title: 'KLING 3.0 in 4K',
+    description: 'Cinema-grade video at full 4K resolution',
+    image: '/higgsfield-home/hero-cinema.png',
+  },
+  {
+    title: 'Marketing Studio for Apps',
+    description: 'Powered by Hermes Agent',
+    image: '/higgsfield-home/hero-marketing.png',
+  },
+  {
+    title: 'Seedance 2.0 in 1080p',
     description: 'Now generating in 1080p - sharper detail, smoother motion output',
     image: '/higgsfield-home/hero-seedance.png',
   },
   {
     title: 'Marketing Studio',
-    label: 'MARKETING STUDIO',
     description: 'Different Formats. One Product. Powered by Seedance 2.0.',
-    image: '/higgsfield-home/hero-marketing.png',
-  },
-  {
-    title: 'Cinema Studio 3.5',
-    label: 'CINEMA STUDIO 3.5',
-    description: 'AI Director, collaborative elements, and per-shot camera control',
-    image: '/higgsfield-home/hero-cinema.png',
-  },
-  {
-    title: 'Seedance 2.0',
-    label: 'URL TO VIDEO',
-    description: 'One URL. Professional ads. Powered by Ninja Box.',
     image: '/higgsfield-home/hero-url.png',
   },
 ]
@@ -84,14 +85,14 @@ const tools = [
   },
   {
     name: 'Motion Control',
-    desc: 'Precise actions and expressions',
+    desc: 'Precise control of character actions and expressions up to 30 seconds',
     icon: Play,
     image: '/higgsfield-home/tool-motion-control.png',
     tag: 'NEW',
   },
   {
     name: 'Soul 2.0',
-    desc: 'Ultra-realistic fashion visuals',
+    desc: 'Next generation ultra-realistic fashion visuals',
     icon: Sparkles,
     image: '/higgsfield-home/tool-soul.png',
     tag: 'NEW',
@@ -210,22 +211,23 @@ export default function LandingPage() {
           >
             <ChevronRight className="h-5 w-5" />
           </button>
-          <div className="flex gap-3 overflow-hidden lg:grid lg:grid-cols-[1.2fr_1.2fr_1.2fr_.45fr]">
+          <div className="flex gap-3 overflow-x-auto pb-1 lg:grid lg:grid-cols-5">
             {heroCards.map((card) => (
-              <article key={card.label} className="group w-[278px] flex-none lg:w-auto lg:min-w-0">
+              <article key={card.title} className="group w-[220px] flex-none lg:w-auto lg:min-w-0">
                 <div
                   aria-label={card.title}
-                  className="relative h-[142px] overflow-hidden rounded-xl bg-[#171717] md:h-[198px]"
+                  className="relative h-[140px] overflow-hidden rounded-2xl bg-[#171717] md:h-[190px]"
                 >
                   <img
                     src={card.image}
                     alt=""
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
-                <div className="mt-3 space-y-1">
-                  <h3 className="text-xs font-black uppercase text-white">{card.label}</h3>
-                  <p className="line-clamp-1 text-[11px] font-medium text-white/45">
+                <div className="mt-2.5 space-y-0.5">
+                  <h3 className="text-[13px] font-black leading-tight text-white">{card.title}</h3>
+                  <p className="line-clamp-2 text-[11px] font-medium leading-[1.4] text-white/45">
                     {card.description}
                   </p>
                 </div>
@@ -241,15 +243,17 @@ export default function LandingPage() {
           title="Meet GPT Image 2"
           description="4K images with near-perfect text rendering"
           button="Try Model"
+          viewAll="View all of GPT Image 2"
           variant="dark"
           images={imageSet}
           panelImage="/higgsfield-home/gpt-panel-glow.png"
         />
         <FeatureBlock
           eyebrow=""
-          title="One link in. Marketing out."
+          title="One link in. marketing out."
           description="Create UGC, demos, and ads across channels"
           button="Try Marketing Studio"
+          viewAll="View all Marketing Studio"
           variant="pink"
           images={marketingImages}
           panelImage="/higgsfield-home/marketing-panel-products.png"
@@ -257,8 +261,9 @@ export default function LandingPage() {
         <FeatureBlock
           eyebrow="AVAILABLE FOR EVERYONE"
           title="Seedance 2.0"
-          description="World's best video model available with up to 30% OFF with special offer"
+          description="World's best video model. Up to 30% OFF with special offer."
           button="Get Seedance 2.0"
+          viewAll="View all of SEEDANCE 2.0"
           variant="blue"
           images={seedanceImages}
         />
@@ -329,6 +334,49 @@ export default function LandingPage() {
         />
       </section>
 
+      <section className="mx-auto max-w-[1380px] px-3 pb-5 sm:px-5">
+        <div className="relative min-h-[360px] overflow-hidden rounded-3xl border border-white/[0.08] bg-[#0a0a0c]">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_50%,rgba(60,20,100,.6),transparent_60%)]" />
+          <div className="relative grid min-h-[360px] lg:grid-cols-[1fr_1fr]">
+            <div className="flex flex-col justify-center p-8 md:p-12">
+              <p className="mb-3 text-xs font-black uppercase tracking-[.24em] text-white/40">
+                Ninja Box Originals
+              </p>
+              <h2 className="text-5xl font-black uppercase leading-[.9] tracking-[-.05em] text-white md:text-7xl">
+                Watch<br />Zephyr
+              </h2>
+              <p className="mt-4 max-w-xs text-base font-medium leading-7 text-white/50">
+                First ever AI series streaming platform. Available on Ninja Box Original Series.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  href="/originals"
+                  className="inline-flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-black text-black"
+                >
+                  <Play className="h-4 w-4 fill-black" /> Watch now
+                </Link>
+                <Link
+                  href="/originals"
+                  className="inline-flex h-12 items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.06] px-6 text-sm font-black text-white hover:bg-white/[0.1]"
+                >
+                  Explore Original Series
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+            <div className="hidden items-center justify-end p-6 lg:flex">
+              <div className="grid grid-cols-2 gap-2 opacity-80">
+                {['/higgsfield/image-history.png', '/higgsfield/image-community.png', '/higgsfield/video-create.png', '/higgsfield/image-menu.png'].map((src) => (
+                  <div key={src} className="h-44 w-44 overflow-hidden rounded-2xl bg-[#1c1e20]">
+                    <img src={src} alt="" className="h-full w-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-[1380px] space-y-4 px-3 pb-8 sm:px-5">
         {chipGroups.map((group) => (
           <div
@@ -357,7 +405,7 @@ export default function LandingPage() {
       </section>
 
       <footer className="border-t border-white/[0.08] bg-[#0f1113] px-5 py-10">
-        <div className="mx-auto grid max-w-[1380px] gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="mx-auto grid max-w-[1380px] gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           <div>
             <div className="mb-4 flex items-center gap-3">
               <LogoMark />
@@ -373,12 +421,43 @@ export default function LandingPage() {
               'Image',
               'AI Image',
               'Soul ID Character',
+              'Draw to Edit',
               'Edit Image',
               'Image Upscale',
               'GPT Image 2',
+              'Soul 2.0',
+              'Soul Cinema',
             ],
-            ['Video', 'AI Video', 'Create Video', 'Lipsync Studio', 'UGC Factory', 'Seedance 2.0'],
-            ['Ninja Box', 'Pricing', 'Apps', 'Marketing Studio', 'Community', 'Enterprise'],
+            [
+              'Video',
+              'AI Video',
+              'Create Video',
+              'Lipsync Studio',
+              'Motion Control',
+              'Draw to Video',
+              'UGC Factory',
+              'Seedance 2.0',
+              'Kling 3.0',
+            ],
+            [
+              'Edit',
+              'Edit Image',
+              'Edit Video',
+              'Product Placement',
+              'Upscale',
+              'Multi Reference',
+            ],
+            [
+              'Ninja Box',
+              'Pricing',
+              'Apps',
+              'Marketing Studio',
+              'Cinema Studio',
+              'Originals',
+              'Community',
+              'Enterprise',
+              'Blog',
+            ],
           ].map(([title, ...links]) => (
             <div key={title}>
               <h3 className="mb-3 text-sm font-black">{title}</h3>
@@ -512,6 +591,7 @@ function FeatureBlock({
   title,
   description,
   button,
+  viewAll,
   variant,
   images,
   panelImage,
@@ -520,6 +600,7 @@ function FeatureBlock({
   title: string
   description: string
   button: string
+  viewAll?: string
   variant: 'dark' | 'pink' | 'blue'
   images: string[]
   panelImage?: string
@@ -573,12 +654,14 @@ function FeatureBlock({
             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
           </div>
         ))}
-        <Link
-          href="/apps"
-          className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-xl bg-[#54700d]/95 px-5 py-3 text-sm font-black text-[#d1fe17] shadow-2xl"
-        >
-          View all {title.split(' ')[0]} <ArrowUpRight className="h-4 w-4" />
-        </Link>
+        {viewAll && (
+          <Link
+            href="/apps"
+            className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-xl bg-[#54700d]/95 px-5 py-3 text-sm font-black text-[#d1fe17] shadow-2xl"
+          >
+            {viewAll} <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        )}
       </div>
     </div>
   )

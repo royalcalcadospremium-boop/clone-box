@@ -78,8 +78,8 @@ export default async function OriginalsPage() {
         </section>
       ) : (
         <div className="flex flex-col items-center px-6 py-24 text-center">
-          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#ffff00]/20 bg-[#ffff00]/10">
-            <Film className="h-9 w-9 text-[#ffff56]" />
+          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#d1fe17]/20 bg-[#d1fe17]/10">
+            <Film className="h-9 w-9 text-[#d1fe17]" />
           </div>
           <h2 className="text-2xl font-black text-white">Sem originais ainda</h2>
           <p className="mt-2 max-w-sm text-sm text-white/40">

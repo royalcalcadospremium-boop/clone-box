@@ -38,7 +38,7 @@ const IMAGE_MODELS: ImageModel[] = [
     description: 'Qualidade superior, mais detalhado e fiel ao prompt',
     badge: 'Alta qualidade',
     icon: '✨',
-    color: '#ffff56',
+    color: '#d1fe17',
     creditCost: 10,
     speed: '10-20s',
   },
@@ -126,7 +126,7 @@ export function ImageGeneratorClient() {
                 onClick={() => setSelectedModel(model)}
                 className={`w-full flex items-center gap-3 rounded-lg p-3 text-left transition-all ${
                   selectedModel.id === model.id
-                    ? 'border border-[#ffff00]/40 bg-[#ffff00]/10'
+                    ? 'border border-[#d1fe17]/40 bg-[#d1fe17]/10'
                     : 'border border-white/[0.04] bg-white/[0.02] hover:bg-white/[0.04]'
                 }`}
               >
@@ -140,7 +140,7 @@ export function ImageGeneratorClient() {
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-white">{model.name}</span>
                     {model.badge && (
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#ffff00]/20 text-[#ffff56]">
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#d1fe17]/20 text-[#d1fe17]">
                         {model.badge}
                       </span>
                     )}
@@ -151,7 +151,7 @@ export function ImageGeneratorClient() {
                   </div>
                 </div>
                 {selectedModel.id === model.id && (
-                  <CheckCircle2 className="h-4 w-4 text-[#ffff56] shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-[#d1fe17] shrink-0" />
                 )}
               </button>
             ))}
@@ -166,7 +166,7 @@ export function ImageGeneratorClient() {
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Descreva a imagem... ex: 'Ultra-realistic product photo of sneakers on clean white background, studio lighting, 8K'"
             rows={3}
-            className="w-full resize-none rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 transition-all"
+            className="w-full resize-none rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#d1fe17]/50 transition-all"
           />
           <div className="mt-2 flex justify-end">
             <button
@@ -192,7 +192,7 @@ export function ImageGeneratorClient() {
               onChange={(e) => setNegativePrompt(e.target.value)}
               placeholder="O que evitar: blur, low quality, deformed..."
               rows={2}
-              className="mt-2 w-full resize-none rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#ffff00]/50 transition-all"
+              className="mt-2 w-full resize-none rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#d1fe17]/50 transition-all"
             />
           )}
         </div>
@@ -207,7 +207,7 @@ export function ImageGeneratorClient() {
                 onClick={() => setImageSize(size.value)}
                 className={`flex items-center gap-2 rounded-lg p-2.5 transition-all ${
                   imageSize === size.value
-                    ? 'border border-[#ffff00]/50 bg-[#ffff00]/10 text-white'
+                    ? 'border border-[#d1fe17]/50 bg-[#d1fe17]/10 text-white'
                     : 'border border-white/[0.06] bg-white/[0.02] text-white/50 hover:text-white/80'
                 }`}
               >
@@ -231,7 +231,7 @@ export function ImageGeneratorClient() {
                 onClick={() => setNumImages(n)}
                 className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-sm font-bold transition-all ${
                   numImages === n
-                    ? 'border border-[#ffff00]/50 bg-[#ffff00]/10 text-white'
+                    ? 'border border-[#d1fe17]/50 bg-[#d1fe17]/10 text-white'
                     : 'border border-white/[0.06] bg-white/[0.02] text-white/50 hover:text-white/80'
                 }`}
               >
@@ -246,18 +246,12 @@ export function ImageGeneratorClient() {
         <button
           onClick={handleGenerate}
           disabled={!prompt.trim() || status === 'loading'}
-          className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-black text-white gradient-purple hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all glow-purple-sm"
+          className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#d1fe17] py-3.5 text-sm font-black text-black hover:bg-[#c4f000] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
           {status === 'loading' ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Gerando imagem...
-            </>
+            <><Loader2 className="h-4 w-4 animate-spin" />Gerando imagem...</>
           ) : (
-            <>
-              <Zap className="h-4 w-4" />
-              Gerar · {totalCost} crédito{totalCost !== 1 ? 's' : ''}
-            </>
+            <><Zap className="h-4 w-4" />Gerar · {totalCost} crédito{totalCost !== 1 ? 's' : ''}</>
           )}
         </button>
       </div>
@@ -341,7 +335,7 @@ export function ImageGeneratorClient() {
                 key={i}
                 onClick={() => setSelectedImage(img.url)}
                 className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                  selectedImage === img.url ? 'border-[#ffff00]' : 'border-transparent hover:border-white/20'
+                  selectedImage === img.url ? 'border-[#d1fe17]' : 'border-transparent hover:border-white/20'
                 }`}
               >
                 <NextImage src={img.url} alt={`result ${i + 1}`} fill className="object-cover" unoptimized />

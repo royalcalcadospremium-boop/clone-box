@@ -64,8 +64,8 @@ export function DashboardExplore({ videos, firstName, totalCredits }: Props) {
         </div>
         <div className="flex items-center gap-3">
           <span className="hidden items-center gap-1.5 text-xs sm:flex">
-            <Zap className="h-3.5 w-3.5 text-[#ffff56]" />
-            <span className="font-black text-[#ffff56]">{totalCredits.toLocaleString('pt-BR')}</span>
+            <Zap className="h-3.5 w-3.5 text-[#d1fe17]" />
+            <span className="font-black text-[#d1fe17]">{totalCredits.toLocaleString('pt-BR')}</span>
             <span className="text-white/30">créditos</span>
           </span>
           <Link
@@ -125,7 +125,7 @@ export function DashboardExplore({ videos, firstName, totalCredits }: Props) {
                         ? 'bg-green-500/20 text-green-400'
                         : video.status === 'failed'
                           ? 'bg-red-500/20 text-red-400'
-                          : 'bg-[#ffff00]/20 text-[#ffff56]'
+                          : 'bg-[#d1fe17]/20 text-[#d1fe17]'
                     }`}
                   >
                     {video.status === 'ready' ? 'Done' : video.status === 'failed' ? 'Failed' : 'Gen...'}
@@ -157,11 +157,11 @@ export function DashboardExplore({ videos, firstName, totalCredits }: Props) {
           </section>
         ) : (
           <div className="flex flex-col items-center px-6 py-24 text-center">
-            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#ffff00]/20 bg-[#ffff00]/10">
-              <Wand2 className="h-9 w-9 text-[#ffff56]" />
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#d1fe17]/20 bg-[#d1fe17]/10">
+              <Wand2 className="h-9 w-9 text-[#d1fe17]" />
             </div>
             <h2 className="text-2xl font-black text-white">
-              Olá, {firstName} <span className="text-[#ffff56]">✦</span>
+              Olá, {firstName} <span className="text-[#d1fe17]">✦</span>
             </h2>
             <p className="mt-2 max-w-sm text-sm text-white/40">
               Comece criando seu primeiro conteúdo com IA — vídeos, imagens, lip-sync e muito mais
