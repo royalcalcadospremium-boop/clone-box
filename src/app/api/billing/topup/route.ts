@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { stripe } from '@/lib/payments/stripe'
+import { getStripe } from '@/lib/payments/stripe'
 import { TOPUP_PACKAGES } from '@/lib/credits/pricing'
 import { z } from 'zod'
 import { rateLimit } from '@/lib/rate-limit'
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     let customerId = profile?.stripe_customer_id
 
     if (!customerId) {
-      const customer = await stripe.customers.create({
+      const customer = await getStripe().customers.create({
         email: profile?.email ?? user.email,
         name: profile?.full_name ?? undefined,
         metadata: { userId: user.id },
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
         .eq('id', user.id)
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       customer: customerId,
       mode: 'payment',
       line_items: [

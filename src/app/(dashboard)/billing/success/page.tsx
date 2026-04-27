@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { stripe } from '@/lib/payments/stripe'
+import { getStripe } from '@/lib/payments/stripe'
 import { CheckCircle2, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
@@ -15,7 +15,7 @@ export default async function BillingSuccessPage({ searchParams }: Props) {
   }
 
   try {
-    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    const session = await getStripe().checkout.sessions.retrieve(sessionId)
     if (session.payment_status !== 'paid') {
       redirect('/billing')
     }

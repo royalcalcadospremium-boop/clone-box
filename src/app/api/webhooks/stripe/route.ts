@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { stripe, STRIPE_WEBHOOK_SECRET } from '@/lib/payments/stripe'
+import { getStripe, STRIPE_WEBHOOK_SECRET } from '@/lib/payments/stripe'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { PLAN_CREDITS } from '@/lib/credits/pricing'
 import { logger } from '@/lib/logger'
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
   let event: Stripe.Event
   try {
-    event = stripe.webhooks.constructEvent(payload, signature, STRIPE_WEBHOOK_SECRET)
+    event = getStripe().webhooks.constructEvent(payload, signature, STRIPE_WEBHOOK_SECRET)
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Invalid signature'
     logger.error({ error: msg }, 'Stripe webhook signature error')
@@ -130,7 +130,7 @@ async function handleCheckoutCompleted(
       .eq('provider_subscription_id', subscriptionId)
       .single()
 
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+    const subscription = await getStripe().subscriptions.retrieve(subscriptionId)
     const amountCents = subscription.items.data[0]?.price.unit_amount ?? 0
 
     const payload = {
