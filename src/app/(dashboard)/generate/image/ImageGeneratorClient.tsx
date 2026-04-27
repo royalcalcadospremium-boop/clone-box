@@ -112,10 +112,10 @@ export function ImageGeneratorClient() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
+    <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-[360px_1fr]">
 
       {/* Controls */}
-      <div className="space-y-4">
+      <div className="h-full space-y-3 overflow-y-auto pr-1">
         {/* Model picker */}
         <div className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-4">
           <h3 className="text-xs font-semibold uppercase tracking-widest text-white/30 mb-3">Modelo</h3>
@@ -263,8 +263,8 @@ export function ImageGeneratorClient() {
       </div>
 
       {/* Result */}
-      <div className="space-y-4">
-        <div className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] flex items-center justify-center min-h-[400px] relative overflow-hidden">
+      <div className="flex h-full flex-col gap-3">
+        <div className="relative flex min-h-[400px] flex-1 items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-[#0F0F0F]">
 
           <div className="absolute inset-0 opacity-[0.02]" style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',

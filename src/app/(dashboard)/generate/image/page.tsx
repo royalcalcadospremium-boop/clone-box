@@ -38,7 +38,7 @@ export default function ImageGeneratorPage() {
       </div>
 
       {tab === 'criar' ? (
-        <div className="p-6">
+        <div className="h-[calc(100vh-58px-56px)] overflow-hidden p-4">
           <ImageGeneratorClient />
         </div>
       ) : (

@@ -137,10 +137,10 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-6 h-full">
+    <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-[360px_1fr]">
 
       {/* Left panel: controls */}
-      <div className="space-y-4 overflow-y-auto">
+      <div className="h-full space-y-3 overflow-y-auto pr-1 scrollbar-thin">
 
         {/* Model picker */}
         <div className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] p-4">
@@ -338,7 +338,7 @@ export function VideoGeneratorClient({ initialModel }: { initialModel?: string }
       </div>
 
       {/* Right panel: result */}
-      <div className="rounded-xl border border-white/[0.06] bg-[#0F0F0F] flex items-center justify-center min-h-[400px] relative overflow-hidden">
+      <div className="relative flex min-h-[400px] items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-[#0F0F0F] lg:h-full">
 
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-[0.02]" style={{

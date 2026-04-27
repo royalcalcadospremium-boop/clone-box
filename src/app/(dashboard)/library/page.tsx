@@ -1,29 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { PublishButton } from '@/components/publish/PublishButton'
-import { PublishedBadge } from '@/components/publish/PublishedBadge'
-import { Play, Download, Clock, CheckCircle2, XCircle, Loader2, Zap, Plus, Folder } from 'lucide-react'
-
-const STATUS_LABELS: Record<string, { label: string; color: string; icon: typeof CheckCircle2 }> = {
-  ready: { label: 'Pronto', color: 'text-green-400', icon: CheckCircle2 },
-  generating_video: { label: 'Gerando', color: 'text-[#ffff00]', icon: Loader2 },
-  polling: { label: 'Processando', color: 'text-[#ffff00]', icon: Loader2 },
-  analyzing_reference: { label: 'Analisando', color: 'text-blue-400', icon: Loader2 },
-  prompt_ready: { label: 'Aguardando', color: 'text-yellow-400', icon: Clock },
-  failed: { label: 'Falhou', color: 'text-red-400', icon: XCircle },
-  draft: { label: 'Rascunho', color: 'text-white/40', icon: Clock },
-}
-
-const STYLE_LABELS: Record<string, string> = {
-  'ugc-selfie': 'UGC Selfie',
-  'product-solo': 'Produto Solo',
-  'unboxing-asmr': 'Unboxing ASMR',
-  'lifestyle': 'Lifestyle',
-  'tiktok-shop': 'TikTok Shop',
-  'street-interview': 'Street Interview',
-  'claymation': 'Claymation',
-  'green-screen': 'Green Screen',
-}
+import { Download, Play, Plus, Video, Zap, Loader2, CheckCircle2, XCircle, Clock } from 'lucide-react'
 
 export default async function LibraryPage() {
   const supabase = await createClient()
@@ -35,192 +13,158 @@ export default async function LibraryPage() {
     .eq('user_id', user!.id)
     .order('created_at', { ascending: false })
 
-  const { data: folders } = await supabase
-    .from('folders')
-    .select('*')
-    .eq('user_id', user!.id)
-    .order('order', { ascending: true })
-
   const totalVideos = videos?.length ?? 0
   const readyVideos = videos?.filter((v) => v.status === 'ready').length ?? 0
-  const totalCreditsSpent = videos?.reduce((acc, v) => acc + (v.credits_spent ?? 0), 0) ?? 0
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-black">Biblioteca de vídeos</h1>
-          <p className="mt-1 text-sm text-white/50">
-            {totalVideos} vídeo{totalVideos !== 1 ? 's' : ''} · {readyVideos} pronto{readyVideos !== 1 ? 's' : ''}
-          </p>
+    <div className="min-h-[calc(100vh-58px)] bg-[#101112]">
+      {/* Sub-nav */}
+      <div className="sticky top-[58px] z-40 flex h-14 items-center justify-between gap-4 border-b border-white/[0.06] bg-[#111214]/95 px-4 backdrop-blur-xl">
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-black text-white">Assets</span>
+          <span className="text-xs text-white/30">
+            {totalVideos} itens · {readyVideos} prontos
+          </span>
         </div>
         <Link
-          href="/clone"
-          className="flex items-center gap-2 rounded-xl bg-[#ffff00] px-4 py-2.5 text-sm font-bold text-black hover:bg-[#ffff56] transition"
+          href="/generate/video"
+          className="flex h-9 items-center gap-2 rounded-xl bg-[#d8ff00] px-4 text-sm font-black text-black hover:bg-[#e8ff40] transition-colors"
         >
           <Plus className="h-4 w-4" />
-          Novo clone
+          Create
         </Link>
       </div>
 
-      {/* Stats rápidas */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="rounded-xl border border-white/5 bg-[#111111] p-4">
-          <p className="text-xs text-white/40 mb-1">Total de vídeos</p>
-          <p className="text-2xl font-black">{totalVideos}</p>
-        </div>
-        <div className="rounded-xl border border-white/5 bg-[#111111] p-4">
-          <p className="text-xs text-white/40 mb-1">Prontos</p>
-          <p className="text-2xl font-black text-green-400">{readyVideos}</p>
-        </div>
-        <div className="rounded-xl border border-white/5 bg-[#111111] p-4">
-          <p className="text-xs text-white/40 mb-1">Créditos gastos</p>
-          <div className="flex items-center gap-1.5">
-            <Zap className="h-4 w-4 text-[#ffff00]" />
-            <p className="text-2xl font-black text-[#ffff00]">{totalCreditsSpent}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Pastas */}
-      {folders && folders.length > 0 && (
-        <div>
-          <h2 className="text-sm font-semibold text-white/50 mb-3">Pastas</h2>
-          <div className="flex flex-wrap gap-2">
-            {folders.map((folder) => (
-              <button
-                key={folder.id}
-                className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm hover:border-white/20 transition"
-              >
-                <Folder className="h-4 w-4 text-[#ffff00]" />
-                {folder.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Lista de vídeos */}
       {!videos || videos.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-20 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#ffff00]/10 mb-4">
-            <Play className="h-8 w-8 text-[#ffff00]" />
+        <div className="flex flex-col items-center px-6 py-24 text-center">
+          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#ffff00]/20 bg-[#ffff00]/10">
+            <Video className="h-9 w-9 text-[#ffff56]" />
           </div>
-          <h3 className="font-bold text-lg">Nenhum vídeo ainda</h3>
-          <p className="mt-2 text-sm text-white/40 max-w-xs">
-            Clone seu primeiro vídeo viral e ele aparecerá aqui
+          <h2 className="text-2xl font-black text-white">Nenhuma criação ainda</h2>
+          <p className="mt-2 max-w-sm text-sm text-white/40">
+            Seus vídeos e imagens gerados aparecem aqui
           </p>
-          <Link
-            href="/clone"
-            className="mt-6 flex items-center gap-2 rounded-xl bg-[#ffff00] px-5 py-2.5 text-sm font-bold text-black hover:bg-[#ffff56] transition"
-          >
-            <Zap className="h-4 w-4" />
-            Criar primeiro clone
-          </Link>
+          <div className="mt-8 flex gap-3">
+            <Link
+              href="/generate/video"
+              className="flex items-center gap-2 rounded-xl bg-[#d8ff00] px-5 py-2.5 text-sm font-black text-black hover:bg-[#e8ff40] transition"
+            >
+              <Zap className="h-4 w-4" />
+              Gerar vídeo
+            </Link>
+            <Link
+              href="/generate/image"
+              className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-5 py-2.5 text-sm font-black text-white/75 hover:bg-white/[0.07] transition"
+            >
+              Gerar imagem
+            </Link>
+          </div>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="columns-1 gap-2 p-2 sm:columns-2 lg:columns-4">
           {videos.map((video) => {
-            const statusInfo = STATUS_LABELS[video.status] ?? STATUS_LABELS.draft
-            const StatusIcon = statusInfo.icon
             const isProcessing = ['generating_video', 'polling', 'analyzing_reference'].includes(video.status)
+            const isReady = video.status === 'ready'
+            const isFailed = video.status === 'failed'
 
             return (
-              <div
+              <figure
                 key={video.id}
-                className="group rounded-2xl border border-white/5 bg-[#111111] overflow-hidden hover:border-white/10 transition"
+                className="group mb-2 break-inside-avoid overflow-hidden rounded-[4px] bg-[#1d1e20]"
               >
-                {/* Thumbnail / Preview */}
-                <div className="relative aspect-[9/16] bg-[#0A0A0A] flex items-center justify-center overflow-hidden">
+                <div className="relative">
                   {video.thumbnail_url ? (
-                    <img
-                      src={video.thumbnail_url}
-                      alt="thumbnail"
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={video.thumbnail_url} alt="" className="w-full object-cover" />
                   ) : video.output_video_url ? (
                     <video
                       src={video.output_video_url}
-                      className="w-full h-full object-cover"
                       muted
                       playsInline
+                      className="w-full object-cover"
                     />
                   ) : (
-                    <div className="flex flex-col items-center gap-2 text-white/20">
+                    <div className="flex aspect-[9/16] items-center justify-center bg-[#1a1b1d]">
                       {isProcessing ? (
-                        <Loader2 className="h-10 w-10 animate-spin text-[#ffff00]" />
+                        <Loader2 className="h-8 w-8 animate-spin text-[#ffff56]" />
                       ) : (
-                        <Play className="h-10 w-10" />
+                        <Video className="h-8 w-8 text-white/10" />
                       )}
                     </div>
                   )}
 
-                  {/* Overlay de ações ao hover */}
-                  {video.status === 'ready' && video.output_video_url && (
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-3">
+                  {/* Hover actions */}
+                  {isReady && video.output_video_url && (
+                    <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 transition-opacity group-hover:opacity-100 bg-black/50">
+                      <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/20 backdrop-blur hover:bg-white/35 transition">
+                        <Play className="ml-0.5 h-4 w-4 fill-white text-white" />
+                      </div>
                       <a
                         href={video.output_video_url}
                         download
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffff00] text-black hover:bg-[#ffff56] transition"
-                        onClick={(e) => e.stopPropagation()}
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur hover:bg-white/35 transition"
                       >
-                        <Download className="h-5 w-5" />
+                        <Download className="h-4 w-4 text-white" />
                       </a>
-                      <div onClick={(e) => e.stopPropagation()}>
-                        <PublishButton
-                          videoId={video.id}
-                          videoUrl={video.output_video_url}
-                          videoStatus={video.status}
-                          size="sm"
-                        />
-                      </div>
                     </div>
                   )}
 
-                  {/* Badge de duração */}
-                  <div className="absolute top-2 left-2 rounded-md bg-black/70 px-2 py-0.5 text-xs font-medium">
-                    {video.duration}s
+                  {/* Status badge */}
+                  <div
+                    className={`absolute right-2 top-2 flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-black backdrop-blur-sm ${
+                      isReady
+                        ? 'bg-green-500/20 text-green-400'
+                        : isFailed
+                          ? 'bg-red-500/20 text-red-400'
+                          : 'bg-[#ffff00]/20 text-[#ffff56]'
+                    }`}
+                  >
+                    {isReady ? (
+                      <CheckCircle2 className="h-2.5 w-2.5" />
+                    ) : isFailed ? (
+                      <XCircle className="h-2.5 w-2.5" />
+                    ) : (
+                      <Clock className="h-2.5 w-2.5" />
+                    )}
+                    {isReady ? 'Done' : isFailed ? 'Failed' : 'Gen...'}
                   </div>
 
-                  {/* Badge de resolução */}
-                  <div className="absolute top-2 right-2 rounded-md bg-black/70 px-2 py-0.5 text-xs font-medium">
-                    {video.resolution ?? '720p'}
-                  </div>
-                </div>
-
-                {/* Info */}
-                <div className="p-4 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-white/40">
-                      {STYLE_LABELS[video.style] ?? video.style}
-                    </span>
-                    <div className={`flex items-center gap-1 text-xs ${statusInfo.color}`}>
-                      <StatusIcon className={`h-3 w-3 ${isProcessing ? 'animate-spin' : ''}`} />
-                      {statusInfo.label}
-                    </div>
-                  </div>
-
-                  {video.product_description && (
-                    <p className="text-xs text-white/60 line-clamp-2">{video.product_description}</p>
-                  )}
-
-                  <PublishedBadge publishedTo={video.published_to} />
-
-                  <div className="flex items-center justify-between pt-1">
-                    <div className="flex items-center gap-1 text-xs text-white/30">
-                      <Zap className="h-3 w-3" />
-                      {video.credits_spent ?? 0} créditos
-                    </div>
-                    <span className="text-xs text-white/30">
-                      {new Date(video.created_at).toLocaleDateString('pt-BR')}
-                    </span>
+                  {/* Duration + resolution */}
+                  <div className="absolute left-2 top-2 flex gap-1">
+                    {video.duration && (
+                      <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-bold text-white/70 backdrop-blur-sm">
+                        {video.duration}s
+                      </span>
+                    )}
+                    {video.resolution && (
+                      <span className="rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-bold text-white/70 backdrop-blur-sm">
+                        {video.resolution}
+                      </span>
+                    )}
                   </div>
                 </div>
-              </div>
+
+                <div className="p-2.5">
+                  <p className="truncate text-[11px] font-semibold capitalize text-white/60">
+                    {video.style?.replace(/-/g, ' ') ?? 'AI Video'}
+                  </p>
+                  <div className="mt-1 flex items-center justify-between">
+                    <p className="text-[10px] text-white/30">
+                      {new Date(video.created_at).toLocaleDateString('pt-BR')} · {video.credits_spent ?? 0} cr
+                    </p>
+                    {isReady && video.output_video_url && (
+                      <PublishButton
+                        videoId={video.id}
+                        videoUrl={video.output_video_url}
+                        videoStatus={video.status}
+                        size="sm"
+                      />
+                    )}
+                  </div>
+                </div>
+              </figure>
             )
           })}
-        </div>
+        </section>
       )}
     </div>
   )
