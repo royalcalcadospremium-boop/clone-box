@@ -6,7 +6,7 @@ import { Send, ChevronDown, Bot } from "lucide-react";
 const MODELS = ["ChatGPT 5", "ChatGPT 5 Mini", "ChatGPT 4.1", "ChatGPT 4o"];
 
 const quickActions = [
-  { label: "Explore Higgsfield AI features", prompt: "Tell me about the AI features available for image and video generation." },
+  { label: "Explore Ninja Box features", prompt: "Tell me about the AI features available for image and video generation." },
   { label: "How Can I Create Stunning Content?", prompt: "How can I create stunning cinematic content with AI video generation?" },
   { label: "Best prompts for video generation", prompt: "What are the best prompts for generating cinematic AI videos?" },
   { label: "Compare AI video models", prompt: "Compare Kling 3.0, Seedance 2.0, and Veo 3 for video generation quality." },
@@ -119,7 +119,7 @@ export default function ChatPage() {
                 <Bot size={24} className="text-hf-neon" />
               </div>
               <div className="text-center">
-                <h2 className="text-[20px] font-black text-hf-text mb-1">Higgsfield Assist</h2>
+                <h2 className="text-[20px] font-black text-hf-text mb-1">Ninja Box Assist</h2>
                 <p className="text-[13px] text-white/40">Your AI creative partner for cinematic video & image generation</p>
               </div>
               <div className="grid grid-cols-2 gap-2 w-full max-w-[480px]">

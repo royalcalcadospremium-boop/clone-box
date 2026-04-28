@@ -19,7 +19,7 @@ export const APP_TOOLS: Record<string, AppTool> = {
     slug: "face-swap",
     title: "Instant Face Swap In a Single Click",
     subtitle: "AI Face Swap",
-    description: "Seamlessly integrate new faces into any image. Higgsfield's face swap is the definitive tool for marketers, artists and content creators.",
+    description: "Seamlessly integrate new faces into any image. Ninja Box's face swap is the definitive tool for marketers, artists and content creators.",
     badge: "FREE",
     heroImage: "https://cdn.higgsfield.ai/application_detail/8982dc33-6823-4c61-a39e-558816b494b3.webp",
     steps: [

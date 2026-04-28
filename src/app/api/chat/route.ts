@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         {
           role: "system",
           content:
-            "You are Higgsfield Assist, an AI creative assistant specialized in AI-generated video, images, and cinematic storytelling. Help users craft prompts, suggest creative directions, and answer questions about AI media generation.",
+            "You are Ninja Box Assist, an AI creative assistant specialized in AI-generated video, images, and cinematic storytelling. Help users craft prompts, suggest creative directions, and answer questions about AI media generation.",
         },
         ...messages,
       ],

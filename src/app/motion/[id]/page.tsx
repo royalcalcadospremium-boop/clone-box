@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Play, Wand2 } from "lucide-react";
+import { ArrowLeft, Play, Wand2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 
 type MotionPageProps = {
@@ -8,7 +8,7 @@ type MotionPageProps = {
 
 export default async function MotionPage({ params }: MotionPageProps) {
   const { id } = await params;
-  const originalUrl = `https://higgsfield.ai/motion/${id}`;
+  const originalUrl = `/ai/video`;
 
   return (
     <>
@@ -31,7 +31,7 @@ export default async function MotionPage({ params }: MotionPageProps) {
               {id}
             </h1>
             <p className="mt-3 max-w-[620px] text-sm font-semibold text-white/58">
-              Local functional clone route for the Higgsfield motion sublink. The original generation and account actions remain external.
+              Local functional clone route for the Ninja Box motion sublink. The original generation and account actions remain external.
             </p>
           </div>
         </section>
@@ -49,18 +49,16 @@ export default async function MotionPage({ params }: MotionPageProps) {
           <div className="mt-6 rounded-[12px] bg-white/[0.045] p-4">
             <h2 className="text-lg font-black">Try this motion</h2>
             <p className="mt-2 text-sm font-semibold text-white/52">
-              This clone mirrors the route and visual shell. Opening the source link keeps the real Higgsfield preset available.
+              This clone mirrors the route and visual shell. Opening the source link keeps the real Ninja Box preset available.
             </p>
           </div>
 
-          <a
+          <Link
             href={originalUrl}
-            target="_blank"
-            rel="noreferrer"
             className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-hf-neon text-sm font-black text-black"
           >
-            Open original <ExternalLink size={16} />
-          </a>
+            Generate Video <Wand2 size={16} />
+          </Link>
         </aside>
       </main>
     </>

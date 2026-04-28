@@ -11,30 +11,30 @@ interface Series {
 }
 
 const higgsChoice: Series[] = [
-  { title: "Hell Grind", href: "https://higgsfield.ai/original-series/hell-grind/episode-1", gradient: "from-red-900 to-red-950" },
-  { title: "Soulmate: The Last Wagon", href: "https://higgsfield.ai/original-series/soulmate-the-last-wagon/episode-1", gradient: "from-violet-900 to-purple-950" },
-  { title: "Arena Zero", href: "https://higgsfield.ai/original-series/arena-zero/episode-1", gradient: "from-slate-700 to-slate-900" },
-  { title: "Spit and Glow", href: "https://higgsfield.ai/original-series/spit-and-glow/episode-1", gradient: "from-orange-800 to-amber-950" },
-  { title: "Bucket List", href: "https://higgsfield.ai/original-series/bucket-list/episode-1", gradient: "from-teal-800 to-cyan-950" },
-  { title: "Mother Trucker", href: "https://higgsfield.ai/original-series/mother-trucker/episode-1", gradient: "from-stone-700 to-stone-900" },
-  { title: "Misfortune", href: "https://higgsfield.ai/original-series/misfortune/episode-1", gradient: "from-gray-700 to-gray-900" },
-  { title: "Vermin Control Unit", href: "https://higgsfield.ai/original-series/vermin-control-unit/episode-1", gradient: "from-green-900 to-emerald-950" },
+  { title: "Hell Grind", href: "/original-series", gradient: "from-red-900 to-red-950" },
+  { title: "Soulmate: The Last Wagon", href: "/original-series", gradient: "from-violet-900 to-purple-950" },
+  { title: "Arena Zero", href: "/original-series", gradient: "from-slate-700 to-slate-900" },
+  { title: "Spit and Glow", href: "/original-series", gradient: "from-orange-800 to-amber-950" },
+  { title: "Bucket List", href: "/original-series", gradient: "from-teal-800 to-cyan-950" },
+  { title: "Mother Trucker", href: "/original-series", gradient: "from-stone-700 to-stone-900" },
+  { title: "Misfortune", href: "/original-series", gradient: "from-gray-700 to-gray-900" },
+  { title: "Vermin Control Unit", href: "/original-series", gradient: "from-green-900 to-emerald-950" },
 ];
 
 const firstLook: Series[] = [
-  { title: "Zephyr", href: "https://higgsfield.ai/original-series/zephyr/episode-0", gradient: "from-sky-800 to-blue-950", tag: "First Look" },
-  { title: "MORK: Behind the Scenes", href: "https://higgsfield.ai/original-series/behind-the-scenes-of-mork-the-tale-of-kael/episode-0", gradient: "from-slate-600 to-slate-900", tag: "First Look" },
-  { title: "Arena Zero: Music Video", href: "https://higgsfield.ai/original-series/arena-zero-music-video/episode-1", gradient: "from-indigo-800 to-indigo-950", tag: "Music Video" },
-  { title: "Tails of Steel", href: "https://higgsfield.ai/original-series/tails-of-steel/episode-1", gradient: "from-zinc-700 to-zinc-900" },
-  { title: "Dinoforce", href: "https://higgsfield.ai/original-series/dinoforce/episode-1", gradient: "from-lime-800 to-lime-950" },
-  { title: "Viking Courier", href: "https://higgsfield.ai/original-series/viking-courier/episode-1", gradient: "from-amber-800 to-yellow-950" },
-  { title: "Buddy", href: "https://higgsfield.ai/original-series/buddy/episode-1", gradient: "from-pink-800 to-rose-950" },
+  { title: "Zephyr", href: "/original-series", gradient: "from-sky-800 to-blue-950", tag: "First Look" },
+  { title: "MORK: Behind the Scenes", href: "/original-series", gradient: "from-slate-600 to-slate-900", tag: "First Look" },
+  { title: "Arena Zero: Music Video", href: "/original-series", gradient: "from-indigo-800 to-indigo-950", tag: "Music Video" },
+  { title: "Tails of Steel", href: "/original-series", gradient: "from-zinc-700 to-zinc-900" },
+  { title: "Dinoforce", href: "/original-series", gradient: "from-lime-800 to-lime-950" },
+  { title: "Viking Courier", href: "/original-series", gradient: "from-amber-800 to-yellow-950" },
+  { title: "Buddy", href: "/original-series", gradient: "from-pink-800 to-rose-950" },
 ];
 
 const onRadar: Series[] = [
-  { title: "Frozen Monster", href: "https://higgsfield.ai/original-series/frozen-monster/episode-1", gradient: "from-blue-700 to-cyan-950" },
-  { title: "Alright Alright Alright", href: "https://higgsfield.ai/original-series/alright-alright-alright/episode-1", gradient: "from-orange-700 to-amber-900" },
-  { title: "Peter Pan", href: "https://higgsfield.ai/original-series/peter-pan/episode-1", gradient: "from-teal-700 to-emerald-900" },
+  { title: "Frozen Monster", href: "/original-series", gradient: "from-blue-700 to-cyan-950" },
+  { title: "Alright Alright Alright", href: "/original-series", gradient: "from-orange-700 to-amber-900" },
+  { title: "Peter Pan", href: "/original-series", gradient: "from-teal-700 to-emerald-900" },
 ];
 
 function SeriesCard({ series }: { series: Series }) {
@@ -95,7 +95,7 @@ export default function OriginalSeriesPage() {
               An epic AI-generated original series. Watch the first episode now.
             </p>
             <Link
-              href="https://higgsfield.ai/original-series/mork/episode-1"
+              href="/original-series"
               className="inline-flex h-11 w-max items-center gap-2 rounded-xl bg-white px-5 text-[14px] font-black text-black hover:opacity-90"
             >
               <Play size={16} /> Watch now
@@ -114,7 +114,7 @@ export default function OriginalSeriesPage() {
               <p className="text-[13px] text-hf-text-muted">World's best video model available with up to 30% OFF</p>
             </div>
             <Link
-              href="https://higgsfield.ai/pricing?tab=annual"
+              href="/pricing"
               className="shrink-0 rounded-xl bg-hf-neon px-5 py-2.5 text-[14px] font-black text-black hover:opacity-90"
             >
               Get Seedance 2.0
@@ -122,7 +122,7 @@ export default function OriginalSeriesPage() {
           </div>
         </div>
 
-        <SectionRow title="Higgsfield Choice" items={higgsChoice} />
+        <SectionRow title="Ninja Box Choice" items={higgsChoice} />
         <SectionRow title="First Look" items={firstLook} />
         <SectionRow title="On Our Radar" items={onRadar} />
 
@@ -130,10 +130,10 @@ export default function OriginalSeriesPage() {
         <div className="mt-6 rounded-2xl border border-white/[0.08] bg-hf-surface p-8 text-center">
           <h2 className="text-[26px] font-black text-hf-text">Become a Creator</h2>
           <p className="mt-2 max-w-[480px] mx-auto text-[14px] text-hf-text-muted">
-            From contest winner to Original Series creator. Filmmakers worldwide are using Higgsfield AI to make short films — and the best ones get picked to produce full series with our team.
+            From contest winner to Original Series creator. Filmmakers worldwide are using Ninja Box to make short films — and the best ones get picked to produce full series with our team.
           </p>
           <Link
-            href="https://higgsfield.ai/contests"
+            href="/earn"
             className="mt-5 inline-flex h-11 items-center rounded-xl bg-hf-neon px-6 text-[14px] font-black text-black hover:opacity-90"
           >
             Enter the Contest

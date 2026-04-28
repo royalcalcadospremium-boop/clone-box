@@ -39,7 +39,7 @@ export function SeedanceBanner() {
             Turn any shot cinematic
           </p>
           <Link
-            href="https://higgsfield.ai/ai/video?model=seedance_2_0"
+            href="/ai/video"
             className="inline-flex w-max items-center rounded-full px-5 py-2.5 text-[14px] font-medium transition-colors duration-150 hover:bg-hf-neon-10"
             style={{
               border: "1px solid #d1fe17",
@@ -49,7 +49,7 @@ export function SeedanceBanner() {
             Explore All Presets
           </Link>
           <Link
-            href="https://higgsfield.ai/ai/video?model=kling3_0"
+            href="/ai/video"
             className="text-[14px] font-medium text-hf-text hover:underline"
           >
             Explore Kling 3.0

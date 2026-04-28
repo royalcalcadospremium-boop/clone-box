@@ -38,7 +38,7 @@ export function KlingExclusive() {
             className="text-[11px] font-semibold uppercase tracking-[0.12em]"
             style={{ color: "rgb(137,138,139)" }}
           >
-            Exclusively on Higgsfield
+            Exclusively on Ninja Box
           </p>
           <div>
             <h2
@@ -55,17 +55,17 @@ export function KlingExclusive() {
             </p>
           </div>
           <p className="text-[14px] leading-[1.5]" style={{ color: "rgb(137,138,139)" }}>
-            Explore Higgsfield Community gallery for stunning Kling 3.0 creations
+            Explore Ninja Box Community gallery for stunning Kling 3.0 creations
           </p>
           <Link
-            href="https://higgsfield.ai/ai/video?model=kling3_0"
+            href="/ai/video"
             className="inline-flex w-max items-center rounded-full px-6 py-3 text-[14px] font-bold transition-opacity hover:opacity-85"
             style={{ backgroundColor: "#d1fe17", color: "rgb(19,21,23)" }}
           >
             Get Exclusive Offer
           </Link>
           <Link
-            href="https://higgsfield.ai/ai/video?model=kling3_0"
+            href="/ai/video"
             className="text-[14px] font-medium text-hf-text hover:underline"
           >
             Explore Kling 3.0

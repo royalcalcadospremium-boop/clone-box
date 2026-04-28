@@ -8,7 +8,7 @@ const FEATURES = [
   { title: "Shared Credit Pool", description: "Team credits pooled across all members — no wasted allocations, maximum flexibility." },
   { title: "Usage Analytics", description: "Full dashboard of generation metrics, cost tracking, and team activity reports." },
   { title: "SLA & Priority Support", description: "99.9% uptime SLA, dedicated Slack channel, and 1-hour response time." },
-  { title: "API Access", description: "Direct API integration for embedding Higgsfield AI into your own products and workflows." },
+  { title: "API Access", description: "Direct API integration for embedding Ninja Box into your own products and workflows." },
   { title: "Custom Billing", description: "Invoice-based billing, PO processing, and volume discounts negotiated directly." },
 ];
 

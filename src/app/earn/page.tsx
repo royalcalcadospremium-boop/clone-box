@@ -2,9 +2,9 @@ import { Navbar } from "@/components/Navbar";
 import Link from "next/link";
 
 const STEPS = [
-  { num: "1", title: "Submit your work", description: "Open to creators at every skill level. Generate and submit your videos through your Higgsfield Creator Account. We reward original expression and high-engagement content that resonates with the community." },
-  { num: "2", title: "Earn direct payouts", description: "Approved submissions receive direct compensation through the Higgsfield Earn program. This provides a clear, professional alternative to traditional ad-revenue shares, allowing creators to turn their output into real-world income." },
-  { num: "3", title: "Access opportunities", description: "Gain visibility with the world's leading brands. Higgsfield Earn acts as a bridge, connecting our top talent with professional contracts from Fortune 500 agencies, NBA teams, and global fashion houses." },
+  { num: "1", title: "Submit your work", description: "Open to creators at every skill level. Generate and submit your videos through your Ninja Box Creator Account. We reward original expression and high-engagement content that resonates with the community." },
+  { num: "2", title: "Earn direct payouts", description: "Approved submissions receive direct compensation through the Ninja Box Earn program. This provides a clear, professional alternative to traditional ad-revenue shares, allowing creators to turn their output into real-world income." },
+  { num: "3", title: "Access opportunities", description: "Gain visibility with the world's leading brands. Ninja Box Earn acts as a bridge, connecting our top talent with professional contracts from Fortune 500 agencies, NBA teams, and global fashion houses." },
 ];
 
 const BRANDS = ["Fortune 500 Agencies", "NBA Teams", "Fashion Houses", "Global Brands", "Tech Companies", "Media Studios"];
@@ -18,12 +18,12 @@ export default function EarnPage() {
       <section className="border-b border-white/[0.06] py-24 text-center px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-hf-neon/5 to-transparent" />
         <div className="relative">
-          <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-hf-neon">Higgsfield Earn</p>
+          <p className="mb-3 text-[11px] font-black uppercase tracking-widest text-hf-neon">Ninja Box Earn</p>
           <h1 className="mx-auto max-w-4xl text-[clamp(32px,6vw,72px)] font-black leading-tight mb-6">
             Turn your creativity into real income
           </h1>
           <p className="mx-auto max-w-2xl text-[16px] text-white/50 mb-10">
-            Higgsfield Earn is an innovative, automated program designed for creator monetization. It directly pays creators for their work — connecting them with professional projects, paid opportunities, and the visibility to build lasting careers.
+            Ninja Box Earn is an innovative, automated program designed for creator monetization. It directly pays creators for their work — connecting them with professional projects, paid opportunities, and the visibility to build lasting careers.
           </p>
           <Link href="/pricing" className="inline-block rounded-xl bg-hf-neon px-10 py-4 text-[15px] font-black text-black hover:opacity-90">
             Apply Now — It&apos;s Free
@@ -88,9 +88,9 @@ export default function EarnPage() {
           <h2 className="mb-12 text-center text-[clamp(24px,4vw,40px)] font-black">Content that earns</h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {[
-              { title: "Original AI Videos", description: "Cinematic, creative, and engaging AI-generated video content that resonates with the Higgsfield community." },
+              { title: "Original AI Videos", description: "Cinematic, creative, and engaging AI-generated video content that resonates with the Ninja Box community." },
               { title: "High-Engagement Content", description: "Content that gets likes, shares, and comments — showing real audience impact across social platforms." },
-              { title: "Brand Collaborations", description: "Videos created specifically for brand campaigns through the Higgsfield Earn matching system." },
+              { title: "Brand Collaborations", description: "Videos created specifically for brand campaigns through the Ninja Box Earn matching system." },
               { title: "Series & Recurring Content", description: "Consistent creators who build an audience over time earn recurring contract opportunities." },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
@@ -106,7 +106,7 @@ export default function EarnPage() {
       <section className="py-24 text-center px-6">
         <h2 className="mb-4 text-[clamp(28px,5vw,56px)] font-black">Start earning today</h2>
         <p className="mx-auto mb-10 max-w-xl text-[16px] text-white/50">
-          Create your first AI video, submit it to Higgsfield Earn, and start building your creative career — completely free to join.
+          Create your first AI video, submit it to Ninja Box Earn, and start building your creative career — completely free to join.
         </p>
         <Link href="/pricing" className="inline-block rounded-xl bg-hf-neon px-10 py-4 text-[15px] font-black text-black hover:opacity-90">
           Apply Now

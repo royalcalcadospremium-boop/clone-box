@@ -4,7 +4,7 @@ import Link from "next/link";
 const SECTIONS = [
   {
     title: "Terms of Service",
-    description: "Our terms define your rights and responsibilities when using the Higgsfield platform. By using our services, you agree to these terms.",
+    description: "Our terms define your rights and responsibilities when using the Ninja Box platform. By using our services, you agree to these terms.",
     points: ["Content ownership and licensing", "Acceptable use policy", "Account responsibilities", "Payment and subscription terms", "Dispute resolution"],
   },
   {
@@ -19,7 +19,7 @@ const SECTIONS = [
   },
   {
     title: "Content Policy",
-    description: "Higgsfield is built for creative expression. Our content policy defines what is and isn't allowed on the platform.",
+    description: "Ninja Box is built for creative expression. Our content policy defines what is and isn't allowed on the platform.",
     points: ["Prohibited content types", "NSFW and adult content guidelines", "Intellectual property rights", "Deepfake and face swap ethics", "Community standards"],
   },
   {

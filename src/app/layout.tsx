@@ -9,9 +9,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Higgsfield AI: Infrastructure for AI Video & Image Gen",
+  title: "Ninja Box: Infrastructure for AI Video & Image Gen",
   description:
-    "Browse trending AI-generated videos and images from the Higgsfield community. Find creative inspiration, try new tools, and see what top creators are making.",
+    "Browse trending AI-generated videos and images from the Ninja Box community. Find creative inspiration, try new tools, and see what top creators are making.",
 };
 
 export default function RootLayout({

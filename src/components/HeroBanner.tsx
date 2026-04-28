@@ -76,7 +76,7 @@ interface HeroCardData {
 
 const CARDS: HeroCardData[] = [
   {
-    overlayLabel: "OpenAI × Higgsfield",
+    overlayLabel: "OpenAI × Ninja Box",
     overlayTitle: "GPT IMAGE 2.0",
     belowTitle: "GPT IMAGE 2",
     belowSubtitle: "4K images with near-perfect text rendering",

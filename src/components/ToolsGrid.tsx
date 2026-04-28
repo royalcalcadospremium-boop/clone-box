@@ -38,7 +38,7 @@ const smallCards: SmallCard[] = [
     icon: Film,
   },
   {
-    title: "Higgsfield Soul V2",
+    title: "Ninja Box Soul V2",
     subtitle: "Generate ultra-realistic visuals",
     icon: Atom,
     badge: "FREE_GENS",

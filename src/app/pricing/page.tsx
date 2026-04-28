@@ -29,7 +29,7 @@ const plans: Plan[] = [
     period: "month",
     description: "Perfect for getting started with AI video and image generation.",
     cta: "Get Started",
-    ctaHref: "https://higgsfield.ai/pricing",
+    ctaHref: "/chat",
     credits: "100 credits / month",
     features: [
       "100 generation credits",
@@ -46,7 +46,7 @@ const plans: Plan[] = [
     period: "month",
     description: "For creators who need more power and higher quality output.",
     cta: "Upgrade to Pro",
-    ctaHref: "https://higgsfield.ai/pricing",
+    ctaHref: "/chat",
     highlight: true,
     badge: "Most Popular",
     credits: "500 credits / month",
@@ -67,7 +67,7 @@ const plans: Plan[] = [
     period: "month",
     description: "For power users and studios with unlimited creative needs.",
     cta: "Go Ultra",
-    ctaHref: "https://higgsfield.ai/pricing",
+    ctaHref: "/chat",
     badge: "30% OFF",
     credits: "Unlimited + 2000 credits",
     features: [
@@ -159,7 +159,7 @@ export default function PricingPage() {
               </div>
             </div>
             <Link
-              href="https://higgsfield.ai/pricing"
+              href="/pricing"
               className="shrink-0 rounded-xl bg-black px-5 py-2.5 text-[13px] font-black text-hf-neon hover:opacity-90"
             >
               Claim Offer
@@ -191,7 +191,7 @@ export default function PricingPage() {
             Custom plans for studios, agencies, and enterprise teams with dedicated infrastructure, priority support, and volume pricing.
           </p>
           <Link
-            href="https://higgsfield.ai/enterprise"
+            href="/enterprise"
             className="mt-5 inline-flex h-11 items-center rounded-xl bg-white/[0.08] px-6 text-[14px] font-black text-hf-text hover:bg-white/[0.12] transition-colors"
           >
             Contact Sales
