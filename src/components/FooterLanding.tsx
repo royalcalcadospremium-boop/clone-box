@@ -2,13 +2,13 @@ import Link from "next/link";
 
 const col1 = [
   "About", "Trust", "Careers", "Contact", "Pricing", "Apps",
-  "Cinema Studio", "Marketing Studio", "Higgsfield Chat", "AI Influencer",
+  "Cinema Studio", "Marketing Studio", "Ninja Box Chat", "AI Influencer",
   "Community", "Enterprise", "Team", "Copilot", "Reference Extension",
   "Blog", "Contests", "Discord",
 ];
 const col2 = [
   "AI Image", "Soul ID Character", "Draw to Edit", "Fashion Factory",
-  "Edit Image", "Image Upscale", "Photodump Studio", "Higgsfield Popcorn",
+  "Edit Image", "Image Upscale", "Photodump Studio", "Ninja Box Popcorn",
   "Nano Banana Pro", "Nano Banana 2", "Prompt Guide", "Flux 2",
   "GPT Image 2", "Inpaint", "Soul 2.0", "Soul Cinema", "Soul Cast",
 ];
@@ -23,11 +23,11 @@ const col4 = [
 ];
 
 const socials = [
-  { label: "X / Twitter", href: "https://x.com/higgsfield" },
-  { label: "YouTube", href: "https://www.youtube.com/@HiggsfieldAI" },
-  { label: "Instagram", href: "https://www.instagram.com/higgsfield.ai" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/higgsfield" },
-  { label: "TikTok", href: "https://www.tiktok.com/@higgsfield.ai90" },
+  { label: "X / Twitter", href: "#" },
+  { label: "YouTube", href: "#" },
+  { label: "Instagram", href: "#" },
+  { label: "LinkedIn", href: "#" },
+  { label: "TikTok", href: "#" },
 ];
 
 function NavColumn({ links }: { links: string[] }) {
@@ -36,7 +36,7 @@ function NavColumn({ links }: { links: string[] }) {
       {links.map((label) => (
         <li key={label}>
           <Link
-            href="https://higgsfield.ai"
+            href="/"
             className="block py-[3px] text-[14px] transition-opacity duration-150 hover:opacity-60"
             style={{ color: "rgb(20,21,26)" }}
           >

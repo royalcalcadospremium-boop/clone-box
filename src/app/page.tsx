@@ -23,31 +23,38 @@ import { CopyrightBar } from "@/components/CopyrightBar";
 
 const featuredCards = [
   {
+    title: "Ninja Box MCP",
+    kicker: "New · Agents",
+    subtitle: "End-to-end content creation inside any AI agent",
+    href: "/ai/image",
+    image: "https://cdn.higgsfield.ai/card/14244036-98db-43fb-8cb6-0fd3f092ad38.webp",
+  },
+  {
     title: "GPT Image 2",
-    kicker: "OpenAI x Higgsfield",
+    kicker: "OpenAI x Ninja Box",
     subtitle: "4K images with near-perfect text rendering",
-    href: "https://higgsfield.ai/ai/image?model=imagegen_2_0",
+    href: "/ai/image",
     image: "https://cdn.higgsfield.ai/card/55cebf94-e94a-46ef-9c15-3bc0ff501b54.webp",
   },
   {
     title: "KLING 3.0 in 4K",
     kicker: "Cinema-grade video",
     subtitle: "Cinema-grade video at full 4K resolution",
-    href: "https://higgsfield.ai/ai/video?model=kling3_0",
+    href: "/ai/video",
     image: "https://cdn.higgsfield.ai/card/d814674d-d264-4121-b093-d1eeffff6555.webp",
   },
   {
     title: "Marketing Studio for Apps",
     kicker: "Powered by Hermes Agent",
     subtitle: "Product campaigns, edits, ads and exports from one place",
-    href: "https://higgsfield.ai/marketing-studio/app",
+    href: "/marketing-studio/app",
     image: "https://cdn.higgsfield.ai/card/87919735-396b-4fcf-9970-ca8b6aeb20d4.webp",
   },
   {
     title: "Seedance 2.0 in 1080p",
     kicker: "Sharper motion output",
     subtitle: "Sharper detail and smoother video output",
-    href: "https://higgsfield.ai/ai/video?model=seedance_2_0",
+    href: "/ai/video",
     image: "https://cdn.higgsfield.ai/card/c0b57ae7-f877-4f98-ae78-f62542a108fc.webp",
   },
 ];
@@ -57,42 +64,42 @@ const launchCards = [
     title: "Create Image",
     subtitle: "Prompt high-detail images, edits and visual variations.",
     icon: ImageIcon,
-    href: "https://higgsfield.ai/ai/image",
+    href: "/ai/image",
     image: "https://cdn.higgsfield.ai/card/a5c235aa-388c-477e-8974-955aa5eacb13.webp",
   },
   {
     title: "Generate Video",
     subtitle: "Use top video models with motion, scenes and sound.",
     icon: Play,
-    href: "https://higgsfield.ai/ai/video",
+    href: "/ai/video",
     image: "https://cdn.higgsfield.ai/card/37540ebd-ae97-4f45-aa9b-8da2fce2dafd.webp",
   },
   {
     title: "Cinema Studio 3.5",
     subtitle: "Director-level shot control for cinematic sequences.",
     icon: Clapperboard,
-    href: "https://higgsfield.ai/cinema-studio?autoSelectFolder=true",
+    href: "/cinema-studio",
     image: "https://cdn.higgsfield.ai/card/e88bb549-1b08-44c7-be91-671ec4ff647c.webp",
   },
   {
-    title: "Higgsfield Chat",
+    title: "Ninja Box Chat",
     subtitle: "Collaborate in real time with voice, video and generation.",
     icon: MessageCircle,
-    href: "https://higgsfield.ai/chat",
+    href: "/chat",
     image: "https://cdn.higgsfield.ai/card/23a5304e-af7a-4f3d-96dd-f97406f0f926.webp",
   },
   {
-    title: "Higgsfield Audio",
+    title: "Ninja Box Audio",
     subtitle: "Voice cloning, multilingual synthesis and localization.",
     icon: Mic2,
-    href: "https://higgsfield.ai/audio",
+    href: "/audio",
     image: "https://cdn.higgsfield.ai/card/30bcdc8f-7aa9-42bd-b820-40f2e9959f27.webp",
   },
   {
     title: "Soul 2.0",
     subtitle: "Fashion-forward photo model with cultural fluency.",
     icon: Sparkles,
-    href: "https://higgsfield.ai/ai/image?model=soul-v2",
+    href: "/ai/image",
     image: "https://cdn.higgsfield.ai/card/c2124f76-f96f-4df1-870c-03e5ad15fae4.webp",
   },
 ];
@@ -102,7 +109,7 @@ const exploreCards = [
   ["Unlimited Seedream 5.0 lite", "Intelligent visual reasoning for consistent images", "https://cdn.higgsfield.ai/card/02a55528-f1b7-4cf7-a176-4e1ea9171eee.webp"],
   ["Cinema Studio 2.0", "Step inside 3D scenes and control every shot", "https://cdn.higgsfield.ai/card/424836bc-64a8-4b6e-b52c-384673212340.webp"],
   ["KLING 3.0 Public Release", "Reduced wait times and faster generation", "https://cdn.higgsfield.ai/card/831011af-a320-40a8-bf95-ebc55ff59900.webp"],
-  ["Higgsfield Contests", "Submit AI action videos and compete for prizes", "https://cdn.higgsfield.ai/card/14244036-98db-43fb-8cb6-0fd3f092ad38.webp"],
+  ["Ninja Box Contests", "Submit AI action videos and compete for prizes", "https://cdn.higgsfield.ai/card/14244036-98db-43fb-8cb6-0fd3f092ad38.webp"],
   ["Vibe Motion", "Turn prompts into motion-designed videos", "https://cdn.higgsfield.ai/card/3ecf80d1-a279-42ad-b99b-c840baeb17eb.webp"],
   ["Grok Imagine", "Generate cinematic videos with synchronized audio", "https://cdn.higgsfield.ai/card/df0944c8-17f5-44bb-be7d-d46952e858fa.webp"],
   ["Angles V2", "360-degree coverage and generation history", "https://cdn.higgsfield.ai/card/19aa0ae4-dcbb-4473-9cbc-93f222d2faf0.webp"],
@@ -113,7 +120,7 @@ function readMotionLinks() {
     process.cwd(),
     "..",
     "..",
-    "urls_higgsfield_ai_simplescraper.txt",
+    "urls_motion_presets.txt",
   );
 
   try {
@@ -183,15 +190,80 @@ export default function Home() {
     <>
       <Navbar />
       <main className="mx-auto w-full max-w-[1440px] px-3 pb-24 pt-3 md:px-4">
-        <section className="grid gap-1.5 md:grid-cols-4" aria-label="Featured Higgsfield launches">
+
+        {/* ── Featured cards ── */}
+        <section className="grid gap-1.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5" aria-label="Featured Ninja Box launches">
           {featuredCards.map((card, index) => (
-            <MediaCard key={card.title} {...card} priority={index < 4} />
+            <MediaCard key={card.title} {...card} priority={index < 5} />
           ))}
         </section>
 
+        {/* ── GPT Image 2 "Meet" banner ── */}
+        <section className="mt-4 relative min-h-[340px] overflow-hidden rounded-[14px]">
+          <img
+            src="https://static.higgsfield.ai/gpt-2-banner-image-new.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-transparent" />
+          <div className="relative flex h-full min-h-[340px] flex-col justify-center p-8 md:p-12">
+            <span className="mb-4 inline-flex w-max items-center rounded-full bg-hf-neon px-3 py-1 text-[11px] font-black uppercase tracking-wide text-black">
+              New Model
+            </span>
+            <h2 className="max-w-[480px] text-[clamp(36px,5vw,64px)] font-black leading-[0.95] tracking-tight text-white">
+              Meet<br />
+              <span className="text-hf-neon">GPT Image 2</span>
+            </h2>
+            <p className="mt-4 max-w-[380px] text-[15px] font-semibold text-white/68">
+              4K images with near-perfect text rendering
+            </p>
+            <Link
+              href="/ai/image"
+              className="mt-6 inline-flex h-12 w-max items-center gap-2 rounded-xl bg-white px-6 text-sm font-black text-black transition hover:bg-white/90"
+            >
+              Try Model <ArrowRight size={16} />
+            </Link>
+          </div>
+        </section>
+
+        {/* ── Marketing Studio banner ── */}
+        <section className="mt-4 grid gap-4 overflow-hidden rounded-[14px] bg-[#141518] lg:grid-cols-[1fr_1fr]">
+          <div className="flex flex-col justify-center p-8 md:p-10">
+            <span className="mb-3 inline-flex w-max rounded-md bg-hf-neon/15 px-2 py-1 text-[11px] font-black uppercase tracking-wide text-hf-neon">
+              Marketing Studio
+            </span>
+            <h2 className="text-[clamp(28px,4vw,48px)] font-black leading-[0.95] tracking-tight">
+              One link in.<br />
+              <span className="text-white/60">marketing out.</span>
+            </h2>
+            <p className="mt-3 max-w-[340px] text-[14px] font-semibold text-white/52">
+              Create UGC, demos, and ads across channels from one product link.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link
+                href="/marketing-studio/app"
+                className="inline-flex h-11 items-center gap-2 rounded-xl bg-hf-neon px-5 text-sm font-black text-black transition hover:bg-hf-neon/90"
+              >
+                Try Marketing Studio
+              </Link>
+              <Link href="/marketing-studio/app" className="text-sm font-semibold text-white/52 hover:text-white transition">
+                View all Marketing Studio
+              </Link>
+            </div>
+          </div>
+          <div className="relative flex items-end justify-center overflow-hidden lg:min-h-[280px]">
+            <img
+              src="https://static.higgsfield.ai/home-marketing-studuio-banner-illustration.webp"
+              alt="Marketing Studio product preview"
+              className="h-full w-full object-cover object-top lg:absolute lg:inset-0"
+            />
+          </div>
+        </section>
+
+        {/* ── "What will you create?" hero + launch cards ── */}
         <section className="mt-4 grid gap-2 lg:grid-cols-[1.18fr_2fr]">
           <Link
-            href="https://higgsfield.ai/generate"
+            href="/ai/image"
             className="group relative min-h-[310px] overflow-hidden rounded-[14px] bg-[#151719] p-5"
           >
             <img
@@ -244,15 +316,16 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Explore ── */}
         <section className="mt-8">
           <div className="mb-3 flex items-end justify-between gap-3">
             <div>
               <h2 className="text-[26px] font-black leading-none">Explore</h2>
               <p className="mt-1 text-sm font-semibold text-white/48">
-                Public cards and tools mirrored from the Higgsfield home feed.
+                Public cards and tools mirrored from the Ninja Box home feed.
               </p>
             </div>
-            <Link href="https://higgsfield.ai/apps" className="hidden items-center gap-1 text-sm font-black text-hf-neon sm:flex">
+            <Link href="/apps" className="hidden items-center gap-1 text-sm font-black text-hf-neon sm:flex">
               Apps <ArrowRight size={15} />
             </Link>
           </div>
@@ -263,18 +336,19 @@ export default function Home() {
                 title={title}
                 subtitle={subtitle}
                 image={image}
-                href="https://higgsfield.ai/apps"
+                href="/apps"
               />
             ))}
           </div>
         </section>
 
+        {/* ── Motion presets ── */}
         <section className="mt-8 rounded-[14px] border border-white/[0.08] bg-[#141518] p-4">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="text-[24px] font-black leading-none">Motion presets</h2>
               <p className="mt-1 text-sm font-semibold text-white/48">
-                {motionLinks.length} sublinks loaded from urls_higgsfield_ai_simplescraper.txt
+                {motionLinks.length} motion presets available
               </p>
             </div>
             <span className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-3 py-2 text-xs font-black text-white/70">
@@ -302,12 +376,13 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Promo row ── */}
         <section className="mt-8 grid gap-2 md:grid-cols-[1fr_1fr_1.3fr]">
           <div className="rounded-[14px] bg-hf-neon p-5 text-black">
             <Bot size={26} />
             <h2 className="mt-8 text-[28px] font-black leading-none">Assist</h2>
             <p className="mt-2 text-sm font-bold text-black/68">
-              A compact chat entry point, matching the utility-heavy Higgsfield shell.
+              A compact chat entry point, matching the utility-heavy Ninja Box shell.
             </p>
           </div>
           <div className="rounded-[14px] bg-white/[0.055] p-5">
@@ -333,7 +408,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Below-fold sections */}
+      {/* ── Below-fold sections ── */}
       <div className="mx-auto w-full max-w-[1440px] px-3 md:px-4">
         <div className="mt-12">
           <TopChoice />
@@ -350,20 +425,20 @@ export default function Home() {
         <CommunitySection
           title="Soul Cinema"
           subtitle="Community gallery — cinematic AI portraits and scenes"
-          viewAllHref="https://higgsfield.ai/community"
+          viewAllHref="/community"
           viewAllLabel="View all"
           ctaLabel="Browse Soul Cinema"
-          ctaHref="https://higgsfield.ai/ai/image?model=soul-cinema"
+          ctaHref="/ai/image"
           items={8}
         />
 
         <CommunitySection
           title="Community"
           subtitle="Creator spotlights and top-rated AI generations"
-          viewAllHref="https://higgsfield.ai/community"
+          viewAllHref="/community"
           viewAllLabel="View all"
           ctaLabel="Explore Community"
-          ctaHref="https://higgsfield.ai/community"
+          ctaHref="/community"
           items={12}
         />
       </div>

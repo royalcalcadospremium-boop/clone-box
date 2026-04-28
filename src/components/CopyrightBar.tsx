@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 const links = [
-  { label: "Press", href: "https://higgsfield.ai/press" },
-  { label: "Creative Challenge", href: "https://higgsfield.ai/contests" },
-  { label: "Privacy", href: "https://higgsfield.ai/privacy" },
-  { label: "Terms", href: "https://higgsfield.ai/terms" },
-  { label: "Cookie Notice", href: "https://higgsfield.ai/cookie-notice" },
-  { label: "Cookie Settings", href: "https://higgsfield.ai/cookie-settings" },
+  { label: "Press", href: "/about" },
+  { label: "Creative Challenge", href: "/earn" },
+  { label: "Privacy", href: "/trust" },
+  { label: "Terms", href: "/trust" },
+  { label: "Cookie Notice", href: "/trust" },
+  { label: "Cookie Settings", href: "/trust" },
 ];
 
 export function CopyrightBar() {
@@ -22,7 +22,7 @@ export function CopyrightBar() {
         }}
       >
         <p className="text-[13px] text-hf-text-muted">
-          © 2026 Higgsfield AI™. All rights reserved.
+          © 2026 Ninja Box™. All rights reserved.
         </p>
         <ul className="hidden items-center sm:flex" style={{ gap: 24, listStyle: "none" }}>
           {links.map((link) => (
