@@ -116,6 +116,21 @@ const exploreCards = [
   ["Angles V2", "360-degree coverage and generation history", "https://cdn.higgsfield.ai/card/19aa0ae4-dcbb-4473-9cbc-93f222d2faf0.webp"],
 ];
 
+const gptImageGrid = [
+  "578d27f2-663d-4817-96e7-89f90426c72c",
+  "c10ed514-8e43-4390-b20c-58254f837086",
+  "2230dfb0-c7b6-466e-99ea-f4eee9d08814",
+  "b1988a79-e9d2-4058-9c90-82ab677b6058",
+  "0a707acf-5df0-429a-b9e8-e4961d8d01cd",
+  "a524d80e-204d-40ba-bcd8-39f75dcd5c92",
+  "7e661736-c838-4789-a053-cfb09990a688",
+  "96cb52c1-23e9-47a0-badc-239cf0a29570",
+  "ddd778ac-253e-4251-8d9a-340189a311e8",
+  "051a430d-eb46-423f-93e7-b450faaf7337",
+  "e868fb8f-a0af-4f86-ae5a-6f3ac727878e",
+  "9e7e9e9a-716f-4b59-878c-d3c7f1f7012d",
+];
+
 const exploreMoreTags = [
   "Cinema Studio", "Visual Effects", "Ninja Box Soul", "Ninja Box Apps",
   "Kling 2.1 Master", "Camera Controls", "Viral", "Action movements",
@@ -258,30 +273,50 @@ export default function Home() {
         {/* ── Credit sale banner ── */}
         <CreditSaleBanner />
 
-        {/* ── GPT Image 2 "Meet" banner ── */}
-        <section className="mt-4 relative min-h-[340px] overflow-hidden rounded-[14px]">
-          <img
-            src="https://static.higgsfield.ai/gpt-2-banner-image-new.png"
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-transparent" />
-          <div className="relative flex h-full min-h-[340px] flex-col justify-center p-8 md:p-12">
-            <span className="mb-4 inline-flex w-max items-center rounded-full bg-hf-neon px-3 py-1 text-[11px] font-black uppercase tracking-wide text-black">
+        {/* ── GPT Image 2 "Meet" section — two-column ── */}
+        <section className="mt-2 grid overflow-hidden rounded-[14px] lg:grid-cols-[280px_1fr]">
+          {/* Left: text panel */}
+          <div className="flex flex-col bg-[#0d0e10] p-7">
+            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/35">
               New Model
-            </span>
-            <h2 className="max-w-[480px] text-[clamp(36px,5vw,64px)] font-black leading-[0.95] tracking-tight text-white">
+            </p>
+            <div className="mt-1.5 h-px bg-white/[0.07]" />
+            <h2 className="mt-5 text-[clamp(24px,2.6vw,38px)] font-black leading-[0.9] tracking-tight text-white">
               Meet<br />
               <span className="text-hf-neon">GPT Image 2</span>
             </h2>
-            <p className="mt-4 max-w-[380px] text-[15px] font-semibold text-white/68">
+            <p className="mt-3 text-[13px] font-medium leading-snug text-white/50">
               4K images with near-perfect text rendering
             </p>
             <Link
               href="/ai/image"
-              className="mt-6 inline-flex h-12 w-max items-center gap-2 rounded-xl bg-white px-6 text-sm font-black text-black transition hover:bg-white/90"
+              className="mt-6 inline-flex h-10 w-max items-center gap-2 rounded-xl bg-white px-4 text-[13px] font-black text-black transition hover:bg-white/90"
             >
-              Try Model <ArrowRight size={16} />
+              <Sparkles size={13} /> Try Model
+            </Link>
+            <div className="mt-auto pt-8 opacity-[0.07]">
+              <svg viewBox="0 0 24 24" className="h-20 w-20 text-white" fill="currentColor">
+                <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654 2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z" />
+              </svg>
+            </div>
+          </div>
+          {/* Right: masonry image grid */}
+          <div className="relative overflow-hidden bg-[#141518]">
+            <div className="columns-4 gap-0.5 p-0.5 [column-fill:balance]">
+              {gptImageGrid.map((id) => (
+                <img
+                  key={id}
+                  src={`https://cdn.higgsfield.ai/card/${id}.webp`}
+                  alt=""
+                  className="mb-0.5 w-full rounded-[3px] object-cover"
+                />
+              ))}
+            </div>
+            <Link
+              href="/ai/image"
+              className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-hf-neon px-4 py-2 text-[13px] font-black text-black shadow-xl transition hover:bg-hf-neon/90"
+            >
+              View all GPT Image 2 ↗
             </Link>
           </div>
         </section>
@@ -311,12 +346,20 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="relative flex items-end justify-center overflow-hidden lg:min-h-[280px]">
-            <img
-              src="https://static.higgsfield.ai/home-marketing-studuio-banner-illustration.webp"
-              alt="Marketing Studio product preview"
-              className="h-full w-full object-cover object-top lg:absolute lg:inset-0"
-            />
+          <div className="grid grid-cols-4 gap-0.5 overflow-hidden p-0.5 lg:min-h-[280px]">
+            {[
+              "c1387f77-3127-4c01-add8-9ee2d1a36b14",
+              "e534933b-f6b9-4c2a-8ef2-7abb99817f4e",
+              "a820e015-58b0-437e-9d1f-f044b8ba0b81",
+              "58d0cc0b-fc49-45a8-b66e-ebeea64125b3",
+            ].map((id) => (
+              <img
+                key={id}
+                src={`https://cdn.higgsfield.ai/card/${id}.webp`}
+                alt=""
+                className="h-full w-full rounded-[4px] object-cover"
+              />
+            ))}
           </div>
         </section>
 
