@@ -53,19 +53,34 @@ async function generateKling(prompt: string, duration: number) {
   throw new Error("Kling timeout");
 }
 
-// ── BytePlus / Seedance ──────────────────────────────────────────────────────
-async function generateByteplus(prompt: string, duration: number) {
-  const res = await fetch("https://api.byteplus.com/api/v3/contents/generate/video", {
+// ── BytePlus / Seedance (via ModelArk endpoint) ──────────────────────────────
+async function generateByteplus(prompt: string, _duration: number) {
+  // ModelArk endpoint — ark- prefixed keys use this base URL
+  const res = await fetch("https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${process.env.BYTEPLUS_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ model: "seedance-1-lite", prompt, duration }),
+    body: JSON.stringify({
+      model: "seedance-1-lite",
+      content: [{ type: "text", text: prompt }],
+    }),
   });
   if (!res.ok) throw new Error(`BytePlus error: ${await res.text()}`);
-  const { data } = await res.json();
-  return data?.video_url ?? null;
+  const { id } = await res.json();
+  if (!id) throw new Error("BytePlus: no task id");
+
+  for (let i = 0; i < 60; i++) {
+    await new Promise((r) => setTimeout(r, 5000));
+    const poll = await fetch(`https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks/${id}`, {
+      headers: { Authorization: `Bearer ${process.env.BYTEPLUS_API_KEY}` },
+    });
+    const result = await poll.json();
+    if (result.status === "succeeded") return result.content?.[0]?.video_url ?? null;
+    if (result.status === "failed") throw new Error("BytePlus task failed");
+  }
+  throw new Error("BytePlus timeout");
 }
 
 // ── MiniMax / Hailuo ─────────────────────────────────────────────────────────
