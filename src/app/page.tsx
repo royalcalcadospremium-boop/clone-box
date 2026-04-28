@@ -260,6 +260,88 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Seedance availability banner ── */}
+        <section className="mt-4 overflow-hidden rounded-[14px] bg-[#141518] p-6 md:p-8">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <span className="text-[11px] font-black uppercase tracking-[0.12em] text-white/38">
+                Available for everyone
+              </span>
+              <h2 className="mt-2 text-[clamp(22px,3.5vw,36px)] font-black leading-none">
+                World's best video model available with up to{" "}
+                <span className="text-hf-neon">30% OFF</span>{" "}
+                with special offer
+              </h2>
+            </div>
+            <div className="flex shrink-0 flex-wrap items-center gap-3">
+              <Link
+                href="/ai/video"
+                className="inline-flex h-11 items-center gap-2 rounded-xl bg-hf-neon px-5 text-sm font-black text-black transition hover:bg-hf-neon/90"
+              >
+                Get Seedance 2.0
+              </Link>
+              <Link href="/ai/video" className="text-sm font-semibold text-white/52 hover:text-white transition">
+                Learn more
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Original Series ── */}
+        <section className="mt-4 grid gap-2 md:grid-cols-[1.5fr_1fr]">
+          <Link
+            href="/original-series"
+            className="group relative min-h-[280px] overflow-hidden rounded-[14px] bg-[#0a0a0c]"
+          >
+            <img
+              src="https://static.higgsfield.ai/original-series/mork-promo/3x4%20Mork%20CLEAN%20(1)%201%20(1).png"
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/5" />
+            <div className="relative flex h-full flex-col justify-end p-6">
+              <img
+                src="https://static.higgsfield.ai/original-series/mork-promo/LOGO.png"
+                alt="Arena Zero"
+                className="mb-3 h-8 w-auto object-contain object-left"
+              />
+              <p className="text-[12px] font-black uppercase tracking-[0.1em] text-white/52">
+                Available on Ninja Box Original Series
+              </p>
+              <h2 className="mt-1 text-[22px] font-black leading-tight text-white">
+                First ever AI series streaming platform
+              </h2>
+              <span className="mt-4 inline-flex h-10 w-max items-center gap-2 rounded-xl bg-white px-4 text-sm font-black text-black">
+                Watch Zephyr <ArrowRight size={14} />
+              </span>
+            </div>
+          </Link>
+          <div className="grid gap-2">
+            <Link
+              href="/original-series"
+              className="group relative min-h-[130px] overflow-hidden rounded-[14px] bg-[#1a1218] p-5"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-black/60" />
+              <div className="relative">
+                <span className="text-[11px] font-black uppercase tracking-[0.1em] text-white/40">New Series</span>
+                <h3 className="mt-2 text-[20px] font-black text-white">Zephyr: Cuties on Duty</h3>
+                <p className="mt-1 text-[13px] font-semibold text-white/55">First episode is live. The adventure starts here.</p>
+              </div>
+            </Link>
+            <Link
+              href="/original-series"
+              className="group relative min-h-[130px] overflow-hidden rounded-[14px] bg-[#0f1418] p-5"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-black/60" />
+              <div className="relative">
+                <span className="text-[11px] font-black uppercase tracking-[0.1em] text-white/40">Explore</span>
+                <h3 className="mt-2 text-[20px] font-black text-white">Ninja Box Originals</h3>
+                <p className="mt-1 text-[13px] font-semibold text-white/55">Exclusive AI-generated cinematic series and short films.</p>
+              </div>
+            </Link>
+          </div>
+        </section>
+
         {/* ── "What will you create?" hero + launch cards ── */}
         <section className="mt-4 grid gap-2 lg:grid-cols-[1.18fr_2fr]">
           <Link
