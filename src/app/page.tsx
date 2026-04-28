@@ -18,6 +18,7 @@ import { TopChoice } from "@/components/TopChoice";
 import { SeedanceBanner } from "@/components/SeedanceBanner";
 import { KlingExclusive } from "@/components/KlingExclusive";
 import { CommunitySection } from "@/components/CommunitySection";
+import { CreditSaleBanner } from "@/components/CreditSaleBanner";
 import { FooterLanding } from "@/components/FooterLanding";
 import { CopyrightBar } from "@/components/CopyrightBar";
 
@@ -150,6 +151,50 @@ function readMotionLinks() {
   }
 }
 
+function FeaturedCard({
+  title,
+  subtitle,
+  image,
+  href,
+  kicker,
+  priority = false,
+}: {
+  title: string;
+  subtitle: string;
+  image: string;
+  href: string;
+  kicker?: string;
+  priority?: boolean;
+}) {
+  return (
+    <Link href={href} className="group block min-w-0">
+      <article className="overflow-hidden rounded-[10px] bg-[#141518]">
+        <div className="relative aspect-[4/5] overflow-hidden">
+          <img
+            src={image}
+            alt=""
+            loading={priority ? "eager" : "lazy"}
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.025]"
+          />
+          {kicker && (
+            <span className="absolute bottom-2 left-2 rounded bg-black/55 px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wide text-white/75 backdrop-blur-sm">
+              {kicker}
+            </span>
+          )}
+        </div>
+        <div className="px-3 pb-3 pt-2">
+          <h2 className="text-[12px] font-black uppercase leading-tight tracking-[0.06em] text-white">
+            {title}
+          </h2>
+          <p className="mt-0.5 line-clamp-2 text-[11px] font-medium leading-tight text-white/48">
+            {subtitle}
+          </p>
+        </div>
+      </article>
+    </Link>
+  );
+}
+
 function MediaCard({
   title,
   subtitle,
@@ -201,14 +246,17 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="mx-auto w-full max-w-[1440px] px-3 pb-24 pt-3 md:px-4">
+      <main className="w-full px-2 pb-24 pt-2 md:px-3">
 
         {/* ── Featured cards ── */}
-        <section className="grid gap-1.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5" aria-label="Featured Ninja Box launches">
+        <section className="grid gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5" aria-label="Featured Ninja Box launches">
           {featuredCards.map((card, index) => (
-            <MediaCard key={card.title} {...card} priority={index < 5} />
+            <FeaturedCard key={card.title} {...card} priority={index < 5} />
           ))}
         </section>
+
+        {/* ── Credit sale banner ── */}
+        <CreditSaleBanner />
 
         {/* ── GPT Image 2 "Meet" banner ── */}
         <section className="mt-4 relative min-h-[340px] overflow-hidden rounded-[14px]">
@@ -546,7 +594,7 @@ export default function Home() {
       </main>
 
       {/* ── Below-fold sections ── */}
-      <div className="mx-auto w-full max-w-[1440px] px-3 md:px-4">
+      <div className="w-full px-2 md:px-3">
         <div className="mt-12">
           <TopChoice />
         </div>
@@ -581,7 +629,7 @@ export default function Home() {
       </div>
 
       {/* ── Explore more AI features ── */}
-      <div className="mx-auto w-full max-w-[1440px] px-3 pb-12 md:px-4">
+      <div className="w-full px-2 pb-12 md:px-3">
         <h2 className="mb-4 text-[22px] font-black">Explore more AI features</h2>
         <div className="flex flex-wrap gap-2">
           {exploreMoreTags.map((tag) => (
