@@ -27,7 +27,7 @@ const featuredCards = [
     kicker: "New · Agents",
     subtitle: "End-to-end content creation inside any AI agent",
     href: "/ai/image",
-    image: "https://cdn.higgsfield.ai/card/14244036-98db-43fb-8cb6-0fd3f092ad38.webp",
+    image: "https://cdn.higgsfield.ai/card/4c0ad21f-8b5b-46ee-8bb4-5af51482d40a.webp",
   },
   {
     title: "GPT Image 2",
@@ -113,6 +113,18 @@ const exploreCards = [
   ["Vibe Motion", "Turn prompts into motion-designed videos", "https://cdn.higgsfield.ai/card/3ecf80d1-a279-42ad-b99b-c840baeb17eb.webp"],
   ["Grok Imagine", "Generate cinematic videos with synchronized audio", "https://cdn.higgsfield.ai/card/df0944c8-17f5-44bb-be7d-d46952e858fa.webp"],
   ["Angles V2", "360-degree coverage and generation history", "https://cdn.higgsfield.ai/card/19aa0ae4-dcbb-4473-9cbc-93f222d2faf0.webp"],
+];
+
+const exploreMoreTags = [
+  "Cinema Studio", "Visual Effects", "Ninja Box Soul", "Ninja Box Apps",
+  "Kling 2.1 Master", "Camera Controls", "Viral", "Action movements",
+  "Commercial", "MiniMax Hailuo 02", "Seedance Pro", "Community",
+  "Wan 2.2 Image", "Seedream 4.0", "Nano Banana", "Flux Kontext",
+  "GPT Image", "Topaz", "Google Veo3", "Kling 2.5 Turbo",
+  "Kling Avatars 2.0", "Wan 2.5", "Sora 2", "Sora 2 Presets",
+  "Banana Placement", "Product Placement", "Edit Image", "Multi Reference",
+  "Upscale", "Assists", "YouTube", "TikTok", "Instagram Reels",
+  "YouTube Shorts", "Nano Banana Pro", "Kling o1",
 ];
 
 function readMotionLinks() {
@@ -424,6 +436,49 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── Different Scenes Same Star ── */}
+        <section className="mt-4 grid gap-4 overflow-hidden rounded-[14px] bg-[#141518] lg:grid-cols-[1fr_1fr]">
+          <div className="flex flex-col justify-center p-8 md:p-10">
+            <span className="mb-3 inline-flex w-max rounded-md bg-white/[0.07] px-2 py-1 text-[11px] font-black uppercase tracking-wide text-white/55">
+              Character
+            </span>
+            <h2 className="text-[clamp(28px,4vw,48px)] font-black leading-[0.95] tracking-tight">
+              Different Scenes<br />
+              <span className="text-white/55">Same Star</span>
+            </h2>
+            <p className="mt-3 max-w-[340px] text-[14px] font-semibold text-white/52">
+              Build your character. One click does the rest.
+            </p>
+            <div className="mt-6">
+              <Link
+                href="/character"
+                className="inline-flex h-11 items-center gap-2 rounded-xl bg-hf-neon px-5 text-sm font-black text-black transition hover:bg-hf-neon/90"
+              >
+                Try Photodump <ArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2 p-3 lg:min-h-[280px]">
+            <img
+              src="https://cdn.higgsfield.ai/card/14ed53ed-4cad-46a7-9dad-4cebb7d9cd41.webp"
+              alt=""
+              className="h-full min-h-[160px] w-full rounded-[10px] object-cover"
+            />
+            <div className="grid gap-2">
+              <img
+                src="https://cdn.higgsfield.ai/card/2b3cc30f-49c4-4868-b1d7-5f56a4c946c3.webp"
+                alt=""
+                className="h-full w-full rounded-[10px] object-cover"
+              />
+              <img
+                src="https://cdn.higgsfield.ai/card/19aa0ae4-dcbb-4473-9cbc-93f222d2faf0.webp"
+                alt=""
+                className="h-full w-full rounded-[10px] object-cover"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* ── Motion presets ── */}
         <section className="mt-8 rounded-[14px] border border-white/[0.08] bg-[#141518] p-4">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -523,6 +578,22 @@ export default function Home() {
           ctaHref="/community"
           items={12}
         />
+      </div>
+
+      {/* ── Explore more AI features ── */}
+      <div className="mx-auto w-full max-w-[1440px] px-3 pb-12 md:px-4">
+        <h2 className="mb-4 text-[22px] font-black">Explore more AI features</h2>
+        <div className="flex flex-wrap gap-2">
+          {exploreMoreTags.map((tag) => (
+            <Link
+              key={tag}
+              href="/apps"
+              className="rounded-full border border-white/[0.1] bg-white/[0.045] px-4 py-2 text-[13px] font-semibold text-white/65 transition hover:border-hf-neon/40 hover:text-white"
+            >
+              {tag}
+            </Link>
+          ))}
+        </div>
       </div>
 
       <FooterLanding />
