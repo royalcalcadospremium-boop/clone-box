@@ -1,200 +1,182 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Navbar } from "@/components/Navbar";
-import { Mic2, Languages, RefreshCw, Play, FolderOpen, Plus } from "lucide-react";
+import { Play, Square, AlertCircle } from "lucide-react";
 
-type Tab = "voiceover" | "change-voice" | "translate";
-
-const voices = [
-  { name: "Rachel", lang: "EN", style: "Calm" },
-  { name: "Antoni", lang: "EN", style: "Warm" },
-  { name: "Bella", lang: "EN", style: "Soft" },
-  { name: "Josh", lang: "EN", style: "Deep" },
-  { name: "Elli", lang: "EN", style: "Emotional" },
-  { name: "Arnold", lang: "EN", style: "Crisp" },
+const VOICES = [
+  { name: "Rachel", description: "Calm, American", style: "Narration" },
+  { name: "Antoni", description: "Well-rounded", style: "Narration" },
+  { name: "Bella", description: "Soft, American", style: "Narration" },
+  { name: "Josh", description: "Deep, American", style: "News" },
+  { name: "Elli", description: "Emotional, American", style: "Narration" },
+  { name: "Arnold", description: "Crisp, American", style: "Narration" },
 ];
 
-function VoiceCard({ voice, selected, onClick }: { voice: typeof voices[0]; selected: boolean; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`group relative flex flex-col gap-1 rounded-xl border p-3 text-left transition-all ${
-        selected ? "border-hf-neon bg-hf-neon/10" : "border-white/[0.08] bg-white/[0.03] hover:border-white/20"
-      }`}
-    >
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
-        <Mic2 size={16} className="text-white/70" />
-      </div>
-      <p className="text-[13px] font-semibold text-hf-text">{voice.name}</p>
-      <p className="text-[11px] text-white/40">{voice.lang} · {voice.style}</p>
-      <button
-        type="button"
-        className="mt-1 flex items-center gap-1 text-[10px] font-semibold text-hf-neon opacity-0 transition-opacity group-hover:opacity-100"
-      >
-        <Play size={9} /> Preview
-      </button>
-    </button>
-  );
-}
+const TABS = ["Voiceover", "Change Voice", "Translate"] as const;
+type Tab = (typeof TABS)[number];
 
 export default function AudioPage() {
-  const [tab, setTab] = useState<Tab>("voiceover");
-  const [selectedVoice, setSelectedVoice] = useState(0);
-  const [prompt, setPrompt] = useState("");
-  const [showVoicePicker, setShowVoicePicker] = useState(false);
+  const [tab, setTab] = useState<Tab>("Voiceover");
+  const [text, setText] = useState("");
+  const [voice, setVoice] = useState("Rachel");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const tabs: { id: Tab; label: string; icon: typeof Mic2 }[] = [
-    { id: "voiceover", label: "Voiceover", icon: Mic2 },
-    { id: "change-voice", label: "Change Voice", icon: RefreshCw },
-    { id: "translate", label: "Translate", icon: Languages },
-  ];
+  const bars = Array.from({ length: 32 }, (_, i) => 8 + Math.abs(Math.sin(i * 0.4)) * 32);
+
+  async function handleGenerate() {
+    if (!text.trim() || loading) return;
+    setLoading(true);
+    setError(null);
+    setAudioUrl(null);
+    try {
+      const res = await fetch("/api/audio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, voice, model_id: "eleven_multilingual_v2" }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error ?? "Audio generation failed");
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setAudioUrl(url);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Audio generation failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function togglePlay() {
+    if (!audioRef.current || !audioUrl) return;
+    if (playing) {
+      audioRef.current.pause();
+      setPlaying(false);
+    } else {
+      audioRef.current.play();
+      setPlaying(true);
+    }
+  }
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-hf-bg">
       <Navbar />
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left sidebar */}
-        <aside className="hidden w-[220px] shrink-0 flex-col border-r border-white/[0.06] bg-[#111214] lg:flex">
-          <div className="flex items-center justify-between border-b border-white/[0.06] p-3">
-            <span className="text-[12px] font-semibold text-white/60">My Generations</span>
-            <button type="button" className="flex h-6 w-6 items-center justify-center rounded bg-white/[0.06] hover:bg-white/[0.1]">
-              <Plus size={12} className="text-white/60" />
-            </button>
-          </div>
-          <div className="flex flex-1 flex-col items-center justify-center gap-3 p-4 text-center">
-            <FolderOpen size={32} className="text-white/20" />
-            <p className="text-[12px] text-white/40">No projects yet</p>
-            <p className="text-[11px] text-white/25">Create a project to organize your images, videos, and audio</p>
-            <button type="button" className="mt-1 rounded-lg border border-white/[0.1] px-3 py-1.5 text-[11px] font-semibold text-white/60 hover:border-white/20">
-              Create project
-            </button>
-          </div>
-        </aside>
-
-        {/* Main */}
-        <main className="flex flex-1 flex-col overflow-hidden">
-          <div className="flex items-center gap-2 border-b border-white/[0.06] px-5 py-3">
-            <Mic2 size={18} className="text-hf-neon" />
-            <span className="text-[15px] font-black text-hf-text">Audio</span>
+      <main className="flex flex-1 flex-col items-center justify-center overflow-y-auto p-6">
+        <div className="w-full max-w-[640px]">
+          {/* Header */}
+          <div className="mb-6 text-center">
+            <p className="text-[10px] font-black uppercase tracking-widest text-hf-neon mb-1">ElevenLabs v3</p>
+            <h1 className="text-[clamp(24px,4vw,40px)] font-black text-hf-text">AI Audio Studio</h1>
+            <p className="mt-2 text-[13px] text-white/50">Generate voiceovers, change voices, and translate audio</p>
           </div>
 
-          <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto p-6">
-            <div className="w-full max-w-[560px]">
-              {/* Hero text */}
-              <h2 className="mb-6 text-center text-[clamp(22px,3vw,32px)] font-black leading-tight text-hf-text">
-                Ready to give your<br /><span className="text-hf-neon">scene a voice?</span>
-              </h2>
+          {/* Tabs */}
+          <div className="mb-6 flex rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
+            {TABS.map((t) => (
+              <button key={t} type="button" onClick={() => setTab(t)}
+                className={`flex-1 rounded-lg py-2 text-[13px] font-semibold transition-colors ${
+                  tab === t ? "bg-white/[0.1] text-hf-text" : "text-white/40 hover:text-white/60"
+                }`}>
+                {t}
+              </button>
+            ))}
+          </div>
 
-              {/* Tab switcher */}
-              <div className="mb-5 flex rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
-                {tabs.map(({ id, label, icon: Icon }) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => setTab(id)}
-                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-[13px] font-semibold transition-colors ${
-                      tab === id ? "bg-white/[0.1] text-hf-text" : "text-white/40 hover:text-white/60"
-                    }`}
-                  >
-                    <Icon size={13} />{label}
+          {/* Waveform visualizer */}
+          <div className="mb-6 flex h-16 items-end justify-center gap-[2px] rounded-2xl border border-white/[0.06] bg-white/[0.02] px-4">
+            {bars.map((h, i) => (
+              <div key={i} className="w-1.5 rounded-full"
+                style={{
+                  height: `${playing ? h : h * 0.4}px`,
+                  backgroundColor: playing ? "#d1fe17" : "rgba(255,255,255,0.15)",
+                  transition: "height 0.15s ease, background-color 0.3s ease",
+                }}
+              />
+            ))}
+          </div>
+
+          {tab === "Voiceover" && (
+            <>
+              {/* Voice picker */}
+              <div className="mb-4 grid grid-cols-3 gap-2">
+                {VOICES.map((v) => (
+                  <button key={v.name} type="button" onClick={() => setVoice(v.name)}
+                    className={`rounded-xl border p-3 text-left transition-colors ${
+                      voice === v.name ? "border-hf-neon bg-hf-neon/10" : "border-white/[0.08] bg-white/[0.02] hover:border-white/20"
+                    }`}>
+                    <p className={`text-[13px] font-bold ${voice === v.name ? "text-hf-neon" : "text-hf-text"}`}>{v.name}</p>
+                    <p className="text-[11px] text-white/40">{v.description}</p>
+                    <p className="text-[10px] text-white/30">{v.style}</p>
                   </button>
                 ))}
               </div>
 
-              {/* Audio waveform visual */}
-              <div className="mb-4 flex h-12 items-center justify-center gap-1">
-                {Array.from({ length: 32 }, (_, i) => (
-                  <div
-                    key={i}
-                    className="rounded-full bg-hf-neon/40"
-                    style={{
-                      width: 3,
-                      height: `${20 + Math.sin(i * 0.7) * 16}px`,
-                    }}
-                  />
-                ))}
+              {/* Text input */}
+              <div className="relative mb-4">
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Type the text you want to convert to speech..."
+                  className="w-full resize-none rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 pr-32 text-[14px] text-hf-text placeholder:text-white/25 focus:border-hf-neon/40 focus:outline-none"
+                  rows={4}
+                  disabled={loading}
+                />
+                <div className="absolute bottom-3 right-3">
+                  <button type="button" onClick={handleGenerate}
+                    disabled={loading || !text.trim()}
+                    className="rounded-xl bg-hf-neon px-4 py-2 text-[12px] font-black text-black hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed">
+                    {loading ? "Generating…" : "Generate"}
+                  </button>
+                </div>
               </div>
+              <p className="mb-4 text-right text-[11px] text-white/30">{text.length} / 2500 characters</p>
+            </>
+          )}
 
-              {tab === "voiceover" && (
-                <>
-                  <textarea
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="Describe the sound you imagine..."
-                    className="mb-4 w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 text-[14px] text-hf-text placeholder:text-white/30 focus:border-hf-neon/40 focus:outline-none"
-                    rows={4}
-                  />
-
-                  {/* Voice selector */}
-                  <button
-                    type="button"
-                    onClick={() => setShowVoicePicker(!showVoicePicker)}
-                    className="mb-4 flex w-full items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-[13px] text-hf-text hover:border-white/20"
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className="h-6 w-6 rounded-full bg-violet-600" />
-                      <span>Eleven v3</span>
-                      <span className="text-white/40">· {voices[selectedVoice].name}</span>
-                    </div>
-                    <span className="text-[11px] font-semibold text-hf-neon">CHOOSE VOICE</span>
-                  </button>
-
-                  {showVoicePicker && (
-                    <div className="mb-4 grid grid-cols-3 gap-2">
-                      {voices.map((v, i) => (
-                        <VoiceCard
-                          key={v.name}
-                          voice={v}
-                          selected={selectedVoice === i}
-                          onClick={() => { setSelectedVoice(i); setShowVoicePicker(false); }}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-
-              {tab === "change-voice" && (
-                <div className="mb-4 flex flex-col items-center gap-3 rounded-xl border border-dashed border-white/[0.1] bg-white/[0.02] p-8 text-center">
-                  <RefreshCw size={28} className="text-white/30" />
-                  <p className="text-[14px] text-white/50">Upload an audio file to change voice</p>
-                  <button type="button" className="rounded-lg border border-white/[0.12] px-4 py-2 text-[13px] font-semibold text-hf-text hover:bg-white/[0.05]">
-                    Choose File
-                  </button>
-                </div>
-              )}
-
-              {tab === "translate" && (
-                <div className="mb-4 flex flex-col gap-3">
-                  <select className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-[13px] text-hf-text focus:outline-none">
-                    <option>🇺🇸 English</option>
-                    <option>🇪🇸 Spanish</option>
-                    <option>🇫🇷 French</option>
-                    <option>🇩🇪 German</option>
-                    <option>🇯🇵 Japanese</option>
-                    <option>🇧🇷 Portuguese</option>
-                  </select>
-                  <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-white/[0.1] bg-white/[0.02] p-8 text-center">
-                    <Languages size={28} className="text-white/30" />
-                    <p className="text-[14px] text-white/50">Upload audio to translate</p>
-                    <button type="button" className="rounded-lg border border-white/[0.12] px-4 py-2 text-[13px] font-semibold text-hf-text hover:bg-white/[0.05]">
-                      Choose File
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              <button
-                type="button"
-                className="w-full rounded-xl bg-hf-neon py-3 text-[14px] font-black text-black hover:opacity-90"
-              >
-                GENERATE
+          {(tab === "Change Voice" || tab === "Translate") && (
+            <div className="mb-4 flex flex-col items-center gap-3 rounded-2xl border border-dashed border-white/[0.12] bg-white/[0.02] p-10 text-center">
+              <p className="text-[13px] text-white/40">
+                Upload an audio file to {tab === "Translate" ? "translate" : "change its voice"}
+              </p>
+              <button type="button" className="rounded-xl border border-white/[0.12] px-5 py-2 text-[13px] font-semibold text-white/70 hover:bg-white/[0.05]">
+                Choose Audio File
               </button>
             </div>
-          </div>
-        </main>
-      </div>
+          )}
+
+          {error && (
+            <div className="mb-4 flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-[13px] text-red-400">
+              <AlertCircle size={14} /> {error}
+            </div>
+          )}
+
+          {/* Audio player */}
+          {audioUrl && (
+            <div className="rounded-2xl border border-hf-neon/20 bg-hf-neon/5 p-4">
+              <audio ref={audioRef} src={audioUrl} onEnded={() => setPlaying(false)} className="hidden" />
+              <div className="flex items-center gap-4">
+                <button type="button" onClick={togglePlay}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-hf-neon text-black hover:opacity-90">
+                  {playing ? <Square size={14} fill="black" /> : <Play size={14} fill="black" />}
+                </button>
+                <div className="flex-1">
+                  <p className="text-[13px] font-semibold text-hf-text">{voice} — Voiceover</p>
+                  <p className="text-[11px] text-white/40">ElevenLabs Multilingual v2</p>
+                </div>
+                <a href={audioUrl} download="voiceover.mp3"
+                  className="rounded-lg border border-white/[0.1] px-3 py-1.5 text-[12px] text-white/60 hover:text-white/80">
+                  Download
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

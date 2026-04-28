@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
-import { ChevronDown, Sparkles, History, Users } from "lucide-react";
+import { Sparkles, History, Users, Download, AlertCircle } from "lucide-react";
 
 const MODELS = [
   { id: "nano-banana-pro", name: "Nano Banana Pro", badge: "UNLIMITED" },
@@ -24,6 +24,8 @@ const EMPTY_STATE_IMAGES = [
   "https://higgsfield.ai/cdn-cgi/image/fit=scale-down,format=webp,onerror=redirect,width=1920,quality=85/image/empty-state/image-04.jpg",
 ];
 
+type GeneratedImage = { url: string; prompt: string; model: string };
+
 export default function AIImagePage() {
   const [model, setModel] = useState(MODELS[0]);
   const [showModelPicker, setShowModelPicker] = useState(false);
@@ -32,12 +34,38 @@ export default function AIImagePage() {
   const [count, setCount] = useState("1/4");
   const [prompt, setPrompt] = useState("");
   const [tab, setTab] = useState<"history" | "community">("history");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<GeneratedImage[]>([]);
+
+  async function handleGenerate() {
+    if (!prompt.trim() || loading) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/generate/image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, model: model.id, aspect, quality }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Generation failed");
+      if (data.url) {
+        setHistory((prev) => [{ url: data.url, prompt, model: model.name }, ...prev]);
+        setTab("history");
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Generation failed");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-hf-bg">
       <Navbar />
       <div className="flex flex-1 overflow-hidden">
-        {/* Left sidebar — history / community */}
+        {/* Left sidebar */}
         <aside className="hidden w-[280px] shrink-0 flex-col border-r border-white/[0.06] bg-[#111214] lg:flex">
           <div className="flex border-b border-white/[0.06]">
             {(["history", "community"] as const).map((t) => {
@@ -59,10 +87,27 @@ export default function AIImagePage() {
 
           <div className="flex flex-1 flex-col gap-2 overflow-y-auto p-3">
             {tab === "history" ? (
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-                <Sparkles size={28} className="text-white/20" />
-                <p className="text-[12px] text-white/40">Your generated images will appear here</p>
-              </div>
+              history.length === 0 ? (
+                <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
+                  <Sparkles size={28} className="text-white/20" />
+                  <p className="text-[12px] text-white/40">Your generated images will appear here</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-1.5">
+                  {history.map((img, i) => (
+                    <div key={i} className="group relative overflow-hidden rounded-lg bg-hf-surface-2 aspect-[3/4]">
+                      <img src={img.url} alt={img.prompt} className="h-full w-full object-cover" />
+                      <a
+                        href={img.url}
+                        download
+                        className="absolute bottom-1 right-1 rounded-full bg-black/60 p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Download size={12} className="text-white" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )
             ) : (
               <div className="grid grid-cols-2 gap-1.5">
                 {EMPTY_STATE_IMAGES.concat(EMPTY_STATE_IMAGES).map((src, i) => (
@@ -75,7 +120,7 @@ export default function AIImagePage() {
           </div>
         </aside>
 
-        {/* Center — workspace */}
+        {/* Center workspace */}
         <main className="flex flex-1 flex-col overflow-hidden">
           {/* Soul Cinema banner */}
           <div className="relative overflow-hidden border-b border-white/[0.06]">
@@ -88,7 +133,7 @@ export default function AIImagePage() {
             <div className="relative flex items-center gap-4 px-5 py-3">
               <div>
                 <p className="text-[11px] font-black uppercase tracking-wider text-hf-neon">Soul Cinema is here</p>
-                <p className="text-[12px] text-white/60">The world's first cinematic film model — upgraded, unleashed, and ready for your story</p>
+                <p className="text-[12px] text-white/60">The world&apos;s first cinematic film model — upgraded, unleashed, and ready for your story</p>
               </div>
             </div>
           </div>
@@ -129,68 +174,58 @@ export default function AIImagePage() {
                 </div>
               )}
 
+              {error && (
+                <div className="mb-4 flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-[13px] text-red-400">
+                  <AlertCircle size={14} />
+                  {error}
+                </div>
+              )}
+
               {/* Prompt textarea */}
               <div className="relative">
                 <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleGenerate(); }}
                   placeholder="Describe a scene, character, mood, or style — and watch it come to life"
                   className="w-full resize-none rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 pr-32 text-[14px] text-hf-text placeholder:text-white/25 focus:border-hf-neon/40 focus:outline-none"
                   rows={4}
+                  disabled={loading}
                 />
                 <div className="absolute bottom-3 right-3">
                   <button
                     type="button"
-                    className="rounded-xl bg-hf-neon px-4 py-2 text-[12px] font-black text-black hover:opacity-90"
+                    onClick={handleGenerate}
+                    disabled={loading || !prompt.trim()}
+                    className="rounded-xl bg-hf-neon px-4 py-2 text-[12px] font-black text-black hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    Generate
+                    {loading ? "Generating…" : "Generate"}
                   </button>
                 </div>
               </div>
 
               {/* Options row */}
               <div className="mt-3 flex flex-wrap gap-3">
-                {/* Aspect */}
                 <div className="flex gap-1">
                   {ASPECTS.map((a) => (
-                    <button
-                      key={a}
-                      type="button"
-                      onClick={() => setAspect(a)}
-                      className={`rounded-lg px-2 py-1 text-[11px] font-semibold transition-colors ${
-                        aspect === a ? "bg-hf-neon text-black" : "text-white/40 hover:text-white/60"
-                      }`}
-                    >
+                    <button key={a} type="button" onClick={() => setAspect(a)}
+                      className={`rounded-lg px-2 py-1 text-[11px] font-semibold transition-colors ${aspect === a ? "bg-hf-neon text-black" : "text-white/40 hover:text-white/60"}`}>
                       {a}
                     </button>
                   ))}
                 </div>
-
                 <div className="flex gap-1">
                   {QUALITIES.map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => setQuality(q)}
-                      className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-colors ${
-                        quality === q ? "bg-white/[0.12] text-hf-text" : "text-white/40 hover:text-white/60"
-                      }`}
-                    >
+                    <button key={q} type="button" onClick={() => setQuality(q)}
+                      className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-colors ${quality === q ? "bg-white/[0.12] text-hf-text" : "text-white/40 hover:text-white/60"}`}>
                       {q}
                     </button>
                   ))}
                 </div>
-
                 <div className="flex gap-1">
                   {COUNTS.map((c) => (
-                    <button
-                      key={c}
-                      type="button"
-                      onClick={() => setCount(c)}
-                      className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-colors ${
-                        count === c ? "bg-white/[0.12] text-hf-text" : "text-white/40 hover:text-white/60"
-                      }`}
-                    >
+                    <button key={c} type="button" onClick={() => setCount(c)}
+                      className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-colors ${count === c ? "bg-white/[0.12] text-hf-text" : "text-white/40 hover:text-white/60"}`}>
                       {c}
                     </button>
                   ))}
@@ -199,13 +234,30 @@ export default function AIImagePage() {
             </div>
 
             {/* Example images */}
-            <div className="grid w-full max-w-[640px] grid-cols-4 gap-2 opacity-30">
-              {EMPTY_STATE_IMAGES.map((src, i) => (
-                <div key={i} className="overflow-hidden rounded-xl aspect-[3/4]">
-                  <img src={src} alt="" className="h-full w-full object-cover" />
-                </div>
-              ))}
-            </div>
+            {history.length === 0 && (
+              <div className="grid w-full max-w-[640px] grid-cols-4 gap-2 opacity-30">
+                {EMPTY_STATE_IMAGES.map((src, i) => (
+                  <div key={i} className="overflow-hidden rounded-xl aspect-[3/4]">
+                    <img src={src} alt="" className="h-full w-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Generated image result */}
+            {history.length > 0 && (
+              <div className="w-full max-w-[640px] grid grid-cols-2 gap-3">
+                {history.slice(0, 4).map((img, i) => (
+                  <div key={i} className="group relative overflow-hidden rounded-2xl aspect-[3/4]">
+                    <img src={img.url} alt={img.prompt} className="h-full w-full object-cover" />
+                    <a href={img.url} download
+                      className="absolute bottom-2 right-2 rounded-full bg-black/60 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Download size={14} className="text-white" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </main>
       </div>
