@@ -1,12 +1,7 @@
-/* ─── CommunitySection ──────────────────────────────────────────────────────
- * Reusable community gallery section. Used multiple times on the page
- * (Soul Cinema, Soul 2.0, Mixed Media, Effects, Apps, Soul, Kling, etc.)
- * ──────────────────────────────────────────────────────────────────────── */
-
 import React from "react";
-import { ExternalLink, Heart } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-/* ── Types ───────────────────────────────────────────────────────────────── */
 interface CommunitySectionProps {
   id?: string;
   title: string;
@@ -15,68 +10,30 @@ interface CommunitySectionProps {
   viewAllLabel: string;
   ctaLabel: string;
   ctaHref: string;
-  accentColor?: string; // defaults to hf-neon
-  items?: number; // number of placeholder thumbnails, default 12
+  accentColor?: string;
+  items?: number;
+  images?: string[];
 }
 
-/* ── Gradient palette for thumbnails ─────────────────────────────────────── */
-const THUMB_GRADIENTS: string[] = [
-  "linear-gradient(135deg, #334155 0%, #0f172a 100%)",
-  "linear-gradient(135deg, #44403c 0%, #1c1917 100%)",
-  "linear-gradient(135deg, #1e3a5f 0%, #0a1929 100%)",
-  "linear-gradient(135deg, #3b2a4a 0%, #1a0f2e 100%)",
-  "linear-gradient(135deg, #0f3d30 0%, #041f17 100%)",
-  "linear-gradient(135deg, #4a3000 0%, #1a1000 100%)",
-  "linear-gradient(135deg, #1a2a44 0%, #0b1520 100%)",
-  "linear-gradient(135deg, #3d1f3d 0%, #1a0a1a 100%)",
-  "linear-gradient(135deg, #1f3d2a 0%, #0a1a10 100%)",
-  "linear-gradient(135deg, #3d2a1f 0%, #1a100a 100%)",
-  "linear-gradient(135deg, #2a2a3d 0%, #10101a 100%)",
-  "linear-gradient(135deg, #3d3a1a 0%, #1a1800 100%)",
+const COMMUNITY_IMAGES = [
+  "https://cdn.higgsfield.ai/card/578d27f2-663d-4817-96e7-89f90426c72c.webp",
+  "https://cdn.higgsfield.ai/card/c10ed514-8e43-4390-b20c-58254f837086.webp",
+  "https://cdn.higgsfield.ai/card/2230dfb0-c7b6-466e-99ea-f4eee9d08814.webp",
+  "https://cdn.higgsfield.ai/card/b1988a79-e9d2-4058-9c90-82ab677b6058.webp",
+  "https://cdn.higgsfield.ai/card/0a707acf-5df0-429a-b9e8-e4961d8d01cd.webp",
+  "https://cdn.higgsfield.ai/card/a524d80e-204d-40ba-bcd8-39f75dcd5c92.webp",
+  "https://cdn.higgsfield.ai/card/7e661736-c838-4789-a053-cfb09990a688.webp",
+  "https://cdn.higgsfield.ai/card/96cb52c1-23e9-47a0-badc-239cf0a29570.webp",
+  "https://cdn.higgsfield.ai/card/ddd778ac-253e-4251-8d9a-340189a311e8.webp",
+  "https://cdn.higgsfield.ai/card/051a430d-eb46-423f-93e7-b450faaf7337.webp",
+  "https://cdn.higgsfield.ai/card/e868fb8f-a0af-4f86-ae5a-6f3ac727878e.webp",
+  "https://cdn.higgsfield.ai/card/9e7e9e9a-716f-4b59-878c-d3c7f1f7012d.webp",
+  "https://cdn.higgsfield.ai/card/14ed53ed-4cad-46a7-9dad-4cebb7d9cd41.webp",
+  "https://cdn.higgsfield.ai/card/2b3cc30f-49c4-4868-b1d7-5f56a4c946c3.webp",
+  "https://cdn.higgsfield.ai/card/c2124f76-f96f-4df1-870c-03e5ad15fae4.webp",
+  "https://cdn.higgsfield.ai/card/153574e6-6f8b-4857-806e-22b37202dd29.webp",
 ];
 
-/* ── Thumbnail ───────────────────────────────────────────────────────────── */
-interface ThumbProps {
-  index: number;
-  showBadges: boolean;
-}
-
-function Thumbnail({ index, showBadges }: ThumbProps) {
-  const gradient = THUMB_GRADIENTS[index % THUMB_GRADIENTS.length];
-
-  return (
-    <div className="relative overflow-hidden rounded-xl cursor-pointer group/thumb bg-hf-surface-2 aspect-[16/10]">
-      {/* Gradient placeholder */}
-      <div
-        className="w-full h-full transition-transform duration-200 group-hover/thumb:scale-[1.02]"
-        style={{ background: gradient }}
-        aria-hidden="true"
-      />
-
-      {/* Creator badge (last 2 items only) */}
-      {showBadges && (
-        <div className="absolute bottom-2 left-2 flex items-center gap-1.5">
-          <div className="w-5 h-5 rounded-full bg-gray-400 border border-white/30 flex-shrink-0" />
-          <span className="text-[11px] text-white/90 font-medium leading-none">
-            creator_name
-          </span>
-        </div>
-      )}
-
-      {/* Like badge (last 2 items only) */}
-      {showBadges && (
-        <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-black/60 rounded-full px-2 py-0.5">
-          <Heart className="w-[10px] h-[10px] text-white/80" />
-          <span className="text-[11px] text-white/80 leading-none">
-            {(index * 37 + 128) % 999}
-          </span>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ── Main export ─────────────────────────────────────────────────────────── */
 export function CommunitySection({
   id,
   title,
@@ -86,65 +43,62 @@ export function CommunitySection({
   ctaLabel,
   ctaHref,
   accentColor,
-  items = 12,
+  items = 8,
+  images,
 }: CommunitySectionProps) {
-  const thumbCount = Math.max(1, items);
-  const lastTwoStart = thumbCount - 2;
-
-  const accentStyle = accentColor
-    ? { color: accentColor, borderColor: accentColor }
-    : undefined;
+  const pool = images ?? COMMUNITY_IMAGES;
+  const count = Math.max(1, items);
 
   return (
-    <section
-      id={id}
-      className="mb-10 md:mb-16 scroll-mt-4 md:scroll-mt-20 container relative px-0"
-    >
-      {/* Header row */}
-      <div className="flex justify-between items-start mb-4">
-        {/* Left */}
+    <section id={id} className="mt-6 scroll-mt-4">
+      {/* Header */}
+      <div className="mb-3 flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-hf-text leading-tight">
-            {title}
-          </h2>
+          <h2 className="text-[22px] font-black text-white">{title}</h2>
           {subtitle && (
-            <p className="text-sm text-hf-text-muted mt-1">{subtitle}</p>
+            <p className="mt-0.5 text-[13px] font-medium text-white/45">{subtitle}</p>
           )}
         </div>
-
-        {/* Right — View all link */}
-        <a
+        <Link
           href={viewAllHref}
-          className="flex items-center gap-1.5 text-sm font-medium text-hf-neon hover:opacity-80 transition-opacity flex-shrink-0 mt-1"
-          style={accentColor ? { color: accentColor } : undefined}
-          target="_blank"
-          rel="noopener noreferrer"
+          className="flex shrink-0 items-center gap-1 text-[13px] font-black transition-opacity hover:opacity-75"
+          style={{ color: accentColor ?? "#d1fe17" }}
         >
-          {viewAllLabel}
-          <ExternalLink className="w-[14px] h-[14px]" />
-        </a>
+          {viewAllLabel} <ArrowRight size={14} />
+        </Link>
       </div>
 
-      {/* Media grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-6">
-        {Array.from({ length: thumbCount }, (_, i) => (
-          <Thumbnail
+      {/* Horizontal scroll strip */}
+      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+        {Array.from({ length: count }, (_, i) => (
+          <Link
             key={i}
-            index={i}
-            showBadges={i >= lastTwoStart}
-          />
+            href={ctaHref}
+            className="group relative flex-shrink-0 overflow-hidden rounded-[10px] bg-hf-surface-2"
+            style={{ width: 220, height: 154 }}
+          >
+            <img
+              src={pool[i % pool.length]}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.04]"
+            />
+          </Link>
         ))}
       </div>
 
-      {/* CTA button */}
-      <div className="flex justify-center">
-        <a
+      {/* CTA */}
+      <div className="mt-4 flex justify-center">
+        <Link
           href={ctaHref}
-          className="border border-hf-neon text-hf-neon bg-transparent rounded-full px-6 py-2.5 text-sm font-medium hover:bg-hf-neon-10 transition-colors"
-          style={accentStyle}
+          className="inline-flex h-10 items-center gap-2 rounded-full border px-6 text-[13px] font-black transition hover:opacity-80"
+          style={{
+            borderColor: accentColor ?? "#d1fe17",
+            color: accentColor ?? "#d1fe17",
+          }}
         >
           {ctaLabel}
-        </a>
+        </Link>
       </div>
     </section>
   );

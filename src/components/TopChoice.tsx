@@ -1,97 +1,113 @@
-import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 interface ToolCard {
   name: string;
   description: string;
-  gradient: string;
-  pro?: boolean;
+  image: string;
+  href: string;
+  badge?: string;
+  badgeColor?: string;
 }
 
 const tools: ToolCard[] = [
   {
     name: "Nano Banana Pro",
     description: "Best 4K image model ever",
-    gradient: "bg-gradient-to-br from-amber-700 to-amber-900",
+    image: "https://cdn.higgsfield.ai/card/1907d968-9588-4599-a53b-4d40f551356b.webp",
+    href: "/ai/image",
   },
   {
     name: "Motion Control",
     description: "Precise control of character actions",
-    gradient: "bg-gradient-to-br from-blue-700 to-indigo-900",
+    image: "https://cdn.higgsfield.ai/card/3ecf80d1-a279-42ad-b99b-c840baeb17eb.webp",
+    href: "/ai/video",
   },
   {
     name: "Skin Enhancer",
     description: "Natural, realistic skin textures",
-    gradient: "bg-gradient-to-br from-rose-700 to-pink-900",
-    pro: true,
+    image: "https://cdn.higgsfield.ai/card/c2124f76-f96f-4df1-870c-03e5ad15fae4.webp",
+    href: "/ai/image",
+    badge: "PRO",
+    badgeColor: "#8b5cf6",
   },
   {
     name: "Shots",
     description: "9 unique shots from one image",
-    gradient: "bg-gradient-to-br from-teal-700 to-cyan-900",
+    image: "https://cdn.higgsfield.ai/card/a5c235aa-388c-477e-8974-955aa5eacb13.webp",
+    href: "/ai/image",
   },
   {
     name: "Angles 2.0",
     description: "Generate any angle view for any subject",
-    gradient: "bg-gradient-to-br from-slate-600 to-gray-900",
-    pro: true,
+    image: "https://cdn.higgsfield.ai/card/19aa0ae4-dcbb-4473-9cbc-93f222d2faf0.webp",
+    href: "/ai/image",
+    badge: "PRO",
+    badgeColor: "#8b5cf6",
   },
   {
     name: "Kling 3.0",
     description: "15-second video generation",
-    gradient: "bg-gradient-to-br from-violet-700 to-purple-900",
+    image: "https://cdn.higgsfield.ai/card/d814674d-d264-4121-b093-d1eeffff6555.webp",
+    href: "/ai/video",
   },
 ];
 
 export function TopChoice() {
   return (
-    <section className="mb-8 md:mb-16 container relative">
+    <section className="mb-8 md:mb-12">
       {/* Header row */}
-      <div className="flex justify-between items-start mb-4">
+      <div className="mb-4 flex items-start justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-hf-text">Top Choice</h2>
-          <p className="text-sm text-hf-text-muted mt-1">
+          <h2 className="text-[22px] font-black text-white">Top Choice</h2>
+          <p className="mt-0.5 text-[13px] font-medium text-white/45">
             Creator-recommended tools tailored for you
           </p>
         </div>
-        <a
-          href="#"
-          className="text-sm font-medium text-hf-text hover:text-hf-neon flex items-center gap-1 transition-colors"
+        <Link
+          href="/apps"
+          className="flex items-center gap-1 text-[13px] font-black text-hf-neon hover:opacity-75 transition-opacity"
         >
-          See all
-          <ChevronRight size={16} />
-        </a>
+          See all <ArrowRight size={14} />
+        </Link>
       </div>
 
-      {/* Scroll row */}
-      <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+      {/* Horizontal scroll row */}
+      <div className="flex gap-2.5 overflow-x-auto hide-scrollbar pb-1">
         {tools.map((tool) => (
-          <div
+          <Link
             key={tool.name}
-            className="flex-shrink-0 w-[200px] cursor-pointer group/tool"
+            href={tool.href}
+            className="group flex-shrink-0 w-[185px]"
           >
-            {/* Image area */}
-            <div className="w-[200px] h-[240px] rounded-xl overflow-hidden bg-hf-surface-2 relative">
-              <div className={`absolute inset-0 ${tool.gradient}`} />
-              {tool.pro && (
-                <span className="absolute top-2 left-2 bg-violet-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase z-10">
-                  PRO
+            {/* Card image */}
+            <div className="relative h-[230px] w-[185px] overflow-hidden rounded-[10px] bg-hf-surface-2">
+              <img
+                src={tool.image}
+                alt={tool.name}
+                loading="lazy"
+                className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.04]"
+              />
+              {tool.badge && (
+                <span
+                  className="absolute left-2 top-2 rounded px-1.5 py-0.5 text-[9px] font-black uppercase text-white"
+                  style={{ backgroundColor: tool.badgeColor }}
+                >
+                  {tool.badge}
                 </span>
               )}
             </div>
 
-            {/* Below image */}
-            <div className="mt-2.5">
-              <div className="flex justify-between items-center">
-                <span className="text-[15px] font-semibold text-hf-text">
-                  {tool.name}
-                </span>
-                <ChevronRight size={16} className="text-hf-text-muted" />
-              </div>
-              <p className="text-[13px] text-hf-text-muted mt-0.5 line-clamp-2">
+            {/* Below card */}
+            <div className="mt-2">
+              <p className="text-[13px] font-black text-white leading-tight">
+                {tool.name}
+              </p>
+              <p className="mt-0.5 text-[11.5px] font-medium text-white/45 leading-snug">
                 {tool.description}
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

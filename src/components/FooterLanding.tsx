@@ -76,12 +76,7 @@ export function FooterLanding() {
             THE ULTIMATE AI-POWERED CAMERA CONTROL FOR FILMMAKERS &amp; CREATORS
           </h2>
 
-          <div
-            className="grid gap-12"
-            style={{
-              gridTemplateColumns: "repeat(2, 1fr)",
-            }}
-          >
+          <div className="grid grid-cols-2 gap-8 xl:grid-cols-4">
             <NavColumn links={col1} />
             <NavColumn links={col2} />
             <NavColumn links={col3} />
