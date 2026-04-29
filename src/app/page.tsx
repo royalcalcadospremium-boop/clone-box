@@ -5,11 +5,6 @@ import {
   ArrowRight,
   BadgePlus,
   Bot,
-  Clapperboard,
-  ImageIcon,
-  MessageCircle,
-  Mic2,
-  Play,
   Sparkles,
   Wand2,
 } from "lucide-react";
@@ -24,52 +19,8 @@ import { FooterLanding } from "@/components/FooterLanding";
 import { CopyrightBar } from "@/components/CopyrightBar";
 import { GptImage2Banner } from "@/components/GptImage2Banner";
 import { MarketingStudioBanner } from "@/components/MarketingStudioBanner";
+import { CreateTodayTools } from "@/components/CreateTodayTools";
 
-
-const launchCards = [
-  {
-    title: "Create Image",
-    subtitle: "Prompt high-detail images, edits and visual variations.",
-    icon: ImageIcon,
-    href: "/ai/image",
-    image: "https://cdn.higgsfield.ai/card/a5c235aa-388c-477e-8974-955aa5eacb13.webp",
-  },
-  {
-    title: "Generate Video",
-    subtitle: "Use top video models with motion, scenes and sound.",
-    icon: Play,
-    href: "/ai/video",
-    image: "https://cdn.higgsfield.ai/card/37540ebd-ae97-4f45-aa9b-8da2fce2dafd.webp",
-  },
-  {
-    title: "Cinema Studio 3.5",
-    subtitle: "Director-level shot control for cinematic sequences.",
-    icon: Clapperboard,
-    href: "/cinema-studio",
-    image: "https://cdn.higgsfield.ai/card/e88bb549-1b08-44c7-be91-671ec4ff647c.webp",
-  },
-  {
-    title: "Ninja Box Chat",
-    subtitle: "Collaborate in real time with voice, video and generation.",
-    icon: MessageCircle,
-    href: "/chat",
-    image: "https://cdn.higgsfield.ai/card/23a5304e-af7a-4f3d-96dd-f97406f0f926.webp",
-  },
-  {
-    title: "Ninja Box Audio",
-    subtitle: "Voice cloning, multilingual synthesis and localization.",
-    icon: Mic2,
-    href: "/audio",
-    image: "https://cdn.higgsfield.ai/card/30bcdc8f-7aa9-42bd-b820-40f2e9959f27.webp",
-  },
-  {
-    title: "Soul 2.0",
-    subtitle: "Fashion-forward photo model with cultural fluency.",
-    icon: Sparkles,
-    href: "/ai/image",
-    image: "https://cdn.higgsfield.ai/card/c2124f76-f96f-4df1-870c-03e5ad15fae4.webp",
-  },
-];
 
 const exploreCards = [
   ["Nano Banana 2", "Pro-level quality at Flash speed", "https://cdn.higgsfield.ai/card/1907d968-9588-4599-a53b-4d40f551356b.webp"],
@@ -286,6 +237,9 @@ export default function Home() {
         {/* ── Seedance availability banner ── */}
         <SeedanceBanner />
 
+        {/* ── Create today tools rail ── */}
+        <CreateTodayTools />
+
         {/* ── Original Series ── */}
         <section className="mt-4 grid gap-2 md:grid-cols-[1.5fr_1fr]">
           <Link
@@ -338,62 +292,6 @@ export default function Home() {
                 <p className="mt-1 text-[13px] font-semibold text-white/55">Exclusive AI-generated cinematic series and short films.</p>
               </div>
             </Link>
-          </div>
-        </section>
-
-        {/* ── "What will you create?" hero + launch cards ── */}
-        <section className="mt-4 grid gap-2 lg:grid-cols-[1.18fr_2fr]">
-          <Link
-            href="/ai/image"
-            className="group relative min-h-[310px] overflow-hidden rounded-[14px] bg-[#151719] p-5"
-          >
-            <img
-              src="https://cdn.higgsfield.ai/card/153574e6-6f8b-4857-806e-22b37202dd29.webp"
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-300 group-hover:scale-[1.025]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
-            <div className="relative flex h-full max-w-[300px] flex-col">
-              <span className="mb-3 w-max rounded-md bg-hf-neon px-2 py-1 text-[10px] font-black uppercase text-black">
-                Start creating
-              </span>
-              <h1 className="text-[34px] font-black leading-[0.95] tracking-normal md:text-[48px]">
-                What will you create today?
-              </h1>
-              <p className="mt-3 text-sm font-semibold text-white/62">
-                Images, videos, ads, characters, edits and motion presets in the same dark creative workspace.
-              </p>
-              <span className="mt-auto inline-flex h-11 w-max items-center gap-2 rounded-xl bg-white px-4 text-sm font-black text-black">
-                Generate <ArrowRight size={16} />
-              </span>
-            </div>
-          </Link>
-
-          <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-            {launchCards.map((card) => {
-              const Icon = card.icon;
-              return (
-                <Link
-                  key={card.title}
-                  href={card.href}
-                  className="group relative min-h-[150px] overflow-hidden rounded-[14px] bg-hf-surface p-4"
-                >
-                  <img
-                    src={card.image}
-                    alt=""
-                    className="absolute inset-0 h-full w-full object-cover opacity-38 transition duration-300 group-hover:scale-[1.03] group-hover:opacity-55"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/58 to-black/5" />
-                  <div className="relative flex h-full flex-col">
-                    <Icon className="mb-auto text-white/72" size={22} />
-                    <h2 className="text-[18px] font-black leading-tight">{card.title}</h2>
-                    <p className="mt-1 line-clamp-2 text-[12px] font-semibold leading-tight text-white/58">
-                      {card.subtitle}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
           </div>
         </section>
 
