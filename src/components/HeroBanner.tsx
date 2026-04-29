@@ -1,158 +1,87 @@
-/* ─── HeroBanner ─────────────────────────────────────────────────────────
- * Three featured-content cards laid out in a 1-col (mobile) / 3-col (md+)
- * responsive grid. Each card uses a gradient div as a media placeholder.
- * ──────────────────────────────────────────────────────────────────────── */
+import Link from "next/link";
 
-import React from "react";
+const CDN = "https://cdn.higgsfield.ai/card";
 
-/* ── Placeholder media gradients ────────────────────────────────────────── */
-function MediaTealDark() {
-  return (
-    <div
-      className="w-full h-full"
-      style={{
-        background:
-          "linear-gradient(135deg, #0d3d40 0%, #0a2a2c 40%, #0f1113 100%)",
-      }}
-      aria-hidden="true"
-    />
-  );
-}
-
-function MediaBlueDark() {
-  return (
-    <div
-      className="w-full h-full"
-      style={{
-        background:
-          "linear-gradient(135deg, #0d1f3d 0%, #0b1929 50%, #0f1113 100%)",
-      }}
-      aria-hidden="true"
-    />
-  );
-}
-
-function MediaSplitPanel() {
-  return (
-    <div
-      className="w-full h-full flex"
-      aria-hidden="true"
-    >
-      {/* Left panel */}
-      <div
-        className="flex-1"
-        style={{
-          background:
-            "linear-gradient(135deg, #1a1230 0%, #0f0c20 100%)",
-        }}
-      />
-      {/* Divider */}
-      <div className="w-px bg-hf-border opacity-40" />
-      {/* Right panel */}
-      <div
-        className="flex-1"
-        style={{
-          background:
-            "linear-gradient(135deg, #0f1a2e 0%, #0a1020 100%)",
-        }}
-      />
-    </div>
-  );
-}
-
-/* ── Card data types ─────────────────────────────────────────────────────── */
-interface HeroCardData {
-  /** Small label shown inside the card overlay (optional) */
-  overlayLabel?: string;
-  /** Large title shown inside the card overlay (optional) */
-  overlayTitle?: string;
-  /** Caption title below the card */
-  belowTitle: string;
-  /** Caption subtitle below the card */
-  belowSubtitle: string;
-  /** The media placeholder element to render */
-  media: React.ReactNode;
-}
-
-const CARDS: HeroCardData[] = [
+const CARDS = [
   {
-    overlayLabel: "OpenAI × Ninja Box",
-    overlayTitle: "GPT IMAGE 2.0",
-    belowTitle: "GPT IMAGE 2",
-    belowSubtitle: "4K images with near-perfect text rendering",
-    media: <MediaTealDark />,
+    title: "NINJA BOX MCP",
+    subtitle: "End-to-end content creation inside any AI agent",
+    video: `${CDN}/2485b7a4-c1c9-4a68-acc1-a7dac15bbacd.mp4`,
+    href: "/mcp",
   },
   {
-    belowTitle: "KLING 3.0 IN 4K",
-    belowSubtitle: "Cinema-grade video at full 4K resolution",
-    media: <MediaBlueDark />,
+    title: "GPT IMAGE 2",
+    subtitle: "4K images with near-perfect text rendering",
+    video: `${CDN}/50e17d9f-5212-430d-8079-8fbec994880b.mp4`,
+    href: "/ai/image",
   },
   {
-    overlayTitle: "MARKETING STUDIO",
-    overlayLabel: "Powered by Hermes Agent",
-    belowTitle: "MARKETING STUDIO FOR APPS",
-    belowSubtitle: "Powered by Hermes Agent",
-    media: <MediaSplitPanel />,
+    title: "KLING 3.0 IN 4K",
+    subtitle: "Cinema-grade video at full 4K resolution",
+    video: `${CDN}/2c356558-2f34-4783-bdcc-ce2d6f575b9e.mp4`,
+    href: "/ai/video",
+  },
+  {
+    title: "MARKETING STUDIO FOR APPS",
+    subtitle: "Powered by Hermes Agent",
+    video: `${CDN}/8943e464-dde1-4ff2-ad1a-7121f72bc1d5.mp4`,
+    href: "/marketing-studio/app",
+  },
+  {
+    title: "SEEDANCE 2.0 IN 1080P",
+    subtitle: "Sharper detail and smoother motion output",
+    poster: `${CDN}/c0b57ae7-f877-4f98-ae78-f62542a108fc.webp`,
+    video: `${CDN}/62a87445-46a0-4c36-a129-ba9b8b6c06c4.mp4`,
+    href: "/ai/video",
   },
 ];
 
-/* ── Single card ─────────────────────────────────────────────────────────── */
-function HeroCard({ card }: { card: HeroCardData }) {
-  return (
-    <article className="flex flex-col">
-      {/* Card with media + overlay */}
-      <div className="relative overflow-hidden rounded-xl cursor-pointer group/card">
-        {/* Media area */}
-        <div className="aspect-[16/10] bg-hf-surface-2 w-full overflow-hidden">
-          {card.media}
-        </div>
-
-        {/* Bottom gradient overlay */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"
-          aria-hidden="true"
-        />
-
-        {/* Overlay text */}
-        {(card.overlayLabel || card.overlayTitle) && (
-          <div className="absolute bottom-3 left-3 flex flex-col gap-0.5">
-            {card.overlayLabel && (
-              <span className="text-[11px] text-white/70 uppercase tracking-widest leading-none">
-                {card.overlayLabel}
-              </span>
-            )}
-            {card.overlayTitle && (
-              <span className="text-2xl md:text-3xl font-bold uppercase text-white leading-none">
-                {card.overlayTitle}
-              </span>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Below-card caption */}
-      <p className="text-[13px] font-semibold text-hf-text uppercase tracking-[0.08em] mt-2">
-        {card.belowTitle}
-      </p>
-      <p className="text-[13px] text-hf-text-muted mt-0.5">
-        {card.belowSubtitle}
-      </p>
-    </article>
-  );
-}
-
-/* ── Main export ──────────────────────────────────────────────────────────── */
 export function HeroBanner() {
   return (
-    <section
-      className="relative px-0 pt-2 md:pt-3 mb-6 md:mb-8 z-0"
-      aria-label="Featured content"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-1.5">
+    <section aria-label="Featured content" className="mb-4 pt-2 md:pt-3">
+      <ul className="flex min-w-0 gap-5 overflow-x-auto hide-scrollbar *:flex-[0_0_19.5rem] md:*:flex-[0_0_25rem] xl:*:flex-[0_0_32rem]">
         {CARDS.map((card) => (
-          <HeroCard key={card.belowTitle} card={card} />
+          <li key={card.title}>
+            <Link
+              href={card.href}
+              className="group grid grid-flow-row-dense gap-3 rounded-lg transition active:brightness-75"
+            >
+              <figure
+                className="relative overflow-hidden rounded-lg"
+                style={{ aspectRatio: "16/9" }}
+              >
+                <video
+                  loop
+                  muted
+                  autoPlay
+                  playsInline
+                  disablePictureInPicture
+                  preload="none"
+                  src={card.video}
+                  poster={card.poster}
+                  className="size-full object-cover"
+                  aria-label={`${card.title} - ${card.subtitle}`}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-lg"
+                  style={{
+                    boxShadow:
+                      "-0.5px -0.5px 1px 0 rgba(255,255,255,0.12) inset, 0.8px 0.5px 0.5px 0 rgba(27,27,27,0.17) inset",
+                  }}
+                />
+              </figure>
+              <div className="grid grid-rows-2 text-left">
+                <h3 className="truncate font-bold uppercase tracking-[0.05em] text-hf-text group-hover:text-hf-neon transition-colors text-[13px] xl:text-[14px]">
+                  {card.title}
+                </h3>
+                <p className="truncate text-xs text-hf-text-muted xl:text-sm">
+                  {card.subtitle}
+                </p>
+              </div>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

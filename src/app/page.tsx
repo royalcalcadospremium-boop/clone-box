@@ -14,6 +14,7 @@ import {
   Wand2,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
+import { HeroBanner } from "@/components/HeroBanner";
 import { TopChoice } from "@/components/TopChoice";
 import { SeedanceBanner } from "@/components/SeedanceBanner";
 import { KlingExclusive } from "@/components/KlingExclusive";
@@ -22,48 +23,6 @@ import { CreditSaleBanner } from "@/components/CreditSaleBanner";
 import { FooterLanding } from "@/components/FooterLanding";
 import { CopyrightBar } from "@/components/CopyrightBar";
 
-const featuredCards = [
-  {
-    title: "Ninja Box MCP",
-    kicker: "New · Agents",
-    subtitle: "End-to-end content creation inside any AI agent",
-    href: "/ai/image",
-    image: "https://cdn.higgsfield.ai/card/4c0ad21f-8b5b-46ee-8bb4-5af51482d40a.webp",
-    highlight: true,
-  },
-  {
-    title: "GPT Image 2",
-    kicker: "OpenAI x Ninja Box",
-    subtitle: "4K images with near-perfect text rendering",
-    href: "/ai/image",
-    image: "https://cdn.higgsfield.ai/card/55cebf94-e94a-46ef-9c15-3bc0ff501b54.webp",
-    highlight: true,
-  },
-  {
-    title: "KLING 3.0 in 4K",
-    kicker: "Cinema-grade video",
-    subtitle: "Cinema-grade video at full 4K resolution",
-    href: "/ai/video",
-    image: "https://cdn.higgsfield.ai/card/d814674d-d264-4121-b093-d1eeffff6555.webp",
-    highlight: false,
-  },
-  {
-    title: "Marketing Studio for Apps",
-    kicker: "Powered by Hermes Agent",
-    subtitle: "Product campaigns, edits, ads and exports from one place",
-    href: "/marketing-studio/app",
-    image: "https://cdn.higgsfield.ai/card/87919735-396b-4fcf-9970-ca8b6aeb20d4.webp",
-    highlight: false,
-  },
-  {
-    title: "Seedance 2.0 in 1080p",
-    kicker: "Sharper motion output",
-    subtitle: "Sharper detail and smoother video output",
-    href: "/ai/video",
-    image: "https://cdn.higgsfield.ai/card/c0b57ae7-f877-4f98-ae78-f62542a108fc.webp",
-    highlight: false,
-  },
-];
 
 const launchCards = [
   {
@@ -171,56 +130,6 @@ function readMotionLinks() {
   }
 }
 
-function FeaturedCard({
-  title,
-  subtitle,
-  image,
-  href,
-  kicker,
-  priority = false,
-  highlight = false,
-}: {
-  title: string;
-  subtitle: string;
-  image: string;
-  href: string;
-  kicker?: string;
-  priority?: boolean;
-  highlight?: boolean;
-}) {
-  return (
-    <Link href={href} className="group block min-w-0">
-      <article className="overflow-hidden rounded-[8px] bg-[#101214]">
-        <div className="relative aspect-[4/5] overflow-hidden">
-          <img
-            src={image}
-            alt=""
-            loading={priority ? "eager" : "lazy"}
-            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-          />
-          {kicker && (
-            <span className="absolute bottom-2.5 left-2.5 rounded bg-black/60 px-1.5 py-0.5 text-[8.5px] font-semibold uppercase tracking-wide text-white/70 backdrop-blur-sm">
-              {kicker}
-            </span>
-          )}
-        </div>
-        <div className="px-2.5 pb-3 pt-2">
-          <h2
-            className={`text-[11px] font-black uppercase leading-tight tracking-[0.05em] ${
-              highlight ? "text-hf-neon" : "text-white"
-            }`}
-          >
-            {title}
-          </h2>
-          <p className="mt-0.5 line-clamp-2 text-[10.5px] font-medium leading-tight text-white/45">
-            {subtitle}
-          </p>
-        </div>
-      </article>
-    </Link>
-  );
-}
-
 function MediaCard({
   title,
   subtitle,
@@ -274,12 +183,8 @@ export default function Home() {
       <Navbar />
       <main className="w-full px-2 pb-24 pt-2 md:px-3">
 
-        {/* ── Featured cards ── */}
-        <section className="grid gap-px sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5" aria-label="Featured Ninja Box launches">
-          {featuredCards.map((card, index) => (
-            <FeaturedCard key={card.title} {...card} priority={index < 5} />
-          ))}
-        </section>
+        {/* ── Featured video scroll (HeroBanner) ── */}
+        <HeroBanner />
 
         {/* ── Credit sale banner ── */}
         <CreditSaleBanner />
