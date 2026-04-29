@@ -23,6 +23,7 @@ import { CreditSaleBanner } from "@/components/CreditSaleBanner";
 import { FooterLanding } from "@/components/FooterLanding";
 import { CopyrightBar } from "@/components/CopyrightBar";
 import { GptImage2Banner } from "@/components/GptImage2Banner";
+import { MarketingStudioBanner } from "@/components/MarketingStudioBanner";
 
 
 const launchCards = [
@@ -240,7 +241,8 @@ export default function Home() {
         </section>
 
         {/* ── Marketing Studio banner ── */}
-        <section className="mt-4 grid gap-4 overflow-hidden rounded-[14px] bg-[#141518] lg:grid-cols-[1fr_1fr]">
+        <MarketingStudioBanner />
+        <section className="hidden">
           <div className="flex flex-col justify-center p-8 md:p-10">
             <span className="mb-3 inline-flex w-max rounded-md bg-hf-neon/15 px-2 py-1 text-[11px] font-black uppercase tracking-wide text-hf-neon">
               Marketing Studio
