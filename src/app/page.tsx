@@ -382,7 +382,7 @@ export default function Home() {
                 Available for everyone
               </span>
               <h2 className="mt-2 text-[clamp(22px,3.5vw,36px)] font-black leading-none">
-                World's best video model available with up to{" "}
+                World&apos;s best video model available with up to{" "}
                 <span className="text-hf-neon">30% OFF</span>{" "}
                 with special offer
               </h2>

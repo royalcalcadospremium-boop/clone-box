@@ -69,7 +69,7 @@ function SectionRow({ title, items }: { title: string; items: Series[] }) {
       <h2 className="mb-4 text-[22px] font-black text-hf-text">{title}</h2>
       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {items.map((s) => (
-          <SeriesCard key={s.href} series={s} />
+          <SeriesCard key={s.title} series={s} />
         ))}
       </div>
     </section>
@@ -111,7 +111,7 @@ export default function OriginalSeriesPage() {
               <p className="mt-1 text-[16px] font-black text-hf-text">
                 Start creating with <span className="text-hf-neon">Seedance 2.0</span>
               </p>
-              <p className="text-[13px] text-hf-text-muted">World's best video model available with up to 30% OFF</p>
+              <p className="text-[13px] text-hf-text-muted">World&apos;s best video model available with up to 30% OFF</p>
             </div>
             <Link
               href="/pricing"

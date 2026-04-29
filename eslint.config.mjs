@@ -13,6 +13,13 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      // We intentionally use <img> for external CDN URLs (cdn.higgsfield.ai, static.higgsfield.ai)
+      // where Next.js Image optimization is not applicable (requires domain configuration per URL).
+      "@next/next/no-img-element": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

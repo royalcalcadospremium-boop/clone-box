@@ -115,7 +115,7 @@ function CategorySection({ cat }: { cat: BlogCategory }) {
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {cat.posts.map((post) => (
-          <PostCard key={post.href} post={post} />
+          <PostCard key={post.title} post={post} />
         ))}
       </div>
     </section>

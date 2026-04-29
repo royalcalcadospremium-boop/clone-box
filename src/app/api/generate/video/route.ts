@@ -54,6 +54,7 @@ async function generateKling(prompt: string, duration: number) {
 }
 
 // ── BytePlus / Seedance (via ModelArk endpoint) ──────────────────────────────
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function generateByteplus(prompt: string, _duration: number) {
   // ModelArk endpoint — ark- prefixed keys use this base URL
   const res = await fetch("https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks", {

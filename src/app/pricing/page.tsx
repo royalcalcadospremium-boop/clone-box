@@ -3,11 +3,6 @@ import { Check, Zap } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { CopyrightBar } from "@/components/CopyrightBar";
 
-interface PlanFeature {
-  text: string;
-  included: boolean;
-}
-
 interface Plan {
   name: string;
   price: number;
