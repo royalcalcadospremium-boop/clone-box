@@ -22,6 +22,7 @@ import { CommunitySection } from "@/components/CommunitySection";
 import { CreditSaleBanner } from "@/components/CreditSaleBanner";
 import { FooterLanding } from "@/components/FooterLanding";
 import { CopyrightBar } from "@/components/CopyrightBar";
+import { GptImage2Banner } from "@/components/GptImage2Banner";
 
 
 const launchCards = [
@@ -190,7 +191,8 @@ export default function Home() {
         <CreditSaleBanner />
 
         {/* ── GPT Image 2 "Meet" section — two-column ── */}
-        <section className="mt-2 grid overflow-hidden rounded-[14px] lg:grid-cols-[280px_1fr]">
+        <GptImage2Banner />
+        <section className="hidden">
           {/* Left: text panel */}
           <div className="flex flex-col bg-[#0d0e10] p-7">
             <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/35">
