@@ -284,31 +284,7 @@ export default function Home() {
         </section>
 
         {/* ── Seedance availability banner ── */}
-        <section className="mt-4 overflow-hidden rounded-[14px] bg-[#141518] p-6 md:p-8">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <span className="text-[11px] font-black uppercase tracking-[0.12em] text-white/38">
-                Available for everyone
-              </span>
-              <h2 className="mt-2 text-[clamp(22px,3.5vw,36px)] font-black leading-none">
-                World&apos;s best video model available with up to{" "}
-                <span className="text-hf-neon">30% OFF</span>{" "}
-                with special offer
-              </h2>
-            </div>
-            <div className="flex shrink-0 flex-wrap items-center gap-3">
-              <Link
-                href="/ai/video"
-                className="inline-flex h-11 items-center gap-2 rounded-xl bg-hf-neon px-5 text-sm font-black text-black transition hover:bg-hf-neon/90"
-              >
-                Get Seedance 2.0
-              </Link>
-              <Link href="/ai/video" className="text-sm font-semibold text-white/52 hover:text-white transition">
-                Learn more
-              </Link>
-            </div>
-          </div>
-        </section>
+        <SeedanceBanner />
 
         {/* ── Original Series ── */}
         <section className="mt-4 grid gap-2 md:grid-cols-[1.5fr_1fr]">
@@ -560,10 +536,6 @@ export default function Home() {
       <div className="w-full px-2 md:px-3">
         <div className="mt-12">
           <TopChoice />
-        </div>
-
-        <div className="mt-6">
-          <SeedanceBanner />
         </div>
 
         <div className="mt-6">
