@@ -240,6 +240,9 @@ export default function Home() {
         {/* ── Create today tools rail ── */}
         <CreateTodayTools />
 
+        {/* ── Melhor escolha ── */}
+        <TopChoice />
+
         {/* ── Original Series ── */}
         <section className="mt-4 grid gap-2 md:grid-cols-[1.5fr_1fr]">
           <Link
@@ -432,10 +435,6 @@ export default function Home() {
 
       {/* ── Below-fold sections ── */}
       <div className="w-full px-2 md:px-3">
-        <div className="mt-12">
-          <TopChoice />
-        </div>
-
         <div className="mt-6">
           <KlingExclusive />
         </div>
