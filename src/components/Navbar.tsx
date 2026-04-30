@@ -12,9 +12,12 @@ import {
 /* ── Logo ─────────────────────────────────────────────────────────────── */
 function NinjaLogo() {
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-label="Ninja Box logo">
-      <rect width="28" height="28" rx="7" fill="#1c1e20" />
-      <path d="M8 8h3v5h6V8h3v12h-3v-5H11v5H8V8Z" fill="#f7f7f8" />
+    <svg width="32" height="32" viewBox="0 0 80 80" aria-label="Ninja Box logo">
+      <rect width="80" height="80" rx="16" fill="currentColor" className="text-white" />
+      <path
+        d="M64.2786 39.6003L64.2323 39.0943C63.7939 34.2383 60.6336 25.102 51.8677 25.102C45.3627 25.102 40.4487 31.5229 36.112 37.1838C32.6515 41.7173 29.6533 45.6063 26.3542 45.6063C25.4773 45.5146 24.3472 45.0772 23.6555 44.0877C23.0326 43.1898 22.8712 42.0393 23.1939 40.6585C23.7011 38.4722 26.6081 36.447 29.6758 34.2838C31.3594 33.1333 33.09 31.9135 34.2895 30.7399C37.75 27.4031 39.5031 24.9866 39.5031 21.0976C39.5031 17.2087 37.3579 15.2751 35.5585 14.4465C31.9598 12.79 26.6775 13.7564 23.3096 16.6565C22.8024 17.117 22.2946 17.5537 21.833 17.968C18.442 20.9828 16.1586 23.0312 10.9219 21.4657V27.7712C17.8653 30.8322 23.7018 24.9866 25.9164 22.2943C27.6232 20.5223 29.4225 19.4866 30.7609 19.4866H30.8304C31.4302 19.5097 31.9374 19.7399 32.307 20.1542C32.9068 20.8449 33.1376 21.6504 33.0219 22.5476C32.7679 24.4351 30.8072 26.6437 27.2085 29.0602C22.9869 31.891 15.9284 36.6317 15.3743 42.5921C14.959 46.8729 17.1736 51.1531 20.6341 52.8096C28.7077 56.63 33.6216 50.0481 38.8345 43.0981C42.8253 37.736 46.6085 32.6504 51.8684 32.6504C56.5972 32.6504 58.3502 36.5624 58.3502 39.0251V39.5086L57.8887 39.6003C46.424 41.6256 40.1723 52.3498 40.1723 57.2976C40.1723 62.2454 44.3708 66.48 49.538 66.48C55.5821 66.48 63.0559 61.3251 64.2555 46.8267L64.3017 46.2977H69.0769V39.601H64.2786V39.6003ZM58.0269 47.0332C57.1044 55.709 52.652 59.7596 49.9533 59.7596C48.7306 59.7596 47.0238 58.7469 47.0238 56.8602C47.0238 54.7432 50.1841 48.3223 57.2889 46.4125L58.1194 46.2053L58.0269 47.0339V47.0332Z"
+        fill="#131313"
+      />
     </svg>
   );
 }
@@ -30,16 +33,10 @@ function InstagramIcon({ size = 18 }: { size?: number }) {
 
 /* ── Badge helpers ────────────────────────────────────────────────────── */
 function BadgeNew() {
-  return <span className="bg-hf-neon text-[#13151a] text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide leading-none">New</span>;
-}
-function BadgeTop() {
-  return <span className="bg-[#db3f3e] text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase leading-none">Top</span>;
+  return <span className="rounded-sm bg-hf-neon px-1 text-[9px] font-bold uppercase leading-none text-[#13151a]">Novo</span>;
 }
 function BadgeVersion({ label }: { label: string }) {
-  return <span className="bg-white/10 text-white/50 text-[10px] px-1 py-0.5 rounded leading-none">{label}</span>;
-}
-function BadgeSale({ label }: { label: string }) {
-  return <span className="bg-[#db3f3e] text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase leading-none">{label}</span>;
+  return <span className="rounded-sm bg-hf-neon px-1 text-[9px] font-bold leading-none text-[#13151a]">{label}</span>;
 }
 
 /* ── Right-side action components ─────────────────────────────────────── */
@@ -48,14 +45,14 @@ function UpgradeButton() {
     <div className="relative shrink-0">
       <Link
         href="/pricing"
-        className="flex items-center gap-1.5 rounded-xl border border-white/[0.12] px-3 py-[7px] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.08]"
+        className="flex items-center gap-1.5 rounded-[10px] px-3 py-[7px] text-[13px] font-semibold text-white transition-colors hover:brightness-75"
         style={{ background: "rgba(255,255,255,0.05)" }}
       >
         <Rocket size={13} className="text-hf-neon shrink-0" />
-        <span>Upgrade</span>
+        <span>Atualizar</span>
       </Link>
-      <span className="pointer-events-none absolute -right-2.5 -top-2.5 z-10 rounded-full bg-[#db3f3e] px-1.5 py-0.5 text-[9px] font-extrabold uppercase leading-none text-white shadow-md">
-        30% OFF
+      <span className="pointer-events-none absolute -bottom-3 left-1/2 z-10 min-w-[86px] -translate-x-1/2 rounded-full bg-[#f31872] px-2 py-0.5 text-center text-[10px] font-extrabold leading-none text-white shadow-md">
+        30 % desconto
       </span>
     </div>
   );
@@ -81,12 +78,12 @@ function NotificationsBell() {
 function AssetsLink() {
   return (
     <Link
-      href="/assets"
+      href="/asset/all"
       className="hidden md:flex items-center gap-1.5 rounded-lg border border-white/[0.08] px-2.5 py-[7px] text-[13px] text-white/60 transition-colors hover:border-white/[0.16] hover:text-white shrink-0"
       style={{ background: "rgba(255,255,255,0.03)" }}
     >
-      <Folder size={13} />
-      <span>Assets</span>
+      <Folder size={13} className="text-green-300" />
+      <span>Ativos</span>
     </Link>
   );
 }
@@ -300,36 +297,45 @@ function DropdownPanel({ menu }: { menu: DropMenu }) {
   const hasTwoCols = !!menu.models;
   return (
     <div
-      className="absolute left-0 top-full z-50 mt-0 min-w-[520px] rounded-b-2xl border border-white/[0.07] bg-[#0f1113]/95 backdrop-blur-xl shadow-2xl"
-      style={{ maxWidth: hasTwoCols ? 700 : 320 }}
+      className="absolute left-4 top-full z-50 mt-0 max-h-[calc(100vh-92px)] overflow-y-auto rounded-b-[22px] rounded-tr-[22px] border border-white/[0.06] bg-[#1b1d1f] shadow-2xl"
+      style={{ width: hasTwoCols ? 760 : 630 }}
+      onMouseEnter={(event) => event.stopPropagation()}
     >
-      <div className={`grid p-4 gap-1 ${hasTwoCols ? "grid-cols-2 divide-x divide-white/[0.06]" : "grid-cols-1"}`}>
+      <div className={`grid gap-3 p-5 ${hasTwoCols ? "grid-cols-[1fr_1fr]" : "grid-cols-1"}`}>
         {/* Features column */}
-        <div className="pr-3">
-          <p className="mb-2 px-2 text-[10px] font-black uppercase tracking-widest text-white/30">
+        <div>
+          <p className="mb-2 px-2 text-sm font-medium text-white/42">
             {menu.groupLabel ?? "Features"}
           </p>
           {menu.features.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="group flex items-start gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-white/[0.05]"
+              className="group flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-white/[0.05]"
             >
-              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-white/50 transition-colors group-hover:bg-hf-neon/10 group-hover:text-hf-neon">
+              <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[10px] bg-white/[0.07] text-white/88 transition-colors group-hover:bg-white/[0.11]">
                 {item.icon}
+                {item.badge === "New" && (
+                  <span className="absolute -left-0.5 -top-2 -skew-x-12 rounded-sm bg-hf-neon px-1.5 text-[10px] font-black uppercase leading-4 text-black">
+                    NEW
+                  </span>
+                )}
+                {item.badge === "Top" && (
+                  <span className="absolute -left-0.5 -top-2 -skew-x-12 rounded-sm bg-[#f31872] px-1.5 text-[10px] font-black uppercase leading-4 text-white">
+                    TOP
+                  </span>
+                )}
               </span>
               <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[13px] font-semibold leading-none text-hf-text group-hover:text-white">
+                <div className="flex items-center gap-2">
+                  <span className="text-[15px] font-bold leading-tight text-white">
                     {item.label}
                   </span>
-                  {item.badge === "New" && <BadgeNew />}
-                  {item.badge === "Top" && <BadgeTop />}
                   {item.live && (
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-hf-neon" title="Live integration" />
                   )}
                 </div>
-                <p className="mt-0.5 line-clamp-1 text-[11px] leading-tight text-white/40">{item.desc}</p>
+                <p className="mt-1 line-clamp-1 text-sm leading-tight text-white/46">{item.desc}</p>
               </div>
             </Link>
           ))}
@@ -337,29 +343,37 @@ function DropdownPanel({ menu }: { menu: DropMenu }) {
 
         {/* Models column */}
         {menu.models && (
-          <div className="pl-3">
-            <p className="mb-2 px-2 text-[10px] font-black uppercase tracking-widest text-white/30">Models</p>
+          <div>
+            <p className="mb-2 px-2 text-sm font-medium text-white/42">Models</p>
             {menu.models.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="group flex items-start gap-3 rounded-xl px-2 py-2 transition-colors hover:bg-white/[0.05]"
+                className="group flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-white/[0.05]"
               >
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.06] text-white/50 transition-colors group-hover:bg-hf-neon/10 group-hover:text-hf-neon">
+                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[10px] bg-white/[0.07] text-white/88 transition-colors group-hover:bg-white/[0.11]">
                   {item.icon}
+                  {item.badge === "New" && (
+                    <span className="absolute -left-0.5 -top-2 -skew-x-12 rounded-sm bg-hf-neon px-1.5 text-[10px] font-black uppercase leading-4 text-black">
+                      NEW
+                    </span>
+                  )}
+                  {item.badge === "Top" && (
+                    <span className="absolute -left-0.5 -top-2 -skew-x-12 rounded-sm bg-[#f31872] px-1.5 text-[10px] font-black uppercase leading-4 text-white">
+                      TOP
+                    </span>
+                  )}
                 </span>
                 <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[13px] font-semibold leading-none text-hf-text group-hover:text-white">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[15px] font-bold leading-tight text-white">
                       {item.label}
                     </span>
-                    {item.badge === "New" && <BadgeNew />}
-                    {item.badge === "Top" && <BadgeTop />}
                     {item.live && (
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-hf-neon" title="Live integration" />
                     )}
                   </div>
-                  <p className="mt-0.5 line-clamp-1 text-[11px] leading-tight text-white/40">{item.desc}</p>
+                  <p className="mt-1 line-clamp-1 text-sm leading-tight text-white/46">{item.desc}</p>
                 </div>
               </Link>
             ))}
@@ -380,21 +394,20 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Explore",          href: "/",                     active: true },
-  { label: "MCP",              href: "/mcp",                  badge: <BadgeNew /> },
-  { label: "Image",            href: "/ai/image",             dropKey: "Image" },
-  { label: "Video",            href: "/ai/video",             dropKey: "Video" },
-  { label: "Audio",            href: "/audio",                dropKey: "Audio" },
-  { label: "Collab",           href: "/chat" },
-  { label: "Edit",             href: "/ai/image",             dropKey: "Edit" },
-  { label: "Character",        href: "/character",            dropKey: "Character" },
-  { label: "Marketing Studio", href: "/marketing-studio/app", badge: <BadgeNew /> },
-  { label: "Cinema Studio",    href: "/cinema-studio",        badge: <BadgeVersion label="3.5" /> },
-  { label: "Originals",        href: "/original-series",      badge: <BadgeNew /> },
-  { label: "Apps",             href: "/apps" },
-  { label: "Community",        href: "/community",            dropKey: "Community" },
-  { label: "Assist",           href: "/chat" },
-  { label: "Pricing",          href: "/pricing",              badge: <BadgeSale label="30% OFF" /> },
+  { label: "Explorar",             href: "/",                     active: true },
+  { label: "Imagem",               href: "/ai/image",             dropKey: "Image" },
+  { label: "Vídeo",                href: "/ai/video",             dropKey: "Video" },
+  { label: "Áudio",                href: "/audio",                dropKey: "Audio" },
+  { label: "Colaboração",          href: "/generate" },
+  { label: "Editar",               href: "/ai/image",             dropKey: "Edit" },
+  { label: "Personagem",           href: "/character",            dropKey: "Character" },
+  { label: "Estúdio de Marketing", href: "/marketing-studio/app", badge: <BadgeNew /> },
+  { label: "Estúdio de Cinema",    href: "/cinema-studio",        badge: <BadgeVersion label="3,5" /> },
+  { label: "Originais",            href: "/original-series",      badge: <BadgeNew /> },
+  { label: "MCP",                  href: "/mcp",                  badge: <BadgeNew /> },
+  { label: "Aplicativos",          href: "/apps" },
+  { label: "Auxiliar",             href: "/chat" },
+  { label: "Comunidade",           href: "/community",            dropKey: "Community" },
 ];
 
 /* ── Main export ──────────────────────────────────────────────────────── */
@@ -417,7 +430,7 @@ export function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-[51] h-16"
+      className="sticky top-0 z-[51] h-[58px]"
       style={{
         background: "rgba(13,15,17,0.92)",
         backdropFilter: "blur(16px)",
@@ -428,13 +441,13 @@ export function Navbar() {
       onMouseLeave={scheduleClose}
     >
       <nav
-        className="grid h-full grid-cols-[auto_1fr_auto] items-center pr-3 md:pr-4 relative container"
-        aria-label="Main navigation"
+        className="container relative grid h-full grid-cols-[auto_1fr_auto] items-center pr-3 md:pr-4"
+        aria-label="navegação principal"
       >
         {/* ── Logo ── */}
-        <Link href="/" className="flex items-center gap-2.5 pr-3 shrink-0" aria-label="Ninja Box home">
+        <Link href="/" className="flex shrink-0 items-center gap-2 pr-4" aria-label="Ninja Box home">
           <NinjaLogo />
-          <span className="font-bold text-[17px] text-hf-text md:hidden xl:block">Ninja Box</span>
+          <span className="font-grotesk text-[17px] font-bold text-hf-text md:hidden">Ninja Box</span>
         </Link>
 
         {/* ── Desktop nav items ── */}
@@ -442,15 +455,15 @@ export function Navbar() {
           {NAV_ITEMS.map((item) => {
             const isOpen = item.dropKey ? activeKey === item.dropKey : false;
             return (
-              <li key={item.label} className="relative h-full flex items-center">
+              <li key={item.label} className="h-full">
                 <Link
                   href={item.href}
                   onMouseEnter={() => item.dropKey ? open(item.dropKey) : setActiveKey(null)}
                   className={[
-                    "flex h-full items-center gap-1.5 whitespace-nowrap rounded-xl px-2.5 py-1 text-[13px] font-medium transition-colors duration-150",
+                    "flex h-full items-center gap-1.5 whitespace-nowrap rounded-xl px-3 py-1 text-[15px] font-semibold transition-colors duration-150",
                     item.active || isOpen
-                      ? "text-[#f7f7f8]"
-                      : "text-white/60 hover:text-[#f7f7f8]",
+                      ? "text-white"
+                      : "text-white/64 hover:text-white",
                   ].join(" ")}
                 >
                   {item.label}
@@ -464,16 +477,6 @@ export function Navbar() {
                   {item.badge}
                 </Link>
 
-                {/* Dropdown */}
-                {item.dropKey && activeKey === item.dropKey && (
-                  <div
-                    className="absolute top-full left-0"
-                    onMouseEnter={cancelClose}
-                    onMouseLeave={scheduleClose}
-                  >
-                    <DropdownPanel menu={DROPS[item.dropKey]} />
-                  </div>
-                )}
               </li>
             );
           })}
@@ -499,6 +502,12 @@ export function Navbar() {
           {/* Mobile-only: Hamburger */}
           <HamburgerButton />
         </div>
+
+        {activeKey && (
+          <div onMouseEnter={cancelClose} onMouseLeave={scheduleClose}>
+            <DropdownPanel menu={DROPS[activeKey]} />
+          </div>
+        )}
       </nav>
     </header>
   );
